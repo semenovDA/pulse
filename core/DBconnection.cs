@@ -5,7 +5,7 @@ using pulse.collection;
 
 namespace pulse.core
 {
-    class DBconnection
+    public class DBconnection
     {
         /*  Variable defenition */
         #if DEBUG
@@ -18,10 +18,12 @@ namespace pulse.core
 
         public SqlConnection sqlConnection = null;
 
+        public static string RECORD_GET = "SELECT *  FROM [Data] WHERE Пациент = @Id";
         public static string RECORD_ADDTITION = "INSERT INTO [DATA] (Id, Время, Длительность, Пациент, Примечание) VALUES(@Id, @Время, @Длительность, @Пациент, @Примечание)";
         public static string RECORD_UPDATE = "UPDATE [DATA] SET [Примечание] = @Примечание, [Время] = @Время, [Длительность] = @Длительность, [Пациент] = @Пациент WHERE Id = @Id";
-        
-        public static string PATIENTS_GET = "SELECT *, 'Choose' AS [Выбрать] FROM [Table]";
+
+        public static string PATIENTS_GET = "SELECT *, 'Delete' AS [Удалить], 'Update' AS [Изменить], 'Data' AS [Данные] FROM [Table]";
+        public static string PATIENTS_GET_CHOOSE = "SELECT *, 'Choose' AS [Выбрать] FROM [Table]";
 
         public static string PATIENT_GET = "SELECT * FROM [Table] WHERE Id = @Id";
         public static string PATIENT_INSERT = "INSERT INTO [TABLE] (Фамилия, Имя, Отчество, Дата_рождения, Рост, Вес, Пол) VALUES(@Фамилия, @Имя, @Отчество, @Дата_рождения, @Рост, @Вес, @Пол)";
@@ -34,11 +36,12 @@ namespace pulse.core
         }
 
         /* Public classes*/
-        public DataSet get_patients() {
+        public DataSet get_patients(bool edit = false) {
             try
             {
                 sqlConnection.Open();
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(PATIENTS_GET, sqlConnection);
+                string query = edit ? PATIENTS_GET : PATIENTS_GET_CHOOSE;
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query, sqlConnection);
                 SqlCommandBuilder sqlBuilder = new SqlCommandBuilder(sqlDataAdapter);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet, "Table");
@@ -49,6 +52,24 @@ namespace pulse.core
         }
 
         /*  Record block    */
+        public DataSet get_records(Patient patient)
+        {
+            try
+            {
+                SqlCommand comm = new SqlCommand(RECORD_GET, sqlConnection);
+                comm.Parameters.AddWithValue("Id", patient.id);
+
+                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(comm);
+                SqlCommandBuilder sqlBuilder = new SqlCommandBuilder(sqlDataAdapter);
+                DataSet dataSet = new DataSet();
+
+                sqlDataAdapter.Fill(dataSet, "Data");
+                return dataSet;
+            }
+            catch (Exception e) { throw e; }
+            finally { sqlConnection.Close(); }
+
+        }
         public void insert_record(Record record)
         {
             try
@@ -58,6 +79,7 @@ namespace pulse.core
                 command.Parameters.AddWithValue("Id", record.id);
                 command.Parameters.AddWithValue("Время", record.time);
                 command.Parameters.AddWithValue("Длительность", record.duration);
+                command.Parameters.AddWithValue("Примечание", record.comments);
                 command.Parameters.AddWithValue("Пациент", record.patient.id);
                 command.ExecuteNonQuery();
             }
