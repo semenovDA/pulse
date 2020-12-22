@@ -1,7 +1,7 @@
-﻿using pulse_2._0.core;
-using System;
+﻿using System;
+using pulse.core;
 
-namespace pulse_2._0.collection
+namespace pulse.collection
 {
     public class Record
     {

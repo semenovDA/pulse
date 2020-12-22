@@ -1,4 +1,4 @@
-﻿namespace pulse_2._0
+﻿namespace pulse
 {
     partial class LineAnnotation1
     {
@@ -72,8 +72,8 @@
             // chart1
             // 
             this.chart1.AllowDrop = true;
-            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
+            this.chart1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
             | System.Windows.Forms.AnchorStyles.Right)));
             lineAnnotation2.AllowAnchorMoving = true;
             lineAnnotation2.AllowMoving = true;
@@ -470,7 +470,7 @@
 
         #endregion
 
-        public  System.Windows.Forms.DataVisualization.Charting.Chart chart1;
+        public System.Windows.Forms.DataVisualization.Charting.Chart chart1;
         private System.Windows.Forms.Timer timer1;
         private System.Windows.Forms.ComboBox comboBox2;
         private System.Windows.Forms.Label label2;

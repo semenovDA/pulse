@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Data;
 using System.Windows.Forms;
-using pulse_2._0.core;
-using pulse_2._0.collection;
+using pulse.core;
+using pulse.collection;
 
-namespace pulse_2._0
+namespace pulse
 {
     public partial class Form5 : Form
     {

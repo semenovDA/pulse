@@ -5,7 +5,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
-namespace pulse_2._0
+namespace pulse
 {
     public partial class Form2 : Form
     {

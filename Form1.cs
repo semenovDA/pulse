@@ -6,10 +6,9 @@ using System.IO.Ports;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using pulse_2._0.core;
-using pulse_2._0.collection;
+using pulse.collection;
 
-namespace pulse_2._0
+namespace pulse
 {
     public partial class LineAnnotation1 : Form
     {
@@ -28,7 +27,6 @@ namespace pulse_2._0
         StreamWriter wr;
 
         SerialPort port = new SerialPort("COM", 9600);
-        DBconnection connection = new DBconnection();
 
         public LineAnnotation1()
         {
@@ -49,8 +47,11 @@ namespace pulse_2._0
 
             chart1.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
             string[] ports = SerialPort.GetPortNames();
+
             comboBox1.Items.AddRange(ports);
-            comboBox2.Items.AddRange(new string[] { "300", "1200", "2400", "4800", "9600", "19200", "38400", "57600", "74880", "115200", "230400", "250000" });
+            comboBox2.Items.AddRange(new string[] { "300", "1200", "2400", "4800", 
+                "9600", "19200", "38400", "57600", "74880", "115200", "230400", "250000" });
+
             comboBox2.SelectedItem = "9600";
             chart1.Series[0].ToolTip = "X = #VALX, Y = #VALY";
             button2.Enabled = false;
@@ -151,16 +152,8 @@ namespace pulse_2._0
 
         private void checkBox2_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox2.Checked == true)
-            {
-                timer2.Start();
-            }
-            else
-            {
-                timer2.Stop();
-
-            }
-
+            if (checkBox2.Checked == true) timer2.Start();
+            else timer2.Stop();
         }
 
         private void timer2_Tick(object sender, EventArgs e)

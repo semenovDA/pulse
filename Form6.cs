@@ -1,8 +1,8 @@
-﻿using pulse_2._0.collection;
+﻿using pulse.collection;
 using System;
 using System.Windows.Forms;
 
-namespace pulse_2._0
+namespace pulse
 {
     public partial class Form6 : Form
     {

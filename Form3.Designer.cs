@@ -1,4 +1,4 @@
-﻿namespace pulse_2._0
+﻿namespace pulse
 {
     partial class Form3
     {

@@ -1,21 +1,26 @@
 ﻿using System;
 using System.Data;
 using System.Data.SqlClient;
-using pulse_2._0.collection;
+using pulse.collection;
 
-namespace pulse_2._0.core
+namespace pulse.core
 {
     class DBconnection
     {
-
         /*  Variable defenition */
+        #if DEBUG
+        public const string defaultConnection = @"Data Source=(LocalDB)\MSSQLLocalDB;" +
+            @"AttachDbFilename='C:\Users\Admin\Desktop\Pulse_2.0\Исходники\pulse_2.0\Database1.mdf';Integrated Security=True";
+        #else
         public const string defaultConnection = @"Data Source=(LocalDB)\MSSQLLocalDB;" + 
             @"AttachDbFilename='|DataDirectory|\Database1.mdf';Integrated Security=True";
+        #endif
 
         public SqlConnection sqlConnection = null;
 
-        public static string RECORD_ADDTITION = "INSERT INTO [DATA] (Id, Время, Длительность, Пациент) VALUES(@Id, @Время, @Длительность, @Пациент)";
+        public static string RECORD_ADDTITION = "INSERT INTO [DATA] (Id, Время, Длительность, Пациент, Примечание) VALUES(@Id, @Время, @Длительность, @Пациент, @Примечание)";
         public static string RECORD_UPDATE = "UPDATE [DATA] SET [Примечание] = @Примечание, [Время] = @Время, [Длительность] = @Длительность, [Пациент] = @Пациент WHERE Id = @Id";
+        
         public static string PATIENTS_GET = "SELECT *, 'Choose' AS [Выбрать] FROM [Table]";
 
         public static string PATIENT_GET = "SELECT * FROM [Table] WHERE Id = @Id";
@@ -46,7 +51,6 @@ namespace pulse_2._0.core
         /*  Record block    */
         public void insert_record(Record record)
         {
-
             try
             {
                 sqlConnection.Open();

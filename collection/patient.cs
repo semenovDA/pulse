@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Windows.Forms;
-using pulse_2._0.core;
+using pulse.core;
 
-namespace pulse_2._0.collection
+namespace pulse.collection
 {
     public class Patient
     {

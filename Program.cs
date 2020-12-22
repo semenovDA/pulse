@@ -2,7 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 
-namespace pulse_2._0
+namespace pulse
 {
     static class Program
     {
