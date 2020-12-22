@@ -6,7 +6,7 @@ namespace pulse.collection
     public class Record
     {
         /* Varible definition */
-        private float _id;
+        private string _id;
         private DateTime _time;
         private float _duration;
         private String _comments;
@@ -15,19 +15,19 @@ namespace pulse.collection
         /* Main constructors */
         public Record(float duration, Patient patient)
         {
-            _id = float.Parse(DateTime.Now.ToString("yyyyMMddhhmmss"));
+            _id = Guid.NewGuid().ToString();
             _time = DateTime.Now;
             _duration = duration;
             _patient = patient;
         }
         public Record(float duration, int patient)
         {
-            _id = float.Parse(DateTime.Now.ToString("yyyyMMddhhmmss"));
+            _id = Guid.NewGuid().ToString();
             _time = DateTime.Now;
             _duration = duration;
             _patient = new Patient(patient);
         }
-        public Record(float Id, DateTime Time, float Duration, string Comments, int Patient)
+        public Record(string Id, DateTime Time, float Duration, string Comments, int Patient)
         {
             _id = Id;
             _time = Time;
@@ -35,7 +35,7 @@ namespace pulse.collection
             _comments = Comments;
             _patient = new Patient(Patient);
         }
-        public Record(float Id, DateTime Time, float Duration, string Comments, Patient Patient)
+        public Record(string Id, DateTime Time, float Duration, string Comments, Patient Patient)
         {
             _id = Id;
             _time = Time;
@@ -45,7 +45,7 @@ namespace pulse.collection
         }
 
         /* Getters & Setters */
-        public float id { get => _id; set => _id = value; }
+        public string id { get => _id; set => _id = value; }
         public DateTime time { get => _time; set => _time = value; }
         public float duration { get => _duration; set => _duration = value; }
         public string comments { get => _comments; set => _comments = value; }
