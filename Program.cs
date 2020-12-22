@@ -13,12 +13,8 @@ namespace pulse
         [STAThread]
         static void Main()
         {
-            DirectoryInfo drInfo = new DirectoryInfo(@"saves/");
-
-            if (!drInfo.Exists)
-            {
-                drInfo.Create();
-            }
+            DirectoryInfo drInfo = new DirectoryInfo(Properties.Settings.Default.savesPath);
+            if (!drInfo.Exists) { drInfo.Create(); }
 
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
