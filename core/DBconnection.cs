@@ -21,6 +21,7 @@ namespace pulse.core
         public static string RECORD_GET = "SELECT *  FROM [Data] WHERE Пациент = @Id";
         public static string RECORD_ADDTITION = "INSERT INTO [DATA] (Id, Время, Длительность, Пациент, Примечание) VALUES(@Id, @Время, @Длительность, @Пациент, @Примечание)";
         public static string RECORD_UPDATE = "UPDATE [DATA] SET [Примечание] = @Примечание, [Время] = @Время, [Длительность] = @Длительность, [Пациент] = @Пациент WHERE Id = @Id";
+        public static string RECORD_DELETE = "DELETE FROM [DATA] WHERE Id = @Id";
 
         public static string PATIENTS_GET = "SELECT *, 'Delete' AS [Удалить], 'Update' AS [Изменить], 'Data' AS [Данные] FROM [Table]";
         public static string PATIENTS_GET_CHOOSE = "SELECT *, 'Choose' AS [Выбрать] FROM [Table]";
@@ -28,6 +29,7 @@ namespace pulse.core
         public static string PATIENT_GET = "SELECT * FROM [Table] WHERE Id = @Id";
         public static string PATIENT_INSERT = "INSERT INTO [TABLE] (Фамилия, Имя, Отчество, Дата_рождения, Рост, Вес, Пол) VALUES(@Фамилия, @Имя, @Отчество, @Дата_рождения, @Рост, @Вес, @Пол)";
         public static string PATIENT_UPDATE = "UPDATE [TABLE] SET [Фамилия] = @Фамилия, [Имя] = @Имя, [Отчество] = @Отчество, [Дата_рождения] = @Дата_рождения, [Рост] = @Рост, [Вес] = @Вес, [Пол] = @Пол WHERE Id = @r";
+        public static string PATIENT_DELETE = "DELETE FROM [TABLE] WHERE Id = @Id";
 
         /*  Main function   */
         public DBconnection(string connectionString = defaultConnection) {
@@ -102,6 +104,18 @@ namespace pulse.core
             catch (Exception e) { throw e; }
             finally { sqlConnection.Close(); }
         }
+        public void delete_record(Record record)
+        {
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand command = new SqlCommand(RECORD_DELETE, sqlConnection);
+                command.Parameters.AddWithValue("Id", record.id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e) { throw e; }
+            finally { sqlConnection.Close(); }
+        }
 
         /*  Patient Block    */
         public void fill_patient(Patient patient) {
@@ -110,8 +124,8 @@ namespace pulse.core
                 sqlConnection.Open();
                 SqlCommand command = new SqlCommand(PATIENT_GET, sqlConnection);
                 command.Parameters.AddWithValue("Id", patient.id);
-
                 var reader = command.ExecuteReader();
+
                 if (reader.HasRows) {
                     while (reader.Read()) {
                         patient.surname = reader.GetString(1);
@@ -162,6 +176,17 @@ namespace pulse.core
             catch (Exception e) { throw e; }
             finally { sqlConnection.Close(); }
         }
-        
+        public void delete_patient(Patient patient)
+        {
+            try
+            {
+                sqlConnection.Open();
+                SqlCommand command = new SqlCommand(PATIENT_UPDATE, sqlConnection);
+                command.Parameters.AddWithValue("Id", patient.id);
+                command.ExecuteNonQuery();
+            }
+            catch (Exception e) { throw e; }
+            finally { sqlConnection.Close(); }
+        }
     }
 }
