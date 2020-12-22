@@ -1,7 +1,12 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="pulse.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="DBPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">'|DataDirectory|\Database1.mdf'</Value>
+    </Setting>
+    <Setting Name="savesPath" Type="System.String" Scope="User">
+      <Value Profile="(Default)">saves/</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>
