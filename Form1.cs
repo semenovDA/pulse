@@ -185,14 +185,11 @@ namespace pulse
             if(patient == null) { MessageBox.Show("Выберите пациента"); }
             else if (patient.id != 0)
             {
-                Console.WriteLine(s);
                 if (timer3.Enabled != true)
                 {
                     DateTime time = DateTime.Now;
                     String stime = (time.ToString("hh:mm:ss.f"));
                     s = DateTime.Now.ToString("yyyyMMddhhmmss");
-
-                    wr = new StreamWriter("saves/" + s + ".txt");
 
                     if (textBox1.Text != "")
                     {
@@ -203,7 +200,10 @@ namespace pulse
                         timer3.Start();
 
                         record = new Record(sch, patient);
-                        
+                        string filename = "saves/" + record.id + ".txt";
+                        wr = new StreamWriter(filename);
+                        Console.WriteLine(String.Format("Writing to {0} ...", filename)); // DEBUG
+
                         button2.Text = "Идет запись";
                         textBox1.ReadOnly = true;
                         button2.ForeColor = System.Drawing.Color.Red;
@@ -233,14 +233,16 @@ namespace pulse
         {
             chart1.Series[0].Points.Clear();
             x = 0;
+
             if (timer3.Enabled == true)
             {
                 timer3.Stop();
                 wr.Close();
-                System.IO.File.Delete(@"saves/" + s + ".txt");
-                sch = Convert.ToInt32(textBox1.Text);
-                sch = sch * 60;
-                wr = new StreamWriter("saves/" + s + ".txt");
+
+                string filename = "saves/" + record.id + ".txt";
+                System.IO.File.Delete(filename);
+                sch = Convert.ToInt32(textBox1.Text) * 60;
+                wr = new StreamWriter(filename);
                 timer3.Start();
             }
         }
