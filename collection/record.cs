@@ -13,6 +13,11 @@ namespace pulse.collection
         private Patient _patient;
 
         /* Main constructors */
+        public Record(string id)
+        {
+            _id = id;
+        }
+
         public Record(float duration, Patient patient)
         {
             _id = Guid.NewGuid().ToString();
@@ -53,16 +58,9 @@ namespace pulse.collection
 
 
         /*  Database relations   */
-        public void create()
-        {
-            DBconnection _connection = new DBconnection();
-            _connection.insert_record(this);
-        }
-        public void update()
-        {
-            DBconnection _connection = new DBconnection();
-            _connection.update_record(this);
-        }
+        public void create() { new DBconnection().insert_record(this); }
+        public void update() { new DBconnection().update_record(this); }
+        public void delete() { new DBconnection().delete_record(this); }
 
     }
 }

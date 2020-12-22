@@ -53,18 +53,19 @@ namespace pulse.collection
 
         /*  Database relations   */
         public void create() {
-            DBconnection _connection = new DBconnection();
-            _connection.insert_patient(this);
+            new DBconnection().insert_patient(this);
         }
 
         public void update() {
-            DBconnection _connection = new DBconnection();
-            _connection.update_patient(this);
+            new DBconnection().update_patient(this);
         }
 
         public void get() {
-            DBconnection _connection = new DBconnection();
-            _connection.fill_patient(this);
+            new DBconnection().fill_patient(this);
+        }
+
+        public void delete() {
+            new DBconnection().delete_patient(this);
         }
     }
 }
