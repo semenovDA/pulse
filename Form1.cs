@@ -7,6 +7,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using pulse.collection;
+using pulse.forms;
 
 namespace pulse
 {
@@ -20,7 +21,6 @@ namespace pulse
 
         string msg;
         string ud;
-        string s;
 
         Patient patient;
         Record record;
@@ -106,9 +106,7 @@ namespace pulse
                     label3.Text = "Видимый диапазон по шкале Х:" + hScrollBar1.Value;
                     x++;
                 }
-
             }
-
         }
 
         private void chart1_Click(object sender, EventArgs e)
@@ -139,9 +137,7 @@ namespace pulse
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked == true)
-            { chart1.Series[0].IsValueShownAsLabel = true; }
-            else { chart1.Series[0].IsValueShownAsLabel = false; }
+            chart1.Series[0].IsValueShownAsLabel = checkBox1.Checked;
         }
 
         private void hScrollBar1_Scroll(object sender, ScrollEventArgs e)
@@ -160,11 +156,14 @@ namespace pulse
         {
             int start = x - hScrollBar1.Value;
             int end = x;
-            Console.WriteLine(start + " " + end);
+
             List<double> allNumbers = new List<double>();
 
-            foreach (Series item in chart1.Series)
-                allNumbers.AddRange(item.Points.Where((x, i) => i >= start && i <= end).Select(x => x.YValues[0]).ToList());
+            foreach (Series item in chart1.Series) {
+                allNumbers
+                    .AddRange(item.Points.Where((x, i) => i >= start && i <= end)
+                    .Select(x => x.YValues[0]).ToList());
+            }
             try
             {
                 double ymin = allNumbers.Min();
@@ -172,9 +171,9 @@ namespace pulse
                 chart1.ChartAreas[0].AxisY.ScaleView.Position = ymin;
                 chart1.ChartAreas[0].AxisY.ScaleView.Size = ymax - ymin;
             }
-            catch (Exception)
+            catch (Exception exp)
             {
-
+                Console.WriteLine(exp);
                 // throw;
             }
 
@@ -183,49 +182,43 @@ namespace pulse
         private void button2_Click(object sender, EventArgs e)
         {
             if(patient == null) { MessageBox.Show("Выберите пациента"); }
-            else if (patient.id != 0)
+            if (timer3.Enabled != true)
             {
-                if (timer3.Enabled != true)
+                if (textBox1.Text != "")
                 {
-                    DateTime time = DateTime.Now;
-                    String stime = (time.ToString("hh:mm:ss.f"));
-                    s = DateTime.Now.ToString("yyyyMMddhhmmss");
+                    sch = Convert.ToInt32(textBox1.Text) * 60;
 
-                    if (textBox1.Text != "")
-                    {
-                        sch = Convert.ToInt32(textBox1.Text) * 60;
+                    timer4.Start();
+                    timer1.Stop();
+                    timer3.Start();
 
-                        timer4.Start();
-                        timer1.Stop();
-                        timer3.Start();
+                    record = new Record(sch, patient);
 
-                        record = new Record(sch, patient);
-                        string filename = "saves/" + record.id + ".txt";
-                        wr = new StreamWriter(filename);
-                        Console.WriteLine(String.Format("Writing to {0} ...", filename)); // DEBUG
+                    string savesDir = Properties.Settings.Default.savesPath;
+                    string filename = savesDir + record.id + ".txt";
 
-                        button2.Text = "Идет запись";
-                        textBox1.ReadOnly = true;
-                        button2.ForeColor = System.Drawing.Color.Red;
+                    wr = new StreamWriter(filename);
+                    Console.WriteLine(String.Format("Writing to {0} ...", filename)); // DEBUG
 
-                    }
-                    else { MessageBox.Show("Введите время записи (в минутах)!"); }
+                    button2.Text = "Идет запись";
+                    textBox1.ReadOnly = true;
+                    button2.ForeColor = System.Drawing.Color.Red;
 
                 }
-                else
-                {
-                    timer3.Stop();
-                    wr.Close();
-                    button2.Text = "Записать";
-                    textBox1.ReadOnly = false;
-                    button2.ForeColor = System.Drawing.Color.Black;
-                    button1.PerformClick();
+                else { MessageBox.Show("Введите время записи (в минутах)!"); }
+            }
+            else
+            {
+                timer3.Stop();
+                wr.Close();
+                button2.Text = "Записать";
+                textBox1.ReadOnly = false;
+                button2.ForeColor = System.Drawing.Color.Black;
+                button1.PerformClick();
 
-                    Console.WriteLine(s);
-                    Form6 f6 = new Form6(record);
-                    if (timer4.Enabled == true) { timer4.Stop(); label5.Text = "Время записи (мин): "; }
-                    f6.ShowDialog();
-                }
+                Form6 f6 = new Form6(record);
+                if (timer4.Enabled == true) { timer4.Stop(); label5.Text = "Время записи (мин): "; }
+                f6.ShowDialog();
             }
         }
 
@@ -239,7 +232,8 @@ namespace pulse
                 timer3.Stop();
                 wr.Close();
 
-                string filename = "saves/" + record.id + ".txt";
+                string savesDir = Properties.Settings.Default.savesPath; 
+                string filename = savesDir + record.id + ".txt";
                 System.IO.File.Delete(filename);
                 sch = Convert.ToInt32(textBox1.Text) * 60;
                 wr = new StreamWriter(filename);
@@ -282,9 +276,6 @@ namespace pulse
                 button2.ForeColor = System.Drawing.Color.Black;
 
             }
-
-
-
         }
 
         private void базаДанныхToolStripMenuItem_Click(object sender, EventArgs e)
@@ -298,7 +289,6 @@ namespace pulse
             colorDialog1.AllowFullOpen = true;
             colorDialog1.ShowHelp = false;
             if (colorDialog1.ShowDialog() == DialogResult.OK)
-
                 chart1.ChartAreas["ChartArea1"].BackColor = colorDialog1.Color;
         }
 
@@ -306,8 +296,9 @@ namespace pulse
         {
             colorDialog1.AllowFullOpen = true;
             colorDialog1.ShowHelp = false;
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
+            if (colorDialog1.ShowDialog() == DialogResult.OK) {
                 chart1.ChartAreas["ChartArea1"].AxisX.MajorGrid.LineColor = colorDialog1.Color;
+            }
             chart1.ChartAreas["ChartArea1"].AxisY.MajorGrid.LineColor = colorDialog1.Color;
         }
 
@@ -315,17 +306,16 @@ namespace pulse
         {
             colorDialog1.AllowFullOpen = true;
             colorDialog1.ShowHelp = false;
-            if (colorDialog1.ShowDialog() == DialogResult.OK)
-
+            if (colorDialog1.ShowDialog() == DialogResult.OK) {
                 chart1.Series["Series1"].Color = colorDialog1.Color;
+            }
         }
 
         private void открытьФайлыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form2 f2 = new Form2();
-
-            var fileContent = string.Empty;
             var filePath = string.Empty;
+
             String rl;
             int tm = 0;
             int dol2 = 0;
@@ -392,34 +382,33 @@ namespace pulse
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            char number = e.KeyChar;
-            if (!Char.IsDigit(number) && number != 8) // цифры и клавиша BackSpace
-            {
-                e.Handled = true;
-            }
+            if (!Char.IsDigit(e.KeyChar) && e.KeyChar != 8) e.Handled = true; // цифры и клавиша BackSpace
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
             Form5 f5 = new Form5();
             f5.ShowDialog();
+
             if(f5.patient != null) {
                 patient = f5.patient;
                 label6.Text = "Пациент: " + patient.fullName();
             }
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-            Form4 f4 = new Form4();
-            f4.ShowDialog();
-        }  
+        private void button5_Click(object sender, EventArgs e) { new Form4().ShowDialog(); }  
 
         private void comboBox1_DropDown(object sender, EventArgs e)
         {
             comboBox1.Items.Clear();
             string[] portes = SerialPort.GetPortNames();
             comboBox1.Items.AddRange(portes);
+        }
+
+        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Settings settings = new Settings();
+            settings.ShowDialog();
         }
     }
 
