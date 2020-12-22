@@ -9,20 +9,13 @@ namespace pulse
 {
     public partial class Form2 : Form
     {
-        public Form2()
-        {
-            InitializeComponent();
-        }
-
-        private void chart1_Click(object sender, EventArgs e)
-        {
-
-        }
+        bool zoom = false;
+        public Form2() { InitializeComponent(); }
 
         private void button1_Click(object sender, EventArgs e)
         {
             chart1.ChartAreas[0].AxisX.ScaleView.Zoom(0, 200);
-           chart1.ChartAreas[0].CursorX.IsUserEnabled = true;
+            chart1.ChartAreas[0].CursorX.IsUserEnabled = true;
             chart1.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
             chart1.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
@@ -32,7 +25,7 @@ namespace pulse
             chart1.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
             chart1.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
         }
-        bool zoom = false;
+        
         private void chart1_AxisViewChanging(object sender, System.Windows.Forms.DataVisualization.Charting.ViewEventArgs e)
         {
             if ((e.Axis.AxisName == AxisName.X) && (zoom == true))
@@ -47,7 +40,9 @@ namespace pulse
 
                 foreach (Series item in chart1.Series)
                 {
-                    allNumbers.AddRange(item.Points.Where((x, i) => i >= start && i <= end).Select(x => x.YValues[0]).ToList());
+                    allNumbers
+                        .AddRange(item.Points.Where((x, i) => i >= start && i <= end)
+                        .Select(x => x.YValues[0]).ToList());
                 }
                 double ymin = allNumbers.Min();
                 double ymax = allNumbers.Max();
@@ -59,29 +54,11 @@ namespace pulse
 
         private void checkBox1_CheckedChanged(object sender, EventArgs e)
         {
-            if (checkBox1.Checked == true)
-            {
-                chart1.Series[0].IsValueShownAsLabel = true;
-                chart2.Series[0].IsValueShownAsLabel = true;
-            }
-            else
-            {
-                chart1.Series[0].IsValueShownAsLabel = false;
-                chart2.Series[0].IsValueShownAsLabel = false;
-            }
+            chart1.Series[0].IsValueShownAsLabel = checkBox1.Checked;
+            chart2.Series[0].IsValueShownAsLabel = checkBox1.Checked;
         }
 
-        private void checkBox2_CheckedChanged(object sender, EventArgs e)
-        {
-            if (checkBox2.Checked == true)
-            { zoom = true; }
-            else
-            {
-                zoom = false;
-            }
-
-
-        }
+        private void checkBox2_CheckedChanged(object sender, EventArgs e) { zoom = checkBox2.Checked; }
 
         private void Form2_Load(object sender, EventArgs e)
         {

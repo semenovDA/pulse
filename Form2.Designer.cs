@@ -153,7 +153,6 @@
             this.chart1.TabIndex = 1;
             this.chart1.Text = "chart1";
             this.chart1.AxisViewChanging += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ViewEventArgs>(this.chart1_AxisViewChanging);
-            this.chart1.Click += new System.EventHandler(this.chart1_Click);
             // 
             // button1
             // 
