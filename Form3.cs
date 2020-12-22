@@ -86,17 +86,13 @@ namespace pulse
 
                         case 9:
                             {
-                                String task = dataGridView1.Rows[e.RowIndex].Cells[0].Value.ToString();
-                                Form4 f4 = new Form4();
-                                f4.textBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[1].Value.ToString();
-                                f4.textBox2.Text = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
-                                f4.textBox3.Text = dataGridView1.Rows[e.RowIndex].Cells[3].Value.ToString();
-                                f4.maskedTextBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[5].Value.ToString();
-                                f4.textBox5.Text = dataGridView1.Rows[e.RowIndex].Cells[6].Value.ToString();
-                                f4.textBox6.Text = dataGridView1.Rows[e.RowIndex].Cells[7].Value.ToString();
-                                f4.comboBox1.Text = dataGridView1.Rows[e.RowIndex].Cells[4].Value.ToString();
-                                f4.label5.Text = task;
+                                int id = Convert.ToInt32(dataGridView1.Rows[e.RowIndex].Cells[0].Value);
+                                Patient patient = new Patient(id);
+                                patient.get();
+
+                                Form4 f4 = new Form4(patient);
                                 f4.ShowDialog();
+
                                 ReloadData();
                             }
                             break;
@@ -158,7 +154,10 @@ namespace pulse
                                 int dol2 = 0;
                                 int x2 = 0;
 
-                                using (StreamReader f = new StreamReader("saves/" + task + ".txt"))
+                                string savesDir = Properties.Settings.Default.savesPath;
+                                string filename = savesDir + task + ".txt";
+
+                                using (StreamReader f = new StreamReader(filename))
                                 {
                                     while (!f.EndOfStream)
                                     {
