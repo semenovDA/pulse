@@ -50,7 +50,7 @@ namespace pulse.forms
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.79791F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.20209F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 36F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 39F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 40F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.dbPath, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.dbBtn, 2, 1);
@@ -79,23 +79,23 @@ namespace pulse.forms
             this.label1.Location = new System.Drawing.Point(3, 36);
             this.label1.Margin = new System.Windows.Forms.Padding(3);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 18);
+            this.label1.Size = new System.Drawing.Size(90, 18);
             this.label1.TabIndex = 0;
             this.label1.Text = "Путь к БД:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // dbPath
             // 
-            this.dbPath.Location = new System.Drawing.Point(100, 36);
+            this.dbPath.Location = new System.Drawing.Point(99, 36);
             this.dbPath.Name = "dbPath";
-            this.dbPath.Size = new System.Drawing.Size(184, 20);
+            this.dbPath.Size = new System.Drawing.Size(183, 20);
             this.dbPath.TabIndex = 1;
             // 
             // dbBtn
             // 
             this.dbBtn.AutoSize = true;
             this.dbBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dbBtn.Location = new System.Drawing.Point(287, 33);
+            this.dbBtn.Location = new System.Drawing.Point(285, 33);
             this.dbBtn.Margin = new System.Windows.Forms.Padding(0);
             this.dbBtn.Name = "dbBtn";
             this.dbBtn.Size = new System.Drawing.Size(36, 24);
@@ -113,11 +113,11 @@ namespace pulse.forms
             this.tableLayoutPanel2.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 83F));
             this.tableLayoutPanel2.Controls.Add(this.saveBtn, 0, 0);
             this.tableLayoutPanel2.Controls.Add(this.resetBtn, 2, 0);
-            this.tableLayoutPanel2.Location = new System.Drawing.Point(100, 383);
+            this.tableLayoutPanel2.Location = new System.Drawing.Point(99, 383);
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(184, 28);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(183, 28);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // saveBtn
@@ -125,7 +125,7 @@ namespace pulse.forms
             this.saveBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.saveBtn.Location = new System.Drawing.Point(3, 3);
             this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(79, 22);
+            this.saveBtn.Size = new System.Drawing.Size(78, 22);
             this.saveBtn.TabIndex = 0;
             this.saveBtn.Text = "Сохранить";
             this.saveBtn.UseVisualStyleBackColor = true;
@@ -134,7 +134,7 @@ namespace pulse.forms
             // resetBtn
             // 
             this.resetBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.resetBtn.Location = new System.Drawing.Point(104, 3);
+            this.resetBtn.Location = new System.Drawing.Point(103, 3);
             this.resetBtn.Name = "resetBtn";
             this.resetBtn.Size = new System.Drawing.Size(77, 22);
             this.resetBtn.TabIndex = 1;
@@ -149,7 +149,7 @@ namespace pulse.forms
             this.label2.Location = new System.Drawing.Point(3, 85);
             this.label2.Margin = new System.Windows.Forms.Padding(3);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(91, 20);
+            this.label2.Size = new System.Drawing.Size(90, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Путь к записям:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
@@ -157,15 +157,15 @@ namespace pulse.forms
             // savesPath
             // 
             this.savesPath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.savesPath.Location = new System.Drawing.Point(100, 85);
+            this.savesPath.Location = new System.Drawing.Point(99, 85);
             this.savesPath.Name = "savesPath";
-            this.savesPath.Size = new System.Drawing.Size(184, 20);
+            this.savesPath.Size = new System.Drawing.Size(183, 20);
             this.savesPath.TabIndex = 5;
             // 
             // savesBtn
             // 
             this.savesBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.savesBtn.Location = new System.Drawing.Point(287, 82);
+            this.savesBtn.Location = new System.Drawing.Point(285, 82);
             this.savesBtn.Margin = new System.Windows.Forms.Padding(0);
             this.savesBtn.Name = "savesBtn";
             this.savesBtn.Size = new System.Drawing.Size(36, 26);

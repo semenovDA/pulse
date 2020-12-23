@@ -1,22 +1,30 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Windows.Forms;
 using pulse.core;
 
 namespace pulse.forms
 {
+    // Main class
     public partial class Settings : Form
     {
         public static int UNCHANGED = 0;
         public static int CHANGED_SAVED = 1;
         public static int CHANGED_NOT_SAVED = 2;
+        
 
         private int _state = UNCHANGED;
+        List<Parameter> parameters = new List<Parameter>();
 
         public Settings()
         {
             InitializeComponent();
             dbPath.Text = Properties.Settings.Default.DBPath;
             savesPath.Text = Properties.Settings.Default.savesPath;
+
+            // Initialize parametr for each TextBox
+            parameters.Add(new Parameter("dbPath", dbPath, dbPath.Text));
+            parameters.Add(new Parameter("savesPath", savesPath, savesPath.Text));
         }
 
         /*  Additional functions */
@@ -45,7 +53,7 @@ namespace pulse.forms
             }
         }
 
-        /*  Events functions    */
+        /*  Event functions    */
         private void dbBtn_Click(object sender, EventArgs e)
         {
             string filePath = GetFilePath();
@@ -60,10 +68,9 @@ namespace pulse.forms
             finally {
                 dbPath.Text = filePath;
                 Properties.Settings.Default.DBPath = filePath;
-                MessageBox.Show("База данных успешно подключена");
+
                 _state = CHANGED_NOT_SAVED;
             }
-
         }
 
         private void saveBtn_Click(object sender, EventArgs e)
@@ -71,26 +78,35 @@ namespace pulse.forms
             _state = CHANGED_SAVED;
             Properties.Settings.Default.Save();
             MessageBox.Show("Настройки успешно сохранены");
+
+            foreach (Parameter parameter in parameters) { parameter.update(); }
         }
 
         private void resetBtn_Click(object sender, EventArgs e)
         {
             _state = CHANGED_NOT_SAVED;
             Properties.Settings.Default.Reset();
+            
             dbPath.Text = Properties.Settings.Default.DBPath;
+            savesPath.Text = Properties.Settings.Default.savesPath;
+
+            foreach(Parameter parameter in parameters) { parameter.update(); }
         }
 
         private void Settings_FormClosing(object sender, FormClosingEventArgs e)
         {
             if(_state == CHANGED_NOT_SAVED)
             {
-                var answer = MessageBox.Show("Вы хотите сохранить изменения ?", "Предупреждение",
-                         MessageBoxButtons.YesNo);
+                var answer = MessageBox.Show("Вы хотите сохранить изменения ?",
+                    "Предупреждение", MessageBoxButtons.YesNoCancel);
 
-                if (answer == DialogResult.Yes)
-                    Properties.Settings.Default.Save();
+                if (answer == DialogResult.Yes) Properties.Settings.Default.Save();
+                if (answer == DialogResult.Cancel) e.Cancel = true;
                 if (answer == DialogResult.No)
-                    e.Cancel = true;
+                {
+                    foreach(Parameter parameter in parameters) { parameter.revert(); }
+                    Properties.Settings.Default.Save();
+                }
             }
         }
 
@@ -102,4 +118,25 @@ namespace pulse.forms
             Properties.Settings.Default.savesPath = dirPath;
         }
     }
+    // Additional class
+    public class Parameter
+    {
+        public string Name { get; set; }
+        public string Param { get; set; }
+        public TextBox TextBox { get; set; }
+        public Parameter(string name, TextBox textBox, String param)
+        {
+            Name = name;
+            Param = param;
+            TextBox = textBox;
+        }
+
+        public void update() { Param = TextBox.Text;  }
+
+        public void revert()
+        {
+            if (Param != TextBox.Text) Properties.Settings.Default[Name] = Param;
+        }
+    }
+
 }
