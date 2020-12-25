@@ -8,13 +8,13 @@ namespace pulse.core
     public class DBconnection
     {
         /*  Variable defenition */
-        #if DEBUG
-        public const string defaultConnection = @"Data Source=(LocalDB)\MSSQLLocalDB;" +
-            @"AttachDbFilename='C:\Users\Admin\Desktop\Pulse_2.0\Исходники\pulse_2.0\Database1.mdf';Integrated Security=True";
-        #else
-        public const string defaultConnection = @"Data Source=(LocalDB)\MSSQLLocalDB;" + 
-            @"AttachDbFilename='|DataDirectory|\Database1.mdf';Integrated Security=True";
-        #endif
+        public const string connString = @"Data Source=(localdb)\mssqllocaldb;AttachDbFilename={0};Integrated Security=True";
+
+#if DEBUG
+        public string defaultDBPath = @"C:\Users\Admin\Desktop\Pulse_2.0\Исходники\pulse_2.0\main.mdf";
+#else
+        public string defaultDBPath = Properties.Settings.Default.DBPath;
+#endif
 
         public SqlConnection sqlConnection = null;
 
@@ -32,9 +32,16 @@ namespace pulse.core
         public static string PATIENT_DELETE = "DELETE FROM [TABLE] WHERE Id = @Id";
 
         /*  Main function   */
-        public DBconnection(string connectionString = defaultConnection) {
-            try { sqlConnection = new SqlConnection(connectionString); }
-            catch(Exception e) { throw e; }
+        public DBconnection(string connectionString = connString) {
+            if(connectionString == connString) {
+                connectionString = String.Format(connectionString, defaultDBPath);
+            }
+            try {
+                sqlConnection = new SqlConnection(connectionString);
+                sqlConnection.Open();
+            }
+            catch (Exception e) { throw e; }
+            finally { sqlConnection.Close(); }
         }
 
         /* Public classes*/
