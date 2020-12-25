@@ -25,7 +25,7 @@ namespace pulse.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\'|DataDirectory|\\Database1.mdf\'")]
+        [global::System.Configuration.DefaultSettingValueAttribute("\'|DataDirectory|\\main.mdf\'")]
         public string DBPath {
             get {
                 return ((string)(this["DBPath"]));
