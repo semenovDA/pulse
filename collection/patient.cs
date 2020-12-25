@@ -31,6 +31,19 @@ namespace pulse.collection
             _weight = weight;
         }
 
+        public Patient(string surname, string name, 
+            string middleName, bool gender, DateTime birthdayDate,
+            int height, int weight)
+        {
+            _surname = surname;
+            _name = name;
+            _middleName = middleName;
+            _gender = gender;
+            _birthdayDate = birthdayDate;
+            _height = height;
+            _weight = weight;
+        }
+
 
         /*  Getters & Setters   */
         public int id { get => _id; set => _id = value; }
