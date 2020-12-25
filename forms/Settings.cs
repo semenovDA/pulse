@@ -130,9 +130,7 @@ namespace pulse.forms
             Param = param;
             TextBox = textBox;
         }
-
         public void update() { Param = TextBox.Text;  }
-
         public void revert()
         {
             if (Param != TextBox.Text) Properties.Settings.Default[Name] = Param;
