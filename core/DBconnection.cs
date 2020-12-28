@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Data;
-using System.Data.SqlClient;
+using System.Data.SQLite;
 using pulse.collection;
 
 namespace pulse.core
@@ -8,15 +8,15 @@ namespace pulse.core
     public class DBconnection
     {
         /*  Variable defenition */
-        public const string connString = @"Data Source=(localdb)\mssqllocaldb;AttachDbFilename={0};Integrated Security=True";
+        public const string connString = @"DataSource={0}";
 
 #if DEBUG
-        public string defaultDBPath = @"C:\Users\Admin\Desktop\Pulse_2.0\Исходники\pulse_2.0\main.mdf";
+        public string defaultDBPath = @"C:\Users\Admin\Desktop\Pulse_2.0\Исходники\pulse_2.0\main.db";
 #else
         public string defaultDBPath = Properties.Settings.Default.DBPath;
 #endif
 
-        public SqlConnection sqlConnection = null;
+        public SQLiteConnection sqlConnection = null;
 
         public static string RECORD_GET = "SELECT *  FROM [Data] WHERE Пациент = @Id";
         public static string RECORD_ADDTITION = "INSERT INTO [DATA] (Id, Время, Длительность, Пациент, Примечание) VALUES(@Id, @Время, @Длительность, @Пациент, @Примечание)";
@@ -37,7 +37,7 @@ namespace pulse.core
                 connectionString = String.Format(connectionString, defaultDBPath);
             }
             try {
-                sqlConnection = new SqlConnection(connectionString);
+                sqlConnection = new SQLiteConnection(connectionString);
                 sqlConnection.Open();
             }
             catch (Exception e) { throw e; }
@@ -50,8 +50,8 @@ namespace pulse.core
             {
                 sqlConnection.Open();
                 string query = edit ? PATIENTS_GET : PATIENTS_GET_CHOOSE;
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(query, sqlConnection);
-                SqlCommandBuilder sqlBuilder = new SqlCommandBuilder(sqlDataAdapter);
+                SQLiteDataAdapter sqlDataAdapter = new SQLiteDataAdapter(query, sqlConnection);
+                SQLiteCommandBuilder sqlBuilder = new SQLiteCommandBuilder(sqlDataAdapter);
                 DataSet dataSet = new DataSet();
                 sqlDataAdapter.Fill(dataSet, "Table");
                 return dataSet;
@@ -65,11 +65,11 @@ namespace pulse.core
         {
             try
             {
-                SqlCommand comm = new SqlCommand(RECORD_GET, sqlConnection);
+                SQLiteCommand comm = new SQLiteCommand(RECORD_GET, sqlConnection);
                 comm.Parameters.AddWithValue("Id", patient.id);
 
-                SqlDataAdapter sqlDataAdapter = new SqlDataAdapter(comm);
-                SqlCommandBuilder sqlBuilder = new SqlCommandBuilder(sqlDataAdapter);
+                SQLiteDataAdapter sqlDataAdapter = new SQLiteDataAdapter(comm);
+                SQLiteCommandBuilder sqlBuilder = new SQLiteCommandBuilder(sqlDataAdapter);
                 DataSet dataSet = new DataSet();
 
                 sqlDataAdapter.Fill(dataSet, "Data");
@@ -84,7 +84,7 @@ namespace pulse.core
             try
             {
                 sqlConnection.Open();
-                SqlCommand command = new SqlCommand(RECORD_ADDTITION, sqlConnection);
+                SQLiteCommand command = new SQLiteCommand(RECORD_ADDTITION, sqlConnection);
                 command.Parameters.AddWithValue("Id", record.id);
                 command.Parameters.AddWithValue("Время", record.time);
                 command.Parameters.AddWithValue("Длительность", record.duration);
@@ -100,7 +100,7 @@ namespace pulse.core
             try
             {
                 sqlConnection.Open();
-                SqlCommand command = new SqlCommand(RECORD_UPDATE, sqlConnection);
+                SQLiteCommand command = new SQLiteCommand(RECORD_UPDATE, sqlConnection);
                 command.Parameters.AddWithValue("Id", record.id);
                 command.Parameters.AddWithValue("Время", record.time);
                 command.Parameters.AddWithValue("Длительность", record.duration);
@@ -116,7 +116,7 @@ namespace pulse.core
             try
             {
                 sqlConnection.Open();
-                SqlCommand command = new SqlCommand(RECORD_DELETE, sqlConnection);
+                SQLiteCommand command = new SQLiteCommand(RECORD_DELETE, sqlConnection);
                 command.Parameters.AddWithValue("Id", record.id);
                 command.ExecuteNonQuery();
             }
@@ -129,7 +129,7 @@ namespace pulse.core
             try
             {
                 sqlConnection.Open();
-                SqlCommand command = new SqlCommand(PATIENT_GET, sqlConnection);
+                SQLiteCommand command = new SQLiteCommand(PATIENT_GET, sqlConnection);
                 command.Parameters.AddWithValue("Id", patient.id);
                 var reader = command.ExecuteReader();
 
@@ -152,7 +152,7 @@ namespace pulse.core
             try
             {
                 sqlConnection.Open();
-                SqlCommand command = new SqlCommand(PATIENT_INSERT, sqlConnection);
+                SQLiteCommand command = new SQLiteCommand(PATIENT_INSERT, sqlConnection);
                 command.Parameters.AddWithValue("Фамилия", patient.surname);
                 command.Parameters.AddWithValue("Имя", patient.name);
                 command.Parameters.AddWithValue("Отчество", patient.middleName);
@@ -169,7 +169,7 @@ namespace pulse.core
             try
             {
                 sqlConnection.Open();
-                SqlCommand command = new SqlCommand(PATIENT_UPDATE, sqlConnection);
+                SQLiteCommand command = new SQLiteCommand(PATIENT_UPDATE, sqlConnection);
                 command.Parameters.AddWithValue("r", patient.id);
                 command.Parameters.AddWithValue("Фамилия", patient.surname);
                 command.Parameters.AddWithValue("Имя", patient.name);
@@ -188,7 +188,7 @@ namespace pulse.core
             try
             {
                 sqlConnection.Open();
-                SqlCommand command = new SqlCommand(PATIENT_UPDATE, sqlConnection);
+                SQLiteCommand command = new SQLiteCommand(PATIENT_UPDATE, sqlConnection);
                 command.Parameters.AddWithValue("Id", patient.id);
                 command.ExecuteNonQuery();
             }
