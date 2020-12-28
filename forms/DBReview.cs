@@ -8,9 +8,9 @@ using pulse.collection;
 
 namespace pulse
 {
-    public partial class Form3 : Form
+    public partial class DBReview : Form
     {
-        public Form3() { InitializeComponent(); }
+        public DBReview() { InitializeComponent(); }
 
         public static int PATIENT_DIALOG = 0;
         public static int RECORDS_DIALOG = 1;
@@ -90,7 +90,7 @@ namespace pulse
                                 Patient patient = new Patient(id);
                                 patient.get();
 
-                                Form4 f4 = new Form4(patient);
+                                PatientCreate f4 = new PatientCreate(patient);
                                 f4.ShowDialog();
 
                                 ReloadData();

@@ -4,12 +4,12 @@ using System.Windows.Forms;
 
 namespace pulse
 {
-    public partial class Form6 : Form
+    public partial class Annatation : Form
     {
         private Record _record;
         public Record record { get => _record; set => _record = value; }
 
-        public Form6(Record record)
+        public Annatation(Record record)
         {
             _record = record;
             InitializeComponent();

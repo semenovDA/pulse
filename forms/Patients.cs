@@ -6,9 +6,9 @@ using pulse.collection;
 
 namespace pulse
 {
-    public partial class Form5 : Form
+    public partial class Patients : Form
     {
-        public Form5() { InitializeComponent(); }
+        public Patients() { InitializeComponent(); }
         private DBconnection _connection = new DBconnection();
         public Patient _patient;
 

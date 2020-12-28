@@ -7,12 +7,12 @@ using System.Windows.Forms;
 
 namespace pulse
 {
-    public partial class Form4 : Form
+    public partial class PatientCreate : Form
     {
         private Patient _patient;
         public Patient patient { get => _patient; set => _patient = value; }
 
-        public Form4(Patient patient = null)
+        public PatientCreate(Patient patient = null)
         {
             InitializeComponent();
             _patient = patient;
