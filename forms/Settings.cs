@@ -32,7 +32,7 @@ namespace pulse.forms
         {
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
-                openFileDialog.Filter = "Базы Данных Microsoft SQL Server (*.mdf)|*.mdf|All files (*.*)|*.*";
+                openFileDialog.Filter = "Базы Данных SQLite (*.db)|*.db|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 1;
                 openFileDialog.RestoreDirectory = true;
 
