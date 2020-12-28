@@ -13,7 +13,6 @@ namespace pulse
 {
     public partial class LineAnnotation1 : Form
     {
-
         /* Variable definition  */
         int dol;
         int sch;
@@ -40,10 +39,8 @@ namespace pulse
             chart1.ChartAreas[0].CursorY.IsUserEnabled = true;
             chart1.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
             chart1.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
-            LineAnnotation annotaton1 = new LineAnnotation();
 
             chart1.Series[0].Points.AddXY(0, 0);
-
 
             chart1.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
             string[] ports = SerialPort.GetPortNames();
@@ -198,8 +195,9 @@ namespace pulse
                     string filename = savesDir + record.id + ".txt";
 
                     wr = new StreamWriter(filename);
-                    Console.WriteLine(String.Format("Writing to {0} ...", filename)); // DEBUG
-
+#if DEBUG
+                    Console.WriteLine(String.Format("Writing to {0} ...", filename));
+#endif
                     button2.Text = "Идет запись";
                     textBox1.ReadOnly = true;
                     button2.ForeColor = System.Drawing.Color.Red;
@@ -216,7 +214,7 @@ namespace pulse
                 button2.ForeColor = System.Drawing.Color.Black;
                 button1.PerformClick();
 
-                Form6 f6 = new Form6(record);
+                Annatation f6 = new Annatation(record);
                 if (timer4.Enabled == true) { timer4.Stop(); label5.Text = "Время записи (мин): "; }
                 f6.ShowDialog();
             }
@@ -280,7 +278,7 @@ namespace pulse
 
         private void базаДанныхToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form3 f3 = new Form3();
+            DBReview f3 = new DBReview();
             f3.ShowDialog();
         }
 
@@ -314,11 +312,8 @@ namespace pulse
         private void открытьФайлыToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form2 f2 = new Form2();
-            var filePath = string.Empty;
-
-            String rl;
+            string rl;
             int tm = 0;
-            int dol2 = 0;
             int x2 = 0;
 
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
@@ -330,7 +325,7 @@ namespace pulse
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     //Get the path of specified file
-                    filePath = openFileDialog.FileName;
+                    string filePath = openFileDialog.FileName;
 
                     //Read the contents of the file into a stream
                     var fileStream = openFileDialog.OpenFile();
@@ -340,7 +335,7 @@ namespace pulse
                         while (!f.EndOfStream)
                         {
                             rl = f.ReadLine();
-                            dol2 = rl.IndexOf('$');
+                            int dol2 = rl.IndexOf('$');
                             if (dol2 != -1)
                             {
                                 rl = rl.Trim('$');
@@ -387,7 +382,7 @@ namespace pulse
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Form5 f5 = new Form5();
+            Patients f5 = new Patients();
             f5.ShowDialog();
 
             if(f5.patient != null) {
@@ -396,7 +391,7 @@ namespace pulse
             }
         }
 
-        private void button5_Click(object sender, EventArgs e) { new Form4().ShowDialog(); }  
+        private void button5_Click(object sender, EventArgs e) { new PatientCreate().ShowDialog(); }  
 
         private void comboBox1_DropDown(object sender, EventArgs e)
         {

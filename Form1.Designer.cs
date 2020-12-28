@@ -50,11 +50,12 @@
             this.timer3 = new System.Windows.Forms.Timer(this.components);
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.базаДанныхToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.открытьФайлыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.цветаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.цветФонаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.цветСеткиToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.цветГрафикаToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.открытьФайлыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -65,7 +66,6 @@
             this.label6 = new System.Windows.Forms.Label();
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
-            this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -309,6 +309,13 @@
             this.базаДанныхToolStripMenuItem.Text = "Картотека";
             this.базаДанныхToolStripMenuItem.Click += new System.EventHandler(this.базаДанныхToolStripMenuItem_Click);
             // 
+            // открытьФайлыToolStripMenuItem
+            // 
+            this.открытьФайлыToolStripMenuItem.Name = "открытьФайлыToolStripMenuItem";
+            this.открытьФайлыToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
+            this.открытьФайлыToolStripMenuItem.Text = "Открыть файлы";
+            this.открытьФайлыToolStripMenuItem.Click += new System.EventHandler(this.открытьФайлыToolStripMenuItem_Click);
+            // 
             // цветаToolStripMenuItem
             // 
             this.цветаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -322,30 +329,30 @@
             // цветФонаToolStripMenuItem
             // 
             this.цветФонаToolStripMenuItem.Name = "цветФонаToolStripMenuItem";
-            this.цветФонаToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.цветФонаToolStripMenuItem.Size = new System.Drawing.Size(149, 22);
             this.цветФонаToolStripMenuItem.Text = "Цвет фона";
             this.цветФонаToolStripMenuItem.Click += new System.EventHandler(this.цветФонаToolStripMenuItem_Click);
             // 
             // цветСеткиToolStripMenuItem1
             // 
             this.цветСеткиToolStripMenuItem1.Name = "цветСеткиToolStripMenuItem1";
-            this.цветСеткиToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.цветСеткиToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.цветСеткиToolStripMenuItem1.Text = "Цвет сетки";
             this.цветСеткиToolStripMenuItem1.Click += new System.EventHandler(this.цветСеткиToolStripMenuItem1_Click);
             // 
             // цветГрафикаToolStripMenuItem1
             // 
             this.цветГрафикаToolStripMenuItem1.Name = "цветГрафикаToolStripMenuItem1";
-            this.цветГрафикаToolStripMenuItem1.Size = new System.Drawing.Size(180, 22);
+            this.цветГрафикаToolStripMenuItem1.Size = new System.Drawing.Size(149, 22);
             this.цветГрафикаToolStripMenuItem1.Text = "Цвет графика";
             this.цветГрафикаToolStripMenuItem1.Click += new System.EventHandler(this.цветГрафикаToolStripMenuItem1_Click);
             // 
-            // открытьФайлыToolStripMenuItem
+            // настройкиToolStripMenuItem
             // 
-            this.открытьФайлыToolStripMenuItem.Name = "открытьФайлыToolStripMenuItem";
-            this.открытьФайлыToolStripMenuItem.Size = new System.Drawing.Size(107, 20);
-            this.открытьФайлыToolStripMenuItem.Text = "Открыть файлы";
-            this.открытьФайлыToolStripMenuItem.Click += new System.EventHandler(this.открытьФайлыToolStripMenuItem_Click);
+            this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
+            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
+            this.настройкиToolStripMenuItem.Text = "Настройки";
+            this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.настройкиToolStripMenuItem_Click);
             // 
             // colorDialog1
             // 
@@ -435,13 +442,6 @@
             this.button5.UseVisualStyleBackColor = true;
             this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
-            // настройкиToolStripMenuItem
-            // 
-            this.настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
-            this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
-            this.настройкиToolStripMenuItem.Text = "Настройки";
-            this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.настройкиToolStripMenuItem_Click);
-            // 
             // LineAnnotation1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -468,7 +468,7 @@
             this.Controls.Add(this.menuStrip1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "LineAnnotation1";
-            this.Text = "Pulse_2.0";
+            this.Text = "Pulse";
             ((System.ComponentModel.ISupportInitialize)(this.chart1)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
