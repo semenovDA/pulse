@@ -18,7 +18,8 @@ namespace pulse.core
 
         public SQLiteConnection sqlConnection = null;
 
-        public static string RECORD_GET = "SELECT *  FROM [Data] WHERE Пациент = @Id";
+        public static string RECORD_GET = "SELECT * FROM [Data] WHERE Id = @Id";
+        public static string RECORD_GET_BY_PATIENT = "SELECT * FROM [Data] WHERE Пациент = @Id";
         public static string RECORD_ADDTITION = "INSERT INTO [DATA] (Id, Время, Длительность, Пациент, Примечание) VALUES(@Id, @Время, @Длительность, @Пациент, @Примечание)";
         public static string RECORD_UPDATE = "UPDATE [DATA] SET [Примечание] = @Примечание, [Время] = @Время, [Длительность] = @Длительность, [Пациент] = @Пациент WHERE Id = @Id";
         public static string RECORD_DELETE = "DELETE FROM [DATA] WHERE Id = @Id";
@@ -65,7 +66,7 @@ namespace pulse.core
         {
             try
             {
-                SQLiteCommand comm = new SQLiteCommand(RECORD_GET, sqlConnection);
+                SQLiteCommand comm = new SQLiteCommand(RECORD_GET_BY_PATIENT, sqlConnection);
                 comm.Parameters.AddWithValue("Id", patient.id);
 
                 SQLiteDataAdapter sqlDataAdapter = new SQLiteDataAdapter(comm);
@@ -78,6 +79,31 @@ namespace pulse.core
             catch (Exception e) { throw e; }
             finally { sqlConnection.Close(); }
 
+        }
+        public void fill_record(Record record)
+        {
+            try
+            {
+                sqlConnection.Open();
+                SQLiteCommand command = new SQLiteCommand(RECORD_GET, sqlConnection);
+                command.Parameters.AddWithValue("Id", record.id);
+                var reader = command.ExecuteReader();
+
+                if (reader.HasRows)
+                {
+                    while (reader.Read())
+                    {
+                        record.time = reader.GetDateTime(1);
+                        record.duration = reader.GetFloat(2);
+                        record.comments = reader.GetString(3);
+                        Patient _patient = new Patient(reader.GetInt32(4));
+                        _patient.get();
+                        record.patient = _patient;
+                    }
+                }
+            }
+            catch (Exception e) { throw e; }
+            finally { sqlConnection.Close(); }
         }
         public void insert_record(Record record)
         {

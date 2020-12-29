@@ -60,6 +60,7 @@ namespace pulse.collection
         public void create() { new DBconnection().insert_record(this); }
         public void update() { new DBconnection().update_record(this); }
         public void delete() { new DBconnection().delete_record(this); }
+        public void get() { new DBconnection().fill_record(this); }
 
         /*  Utils functions */
         public string getFileName()
