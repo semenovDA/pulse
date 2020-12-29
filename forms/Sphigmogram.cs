@@ -35,7 +35,6 @@ namespace pulse
                     if (dol2 != -1)
                     {
                         rl = rl.Trim('$');
-                        Console.WriteLine(rl);
                         rl.Trim('$');
                         chart2.Series[0].Points.AddXY(x2, rl);
                         dol2 = 0;
@@ -83,7 +82,6 @@ namespace pulse
                 int end = (int)e.Axis.ScaleView.ViewMaximum;
 
 
-                Console.WriteLine(start + " " + end);
                 List<double> allNumbers = new List<double>();
 
                 foreach (Series item in chart1.Series)
@@ -126,7 +124,8 @@ namespace pulse
         private void вСРToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PythonUtils pyhton = new PythonUtils(_record);
-            pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
+            var answer = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
+            Console.WriteLine(answer);
         }
     }
 }

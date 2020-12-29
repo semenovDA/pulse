@@ -143,48 +143,8 @@ namespace pulse
                         case 0:
                             {
                                 String task = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
-
-                                Form2 f2 = new Form2();
-
-                                var fileContent = string.Empty;
-                                var filePath = string.Empty;
-
-                                String rl;
-                                int tm = 0;
-                                int dol2 = 0;
-                                int x2 = 0;
-
-                                string savesDir = Properties.Settings.Default.savesPath;
-                                string filename = savesDir + task + ".txt";
-
-                                using (StreamReader f = new StreamReader(filename))
-                                {
-                                    while (!f.EndOfStream)
-                                    {
-                                        rl = f.ReadLine();
-                                        dol2 = rl.IndexOf('$');
-                                        if (dol2 != -1)
-                                        {
-                                            rl = rl.Trim('$');
-                                            Console.WriteLine(rl);
-                                            rl.Trim('$');
-                                            f2.chart2.Series[0].Points.AddXY(x2, rl);
-                                            dol2 = 0;
-                                            x2++;
-                                        }
-                                        else
-                                        {
-                                            if (rl != "")
-                                            {
-                                                f2.chart1.Series[0].Points.AddXY(tm, rl);
-                                                tm++;
-                                            }
-                                        }
-                                    }
-                                    f.Close();
-                                    x2 = 0;
-                                    f2.ShowDialog();
-                                }
+                                Form2 f2 = new Form2(new Record(task));
+                                f2.ShowDialog();
                                 break;
                             }
                         case 1:
