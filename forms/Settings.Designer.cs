@@ -50,7 +50,7 @@ namespace pulse.forms
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.79791F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 66.20209F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 32F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 48F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 49F));
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 1);
             this.tableLayoutPanel1.Controls.Add(this.dbPath, 1, 1);
             this.tableLayoutPanel1.Controls.Add(this.dbBtn, 2, 1);
@@ -89,14 +89,14 @@ namespace pulse.forms
             this.dbPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dbPath.Location = new System.Drawing.Point(98, 36);
             this.dbPath.Name = "dbPath";
-            this.dbPath.Size = new System.Drawing.Size(181, 20);
+            this.dbPath.Size = new System.Drawing.Size(180, 20);
             this.dbPath.TabIndex = 1;
             // 
             // dbBtn
             // 
             this.dbBtn.AutoSize = true;
             this.dbBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dbBtn.Location = new System.Drawing.Point(282, 33);
+            this.dbBtn.Location = new System.Drawing.Point(281, 33);
             this.dbBtn.Margin = new System.Windows.Forms.Padding(0);
             this.dbBtn.Name = "dbBtn";
             this.dbBtn.Size = new System.Drawing.Size(32, 24);
@@ -119,7 +119,7 @@ namespace pulse.forms
             this.tableLayoutPanel2.Name = "tableLayoutPanel2";
             this.tableLayoutPanel2.RowCount = 1;
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(181, 28);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(180, 28);
             this.tableLayoutPanel2.TabIndex = 3;
             // 
             // saveBtn
@@ -127,7 +127,7 @@ namespace pulse.forms
             this.saveBtn.Dock = System.Windows.Forms.DockStyle.Fill;
             this.saveBtn.Location = new System.Drawing.Point(3, 3);
             this.saveBtn.Name = "saveBtn";
-            this.saveBtn.Size = new System.Drawing.Size(76, 22);
+            this.saveBtn.Size = new System.Drawing.Size(75, 22);
             this.saveBtn.TabIndex = 0;
             this.saveBtn.Text = "Сохранить";
             this.saveBtn.UseVisualStyleBackColor = true;
@@ -136,7 +136,7 @@ namespace pulse.forms
             // resetBtn
             // 
             this.resetBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.resetBtn.Location = new System.Drawing.Point(101, 3);
+            this.resetBtn.Location = new System.Drawing.Point(100, 3);
             this.resetBtn.Name = "resetBtn";
             this.resetBtn.Size = new System.Drawing.Size(77, 22);
             this.resetBtn.TabIndex = 1;
@@ -161,13 +161,13 @@ namespace pulse.forms
             this.savesPath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.savesPath.Location = new System.Drawing.Point(98, 85);
             this.savesPath.Name = "savesPath";
-            this.savesPath.Size = new System.Drawing.Size(181, 20);
+            this.savesPath.Size = new System.Drawing.Size(180, 20);
             this.savesPath.TabIndex = 5;
             // 
             // savesBtn
             // 
             this.savesBtn.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.savesBtn.Location = new System.Drawing.Point(282, 82);
+            this.savesBtn.Location = new System.Drawing.Point(281, 82);
             this.savesBtn.Margin = new System.Windows.Forms.Padding(0);
             this.savesBtn.Name = "savesBtn";
             this.savesBtn.Size = new System.Drawing.Size(32, 26);
