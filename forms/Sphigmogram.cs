@@ -5,8 +5,10 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
+using Newtonsoft.Json.Linq;
 using pulse.collection;
 using pulse.core;
+using pulse.forms;
 
 namespace pulse
 {
@@ -18,6 +20,7 @@ namespace pulse
         public void GraphicInstalization(Record record)
         {
             _record = record;
+            _record.get();
 
             String rl;
             int tm = 0;
@@ -124,8 +127,9 @@ namespace pulse
         private void вСРToolStripMenuItem_Click(object sender, EventArgs e)
         {
             PythonUtils pyhton = new PythonUtils(_record);
-            var answer = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
-            Console.WriteLine(answer);
+            JObject jObject = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
+            Statistics statistics = new Statistics(_record.patient, jObject);
+            statistics.ShowDialog();
         }
     }
 }

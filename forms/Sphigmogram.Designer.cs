@@ -196,7 +196,7 @@
             // 
             // chart2
             // 
-            this.chart2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.chart2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             chartArea2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
             chartArea2.BackGradientStyle = System.Windows.Forms.DataVisualization.Charting.GradientStyle.TopBottom;
             chartArea2.BackHatchStyle = System.Windows.Forms.DataVisualization.Charting.ChartHatchStyle.DarkUpwardDiagonal;
@@ -213,7 +213,7 @@
             this.chart2.ChartAreas.Add(chartArea2);
             legend2.Name = "Legend1";
             this.chart2.Legends.Add(legend2);
-            this.chart2.Location = new System.Drawing.Point(481, 393);
+            this.chart2.Location = new System.Drawing.Point(483, 392);
             this.chart2.Name = "chart2";
             series2.BackImageTransparentColor = System.Drawing.Color.White;
             series2.ChartArea = "ChartArea1";
@@ -246,7 +246,7 @@
             // вСРToolStripMenuItem
             // 
             this.вСРToolStripMenuItem.Name = "вСРToolStripMenuItem";
-            this.вСРToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.вСРToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.вСРToolStripMenuItem.Text = "ВСР";
             this.вСРToolStripMenuItem.Click += new System.EventHandler(this.вСРToolStripMenuItem_Click);
             // 
