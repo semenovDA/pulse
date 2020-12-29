@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Scripting.Hosting;
+using Newtonsoft.Json.Linq;
 using Microsoft.Win32;
 using pulse.collection;
 
@@ -29,11 +25,13 @@ namespace pulse.core
         }
 
         // Public functions
-        public void Excute(string script)
+        public JObject Excute(string script)
         {
             try
             {
-                Console.WriteLine(run_cmd(script, ""));
+                string args = "-i " + Path.GetFullPath(_record.getFileName());
+                var result = run_cmd(script, args);
+                return JObject.Parse(result);
             } 
             catch(Exception e)
             {
@@ -74,6 +72,7 @@ namespace pulse.core
                 {
                     string stderr = process.StandardError.ReadToEnd(); // Here are the exceptions from our Python script
                     string result = reader.ReadToEnd(); // Here is the result of StdOut(for example: print "test")
+                    Console.WriteLine(stderr);
                     return result;
                 }
             }
