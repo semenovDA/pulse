@@ -190,10 +190,7 @@ namespace pulse
                     timer3.Start();
 
                     record = new Record(sch, patient);
-
-                    string savesDir = Properties.Settings.Default.savesPath;
-                    string filename = savesDir + record.id + ".txt";
-
+                    string filename = record.getFileName();
                     wr = new StreamWriter(filename);
 #if DEBUG
                     Console.WriteLine(String.Format("Writing to {0} ...", filename));
