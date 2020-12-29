@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using pulse.core;
 
 namespace pulse.collection
@@ -17,7 +18,6 @@ namespace pulse.collection
         {
             _id = id;
         }
-
         public Record(float duration, Patient patient)
         {
             _id = Guid.NewGuid().ToString();
@@ -56,11 +56,17 @@ namespace pulse.collection
         public string comments { get => _comments; set => _comments = value; }
         public Patient patient { get => _patient; set => _patient = value; }
 
-
         /*  Database relations   */
         public void create() { new DBconnection().insert_record(this); }
         public void update() { new DBconnection().update_record(this); }
         public void delete() { new DBconnection().delete_record(this); }
+
+        /*  Utils functions */
+        public string getFileName()
+        {
+            string savesDir = Properties.Settings.Default.savesPath;
+            return savesDir + this.id + ".txt";
+        }
 
     }
 }
