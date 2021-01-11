@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -18,7 +19,8 @@ namespace pulse
 
         Record _record;
         int[] _peaks;
-        bool zoom = true;
+        double[] _signal;
+        bool zoom = false;
 
         public void GraphicInstalization(Record record)
         {
@@ -30,7 +32,18 @@ namespace pulse
             String rl;
             int tm = 0;
             int dol2 = 0;
-            int x2 = 0;
+
+            Signal.Series[0].XValueType = ChartValueType.Time;
+            Signal.Series[1].XValueType = ChartValueType.Time;
+
+            Signal.ChartAreas[0].AxisX.LabelStyle.Format = "hh:mm:ss.fff";
+
+            string[] result = pyhton.Excute(PythonUtils.SCRIPT_VSRPEAKS).Split(' ');
+            _peaks = Array.ConvertAll(result, int.Parse);
+
+            for (int i = 1; i < _peaks.Length; i++) {
+                CIV.Series[0].Points.AddXY(i, _peaks[i] - _peaks[i - 1]);
+            }
 
             string filename = record.getFileName();
 
@@ -43,19 +56,24 @@ namespace pulse
                     if (rl != "" && dol2 == -1)
                     {
                         Signal.Series[0].Points.AddXY(tm, rl);
+                        Signal.Series[0].Points.Last().AxisLabel = getTime(tm);
+                        if (_peaks.Contains(tm))
+                        {
+                            Signal.Series[1].Points.AddXY(tm, rl);
+                            Signal.Series[1].Points.Last().AxisLabel = getTime(tm);
+                        }
                         tm++;
                     }
                 }
                 f.Close();
-                x2 = 0;
             }
 
-            string[] result = pyhton.Excute(PythonUtils.SCRIPT_VSRPEAKS).Split(' ');
-            _peaks = Array.ConvertAll(result, int.Parse);
-
-            for (int i = 1; i < _peaks.Length; i++) {
-                CIV.Series[0].Points.AddXY(i, _peaks[i] - _peaks[i - 1]);
+            _signal = new double[Signal.Series[0].Points.Count];
+            for(int i = 0; i < _signal.Length; i++) {
+                _signal[i] = Signal.Series[0].Points[i].YValues.First();
             }
+
+            // Signal.Update();
         }
 
         public Form2(Record record = null) { 
@@ -89,19 +107,34 @@ namespace pulse
             }
         }
 
-
-        private void Form2_Load(object sender, EventArgs e)
+        private void setView()
         {
-            Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, 200);
+            double max = _signal.Max();
+            double min = _signal.Min();
+
+            Signal.ChartAreas[0].AxisY.ScaleView.Size = max - min;
+            Signal.ChartAreas[0].AxisY.ScaleView.Zoom(min - 10, max + 10);
+            Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, 2000);
+
+            // Set AxisX scrollbar style
+            Signal.ChartAreas[0].AxisX.ScrollBar.Size = 10;
+            Signal.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+            Signal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+            Signal.ChartAreas[0].AxisX.ScrollBar.BackColor = Color.LightGray;
+            Signal.ChartAreas[0].AxisX.ScrollBar.ButtonColor = Color.White;
+
+            // Settings
             Signal.ChartAreas[0].CursorX.IsUserEnabled = true;
             Signal.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             Signal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            //Signal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-            Signal.ChartAreas[0].AxisY.ScaleView.Zoom(0, 30000);
             Signal.ChartAreas[0].CursorY.IsUserEnabled = true;
             Signal.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
             Signal.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
-            //Signal.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
+        }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            setView();
         }
 
         private void вСРToolStripMenuItem_Click(object sender, EventArgs e)
@@ -130,13 +163,15 @@ namespace pulse
         }
 
         // Utils
-        private int [] parseInt(string [] str) {
-            int[] arr = new int[str.Length];
-            foreach (string s in str) {
-                try { arr.Append(int.Parse(s)); }
-                catch (Exception) { }
-            }
-            return arr;
+        private string getTime(int ms)
+        {
+            TimeSpan ts = TimeSpan.FromMilliseconds(ms);
+            return ts.ToString(@"hh\:mm\:ss\.fff");
+        }
+
+        private void сбросToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            setView();
         }
     }
 }
