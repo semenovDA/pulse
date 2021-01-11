@@ -10,7 +10,8 @@ namespace pulse.core
     class PythonUtils
     {
         // Public variables
-        static public string SCRIPT_VSRSTATS = "scripts/test.py";
+        static public string SCRIPT_VSRSTATS = "scripts/VSR_STATS.py";
+        static public string SCRIPT_VSRPEAKS = "scripts/VSR_PEAKS.py";
 
         // Private variables
         private Record _record;
@@ -25,13 +26,12 @@ namespace pulse.core
         }
 
         // Public functions
-        public JObject Excute(string script)
+        public string Excute(string script)
         {
             try
             {
                 string args = "-i " + Path.GetFullPath(_record.getFileName());
-                var result = run_cmd(script, args);
-                return JObject.Parse(result);
+                return run_cmd(script, args);
             } 
             catch(Exception e)
             {
@@ -49,7 +49,6 @@ namespace pulse.core
                 {
                     if (key == null) return null;
                     return key.GetValue(value) as string;
-
                 }
             }
             catch (Exception ex)  //just for demonstration...it's always best to handle specific exceptions
