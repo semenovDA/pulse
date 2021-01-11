@@ -14,13 +14,18 @@ namespace pulse
 {
     public partial class Form2 : Form
     {
+        PythonUtils pyhton;
+
         Record _record;
-        bool zoom = false;
+        int[] _peaks;
+        bool zoom = true;
 
         public void GraphicInstalization(Record record)
         {
             _record = record;
             _record.get();
+
+            pyhton = new PythonUtils(_record);
 
             String rl;
             int tm = 0;
@@ -35,25 +40,21 @@ namespace pulse
                 {
                     rl = f.ReadLine();
                     dol2 = rl.IndexOf('$');
-                    if (dol2 != -1)
+                    if (rl != "" && dol2 == -1)
                     {
-                        rl = rl.Trim('$');
-                        rl.Trim('$');
-                        chart2.Series[0].Points.AddXY(x2, rl);
-                        dol2 = 0;
-                        x2++;
-                    }
-                    else
-                    {
-                        if (rl != "")
-                        {
-                            chart1.Series[0].Points.AddXY(tm, rl);
-                            tm++;
-                        }
+                        Signal.Series[0].Points.AddXY(tm, rl);
+                        tm++;
                     }
                 }
                 f.Close();
                 x2 = 0;
+            }
+
+            string[] result = pyhton.Excute(PythonUtils.SCRIPT_VSRPEAKS).Split(' ');
+            _peaks = Array.ConvertAll(result, int.Parse);
+
+            for (int i = 1; i < _peaks.Length; i++) {
+                CIV.Series[0].Points.AddXY(i, _peaks[i] - _peaks[i - 1]);
             }
         }
 
@@ -61,22 +62,8 @@ namespace pulse
             InitializeComponent();
             if(record != null) GraphicInstalization(record);
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-            chart1.ChartAreas[0].AxisX.ScaleView.Zoom(0, 200);
-            chart1.ChartAreas[0].CursorX.IsUserEnabled = true;
-            chart1.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
-            chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            chart1.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-            chart1.ChartAreas[0].AxisY.ScaleView.Zoom(0, 30000);
-            chart1.ChartAreas[0].CursorY.IsUserEnabled = true;
-            chart1.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
-            chart1.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
-            chart1.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
-        }
         
-        private void chart1_AxisViewChanging(object sender, ViewEventArgs e)
+        private void Signal_AxisViewChanging(object sender, ViewEventArgs e)
         {
             if ((e.Axis.AxisName == AxisName.X) && (zoom == true))
 
@@ -84,10 +71,9 @@ namespace pulse
                 int start = (int)e.Axis.ScaleView.ViewMinimum;
                 int end = (int)e.Axis.ScaleView.ViewMaximum;
 
-
                 List<double> allNumbers = new List<double>();
 
-                foreach (Series item in chart1.Series)
+                foreach (Series item in Signal.Series)
                 {
                     allNumbers
                         .AddRange(item.Points.Where((x, i) => i >= start && i <= end)
@@ -97,39 +83,60 @@ namespace pulse
                 double ymin = allNumbers.Min();
                 double ymax = allNumbers.Max();
 
-                chart1.ChartAreas[0].AxisY.ScaleView.Position = ymin;
-                chart1.ChartAreas[0].AxisY.ScaleView.Size = ymax - ymin;
+                Signal.ChartAreas[0].AxisY.ScaleView.Position = ymin;
+                Signal.ChartAreas[0].AxisY.ScaleView.Size = ymax - ymin;
+                Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, 1000);
             }
         }
 
-        private void checkBox1_CheckedChanged(object sender, EventArgs e)
-        {
-            chart1.Series[0].IsValueShownAsLabel = checkBox1.Checked;
-            chart2.Series[0].IsValueShownAsLabel = checkBox1.Checked;
-        }
-
-        private void checkBox2_CheckedChanged(object sender, EventArgs e) { zoom = checkBox2.Checked; }
 
         private void Form2_Load(object sender, EventArgs e)
         {
-            chart1.ChartAreas[0].AxisX.ScaleView.Zoom(0, 200);
-            chart1.ChartAreas[0].CursorX.IsUserEnabled = true;
-            chart1.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
-            chart1.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            chart1.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-            chart1.ChartAreas[0].AxisY.ScaleView.Zoom(0, 30000);
-            chart1.ChartAreas[0].CursorY.IsUserEnabled = true;
-            chart1.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
-            chart1.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
-            chart1.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
+            Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, 200);
+            Signal.ChartAreas[0].CursorX.IsUserEnabled = true;
+            Signal.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+            Signal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+            //Signal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+            Signal.ChartAreas[0].AxisY.ScaleView.Zoom(0, 30000);
+            Signal.ChartAreas[0].CursorY.IsUserEnabled = true;
+            Signal.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
+            Signal.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
+            //Signal.ChartAreas[0].AxisY.ScrollBar.IsPositionedInside = true;
         }
 
         private void вСРToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            PythonUtils pyhton = new PythonUtils(_record);
-            JObject jObject = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
+            String result = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
+            JObject jObject = JObject.Parse(result);
             Statistics statistics = new Statistics(_record.patient, jObject);
             statistics.ShowDialog();
+        }
+
+        private void ShowValuesCb_Click(object sender, EventArgs e)
+        {
+            ShowValuesCb.Checked = !ShowValuesCb.Checked;
+            Signal.Series[0].IsValueShownAsLabel = ShowValuesCb.Checked;
+        }
+
+        private void FocusSignalCb_Click(object sender, EventArgs e)
+        {
+            FocusSignalCb.Checked = !FocusSignalCb.Checked;
+            zoom = FocusSignalCb.Checked;
+        }
+
+        private void CIV_Click(object sender, EventArgs e)
+        {
+            //CIV.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
+        }
+
+        // Utils
+        private int [] parseInt(string [] str) {
+            int[] arr = new int[str.Length];
+            foreach (string s in str) {
+                try { arr.Append(int.Parse(s)); }
+                catch (Exception) { }
+            }
+            return arr;
         }
     }
 }

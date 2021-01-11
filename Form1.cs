@@ -337,7 +337,7 @@ namespace pulse
                             {
                                 rl = rl.Trim('$');
                                 Console.WriteLine(rl);
-                                f2.chart2.Series[0].Points.AddXY(x2, rl);
+                                f2.CIV.Series[0].Points.AddXY(x2, rl);
                                 dol2 = 0;
                                 x2++;
                             }
@@ -345,8 +345,8 @@ namespace pulse
                             {
                                 if (rl != "")
                                 {
-                                    f2.chart1.Series[0].Points.AddXY(tm, rl);
-                                    f2.chart1.ChartAreas[0].AxisX.ScaleView.Zoom(x - 300, x);
+                                    f2.Signal.Series[0].Points.AddXY(tm, rl);
+                                    f2.Signal.ChartAreas[0].AxisX.ScaleView.Zoom(x - 300, x);
                                     tm++;
                                 }
                             }
