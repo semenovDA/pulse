@@ -40,6 +40,10 @@
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.анализToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.вСРToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.диаграммыToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.скатерграммаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.HistogramDistributionMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.спектрToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.видToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowValuesCb = new System.Windows.Forms.ToolStripMenuItem();
             this.FocusSignalCb = new System.Windows.Forms.ToolStripMenuItem();
@@ -68,7 +72,9 @@
             // анализToolStripMenuItem
             // 
             this.анализToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.вСРToolStripMenuItem});
+            this.вСРToolStripMenuItem,
+            this.диаграммыToolStripMenuItem,
+            this.спектрToolStripMenuItem});
             this.анализToolStripMenuItem.Name = "анализToolStripMenuItem";
             this.анализToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.анализToolStripMenuItem.Text = "Анализ";
@@ -76,9 +82,37 @@
             // вСРToolStripMenuItem
             // 
             this.вСРToolStripMenuItem.Name = "вСРToolStripMenuItem";
-            this.вСРToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.вСРToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.вСРToolStripMenuItem.Text = "ВСР";
             this.вСРToolStripMenuItem.Click += new System.EventHandler(this.вСРToolStripMenuItem_Click);
+            // 
+            // диаграммыToolStripMenuItem
+            // 
+            this.диаграммыToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.скатерграммаToolStripMenuItem,
+            this.HistogramDistributionMenuItem});
+            this.диаграммыToolStripMenuItem.Name = "диаграммыToolStripMenuItem";
+            this.диаграммыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.диаграммыToolStripMenuItem.Text = "Диаграммы";
+            // 
+            // скатерграммаToolStripMenuItem
+            // 
+            this.скатерграммаToolStripMenuItem.Name = "скатерграммаToolStripMenuItem";
+            this.скатерграммаToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.скатерграммаToolStripMenuItem.Text = "Скатерграмма";
+            // 
+            // HistogramDistributionMenuItem
+            // 
+            this.HistogramDistributionMenuItem.Name = "HistogramDistributionMenuItem";
+            this.HistogramDistributionMenuItem.Size = new System.Drawing.Size(234, 22);
+            this.HistogramDistributionMenuItem.Text = "Гистограмма распределения";
+            this.HistogramDistributionMenuItem.Click += new System.EventHandler(this.HistogramDistributionMenuItem_Click);
+            // 
+            // спектрToolStripMenuItem
+            // 
+            this.спектрToolStripMenuItem.Name = "спектрToolStripMenuItem";
+            this.спектрToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.спектрToolStripMenuItem.Text = "Спектр";
             // 
             // видToolStripMenuItem
             // 
@@ -290,6 +324,7 @@
             this.InfoBox.ReadOnly = true;
             this.InfoBox.Size = new System.Drawing.Size(824, 20);
             this.InfoBox.TabIndex = 15;
+            this.InfoBox.Text = "Время: 00:00:00    ms: 0  Y: 0";
             // 
             // Form2
             // 
@@ -326,5 +361,9 @@
         public System.Windows.Forms.DataVisualization.Charting.Chart Signal;
         private System.Windows.Forms.ToolStripMenuItem сбросToolStripMenuItem;
         private System.Windows.Forms.TextBox InfoBox;
+        private System.Windows.Forms.ToolStripMenuItem диаграммыToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem скатерграммаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem HistogramDistributionMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem спектрToolStripMenuItem;
     }
 }

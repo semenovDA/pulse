@@ -10,6 +10,7 @@ using Newtonsoft.Json.Linq;
 using pulse.collection;
 using pulse.core;
 using pulse.forms;
+using pulse.forms.charts;
 
 namespace pulse
 {
@@ -73,7 +74,6 @@ namespace pulse
                 }
                 f.Close();
             }
-
         }
 
         public Form2(Record record = null) { 
@@ -150,7 +150,7 @@ namespace pulse
         {
             String result = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
             JObject jObject = JObject.Parse(result);
-            Statistics statistics = new Statistics(_record.patient, jObject);
+            VSRStatistics statistics = new VSRStatistics(_record.patient, jObject);
             statistics.ShowDialog();
         }
 
@@ -216,6 +216,13 @@ namespace pulse
 
             
             InfoBox.Text = String.Format("Время: {0}\tms: {1}\tY: {2}", XLabel, idx, Y);
+        }
+
+        private void HistogramDistributionMenuItem_Click(object sender, EventArgs e)
+        {
+            var points = CIV.Series[0].Points.Select(s => s.YValues[0]);
+            DistributionHistogram DH = new DistributionHistogram(points);
+            DH.ShowDialog();
         }
     }
 }
