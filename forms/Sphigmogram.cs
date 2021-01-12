@@ -19,8 +19,14 @@ namespace pulse
 
         Record _record;
         int[] _peaks;
-        double[] _signal;
         bool zoom = false;
+
+        public void ZoomAxis(Axis axis, double viewStart, double viewEnd)
+        {
+            axis.Interval = (viewEnd - viewStart) / 4;
+            axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
+            axis.ScaleView.Zoom(viewStart, viewEnd);
+        }
 
         public void GraphicInstalization(Record record)
         {
@@ -68,10 +74,10 @@ namespace pulse
                 f.Close();
             }
 
-            _signal = new double[Signal.Series[0].Points.Count];
-            for(int i = 0; i < _signal.Length; i++) {
-                _signal[i] = Signal.Series[0].Points[i].YValues.First();
-            }
+            //_signal = new double[Signal.Series[0].Points.Count];
+            //for(int i = 0; i < _signal.Length; i++) {
+            //    _signal[i] = Signal.Series[0].Points[i].YValues.First();
+            //}
 
             // Signal.Update();
         }
@@ -109,8 +115,8 @@ namespace pulse
 
         private void setView()
         {
-            double max = _signal.Max();
-            double min = _signal.Min();
+            double max = Signal.Series[0].Points.Max(p => p.YValues[0]);
+            double min = Signal.Series[0].Points.Min(p => p.YValues[0]);
 
             Signal.ChartAreas[0].AxisY.ScaleView.Size = max - min;
             Signal.ChartAreas[0].AxisY.ScaleView.Zoom(min - 10, max + 10);
@@ -123,13 +129,22 @@ namespace pulse
             Signal.ChartAreas[0].AxisX.ScrollBar.BackColor = Color.LightGray;
             Signal.ChartAreas[0].AxisX.ScrollBar.ButtonColor = Color.White;
 
+            CIV.ChartAreas[0].AxisX.ScrollBar.Size = 10;
+            CIV.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+            CIV.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+            CIV.ChartAreas[0].AxisX.ScrollBar.BackColor = Color.LightGray;
+            CIV.ChartAreas[0].AxisX.ScrollBar.ButtonColor = Color.White;
+
             // Settings
+            CIV.ChartAreas[0].CursorX.IsUserEnabled = true;
+
             Signal.ChartAreas[0].CursorX.IsUserEnabled = true;
             Signal.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             Signal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-            Signal.ChartAreas[0].CursorY.IsUserEnabled = true;
-            Signal.ChartAreas[0].CursorY.IsUserSelectionEnabled = true;
-            Signal.ChartAreas[0].AxisY.ScaleView.Zoomable = true;
+
+            CIV.ChartAreas[0].AxisX.ScaleView.Zoom(0, _peaks.Length/2);
+
+            resetInterval();
         }
 
         private void Form2_Load(object sender, EventArgs e)
@@ -157,11 +172,6 @@ namespace pulse
             zoom = FocusSignalCb.Checked;
         }
 
-        private void CIV_Click(object sender, EventArgs e)
-        {
-            //CIV.ChartAreas[0].AxisX.PixelPositionToValue(e.X);
-        }
-
         // Utils
         private string getTime(int ms)
         {
@@ -172,6 +182,32 @@ namespace pulse
         private void сбросToolStripMenuItem_Click(object sender, EventArgs e)
         {
             setView();
+        }
+
+        private void CIV_CursorPositionChanged(object sender, CursorEventArgs e)
+        {
+            int idx = (int)e.NewPosition;
+
+            var p = _peaks[idx == 0 ? idx : idx - 1];
+            var r = _peaks[idx];
+
+            ZoomAxis(Signal.ChartAreas[0].AxisX, p - 50, r + 50);
+        }
+
+        private void resetInterval()
+        {
+            var axis = Signal.ChartAreas[0].AxisX;
+            axis.Interval = 251;
+            axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
+        }
+
+        private void Signal_CursorPositionChanging(object sender, CursorEventArgs e)
+        {
+            int idx = (int)(e.NewPosition > 0 ? e.NewPosition : 0);
+            var Y = Signal.Series[0].Points[idx].YValues[0];
+            var XLabel = Signal.Series[0].Points[idx].AxisLabel;
+
+            InfoBox.Text = String.Format("Время: {0}\tms: {1}\tY: {2}", XLabel, idx, Y);
         }
     }
 }
