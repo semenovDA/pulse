@@ -12,7 +12,7 @@ using System.Windows.Forms;
 
 namespace pulse.forms
 {
-    public partial class Statistics : Form
+    public partial class VSRStatistics : Form
     {
         // Private variables
         private JObject _jObject;
@@ -53,7 +53,7 @@ namespace pulse.forms
         }
 
         // Main constructor
-        public Statistics(Patient patient, JObject jObject)
+        public VSRStatistics(Patient patient, JObject jObject)
         {
             _jObject = jObject;
             _patient = patient;

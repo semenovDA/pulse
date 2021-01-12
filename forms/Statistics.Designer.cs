@@ -1,7 +1,7 @@
 ﻿
 namespace pulse.forms
 {
-    partial class Statistics
+    partial class VSRStatistics
     {
         /// <summary>
         /// Required designer variable.
@@ -29,7 +29,7 @@ namespace pulse.forms
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Statistics));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(VSRStatistics));
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.patientName = new System.Windows.Forms.Label();
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
