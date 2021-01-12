@@ -74,12 +74,6 @@ namespace pulse
                 f.Close();
             }
 
-            //_signal = new double[Signal.Series[0].Points.Count];
-            //for(int i = 0; i < _signal.Length; i++) {
-            //    _signal[i] = Signal.Series[0].Points[i].YValues.First();
-            //}
-
-            // Signal.Update();
         }
 
         public Form2(Record record = null) { 
@@ -201,12 +195,26 @@ namespace pulse
             axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
         }
 
+        public void selectBar(int idx)
+        {
+            foreach (var p in CIV.Series[0].Points) { p.Color = Color.Empty; }
+            CIV.Series[0].Points[idx].Color = Color.Red;
+        }
+
         private void Signal_CursorPositionChanging(object sender, CursorEventArgs e)
         {
             int idx = (int)(e.NewPosition > 0 ? e.NewPosition : 0);
             var Y = Signal.Series[0].Points[idx].YValues[0];
             var XLabel = Signal.Series[0].Points[idx].AxisLabel;
 
+            for(int i = 0; i < _peaks.Length; i++) {
+                if (idx <= _peaks[i]) {
+                    selectBar(i - 1 < 0 ? 0 : i - 1);
+                    break;
+                }
+            }
+
+            
             InfoBox.Text = String.Format("Время: {0}\tms: {1}\tY: {2}", XLabel, idx, Y);
         }
     }

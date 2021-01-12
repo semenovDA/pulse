@@ -207,6 +207,7 @@
             series1.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F);
             series1.IsVisibleInLegend = false;
             series1.Legend = "Legend1";
+            series1.MarkerColor = System.Drawing.SystemColors.MenuHighlight;
             series1.Name = "Series1";
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.CIV.Series.Add(series1);
