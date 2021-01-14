@@ -100,6 +100,7 @@
             this.скатерграммаToolStripMenuItem.Name = "скатерграммаToolStripMenuItem";
             this.скатерграммаToolStripMenuItem.Size = new System.Drawing.Size(234, 22);
             this.скатерграммаToolStripMenuItem.Text = "Скатерграмма";
+            this.скатерграммаToolStripMenuItem.Click += new System.EventHandler(this.скатерграммаToolStripMenuItem_Click);
             // 
             // HistogramDistributionMenuItem
             // 

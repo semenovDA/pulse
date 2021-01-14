@@ -221,8 +221,14 @@ namespace pulse
         private void HistogramDistributionMenuItem_Click(object sender, EventArgs e)
         {
             var points = CIV.Series[0].Points.Select(s => s.YValues[0]);
-            DistributionHistogram DH = new DistributionHistogram(points);
-            DH.ShowDialog();
+            new DistributionHistogram(points).ShowDialog();
+        }
+
+        private void скатерграммаToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String result = pyhton.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
+            JObject jObject = JObject.Parse(result);
+            new Scatterogram(_peaks, jObject).ShowDialog();
         }
     }
 }
