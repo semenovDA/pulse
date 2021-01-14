@@ -198,6 +198,12 @@
     <Compile Include="forms\charts\DistributionHistogram.Designer.cs">
       <DependentUpon>DistributionHistogram.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\charts\Scatterogram.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\charts\Scatterogram.Designer.cs">
+      <DependentUpon>Scatterogram.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\Sphigmogram.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -246,6 +252,9 @@
     <Content Include="scripts\VSR_PEAKS.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="scripts\VSR_POINCARE.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="scripts\VSR_STATS.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -254,6 +263,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\charts\DistributionHistogram.resx">
       <DependentUpon>DistributionHistogram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="forms\charts\Scatterogram.resx">
+      <DependentUpon>Scatterogram.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Sphigmogram.resx">
       <DependentUpon>Sphigmogram.cs</DependentUpon>
