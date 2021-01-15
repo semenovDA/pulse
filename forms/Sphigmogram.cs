@@ -16,20 +16,53 @@ namespace pulse
 {
     public partial class Form2 : Form
     {
+        /* Variables definition */
         PythonUtils pyhton;
-
         Record _record;
 
         int[] _peaks;
         bool zoom = false;
 
-        public void ZoomAxis(Axis axis, double viewStart, double viewEnd)
-        {
-            axis.Interval = (viewEnd - viewStart) / 4;
-            axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
-            axis.ScaleView.Zoom(viewStart, viewEnd);
+        /* Main constructor    */
+        public Form2(Record record = null) { 
+            InitializeComponent();
+            if(record != null) Initialize(record);
         }
 
+        /*  Main Functions */
+        private void setView()
+        {
+            double max = Signal.Series[0].Points.Max(p => p.YValues[0]);
+            double min = Signal.Series[0].Points.Min(p => p.YValues[0]);
+
+            Signal.ChartAreas[0].AxisY.ScaleView.Size = max - min;
+            Signal.ChartAreas[0].AxisY.ScaleView.Zoom(min - 10, max + 10);
+            Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, 2000);
+
+            // Set AxisX scrollbar style
+            Signal.ChartAreas[0].AxisX.ScrollBar.Size = 10;
+            Signal.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+            Signal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+            Signal.ChartAreas[0].AxisX.ScrollBar.BackColor = Color.LightGray;
+            Signal.ChartAreas[0].AxisX.ScrollBar.ButtonColor = Color.White;
+
+            CIV.ChartAreas[0].AxisX.ScrollBar.Size = 10;
+            CIV.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
+            CIV.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
+            CIV.ChartAreas[0].AxisX.ScrollBar.BackColor = Color.LightGray;
+            CIV.ChartAreas[0].AxisX.ScrollBar.ButtonColor = Color.White;
+
+            // Settings
+            CIV.ChartAreas[0].CursorX.IsUserEnabled = true;
+
+            Signal.ChartAreas[0].CursorX.IsUserEnabled = true;
+            Signal.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
+            Signal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+
+            CIV.ChartAreas[0].AxisX.ScaleView.Zoom(0, _peaks.Length / 2);
+
+            resetInterval();
+        }
         private void FillCharts(Record record)
         {
             String rl;
@@ -74,7 +107,6 @@ namespace pulse
                 f.Close();
             }
         }
-
         public void Initialize(Record record)
         {
             _record = record;
@@ -84,11 +116,7 @@ namespace pulse
             FillCharts(_record);
         }
 
-        public Form2(Record record = null) { 
-            InitializeComponent();
-            if(record != null) Initialize(record);
-        }
-        
+        /*  Events  */
         private void Signal_AxisViewChanging(object sender, ViewEventArgs e)
         {
             if ((e.Axis.AxisName == AxisName.X) && (zoom == true))
@@ -114,77 +142,24 @@ namespace pulse
                 Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, 1000);
             }
         }
-
-        private void setView()
-        {
-            double max = Signal.Series[0].Points.Max(p => p.YValues[0]);
-            double min = Signal.Series[0].Points.Min(p => p.YValues[0]);
-
-            Signal.ChartAreas[0].AxisY.ScaleView.Size = max - min;
-            Signal.ChartAreas[0].AxisY.ScaleView.Zoom(min - 10, max + 10);
-            Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, 2000);
-
-            // Set AxisX scrollbar style
-            Signal.ChartAreas[0].AxisX.ScrollBar.Size = 10;
-            Signal.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
-            Signal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-            Signal.ChartAreas[0].AxisX.ScrollBar.BackColor = Color.LightGray;
-            Signal.ChartAreas[0].AxisX.ScrollBar.ButtonColor = Color.White;
-
-            CIV.ChartAreas[0].AxisX.ScrollBar.Size = 10;
-            CIV.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
-            CIV.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-            CIV.ChartAreas[0].AxisX.ScrollBar.BackColor = Color.LightGray;
-            CIV.ChartAreas[0].AxisX.ScrollBar.ButtonColor = Color.White;
-
-            // Settings
-            CIV.ChartAreas[0].CursorX.IsUserEnabled = true;
-
-            Signal.ChartAreas[0].CursorX.IsUserEnabled = true;
-            Signal.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
-            Signal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-
-            CIV.ChartAreas[0].AxisX.ScaleView.Zoom(0, _peaks.Length/2);
-
-            resetInterval();
-        }
-
-        private void Form2_Load(object sender, EventArgs e)
-        {
-            setView();
-        }
-
+        private void Form2_Load(object sender, EventArgs e) => setView();
+        private void сбросToolStripMenuItem_Click(object sender, EventArgs e) => setView();
         private void вСРToolStripMenuItem_Click(object sender, EventArgs e)
         {
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
             VSRStatistics statistics = new VSRStatistics(_record.patient, jToken);
             statistics.ShowDialog();
         }
-
         private void ShowValuesCb_Click(object sender, EventArgs e)
         {
             ShowValuesCb.Checked = !ShowValuesCb.Checked;
             Signal.Series[0].IsValueShownAsLabel = ShowValuesCb.Checked;
         }
-
         private void FocusSignalCb_Click(object sender, EventArgs e)
         {
             FocusSignalCb.Checked = !FocusSignalCb.Checked;
             zoom = FocusSignalCb.Checked;
         }
-
-        // Utils
-        private string getTime(int ms)
-        {
-            TimeSpan ts = TimeSpan.FromMilliseconds(ms);
-            return ts.ToString(@"hh\:mm\:ss\.fff");
-        }
-
-        private void сбросToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            setView();
-        }
-
         private void CIV_CursorPositionChanged(object sender, CursorEventArgs e)
         {
             int idx = (int)e.NewPosition;
@@ -194,47 +169,58 @@ namespace pulse
 
             ZoomAxis(Signal.ChartAreas[0].AxisX, p - 50, r + 50);
         }
-
-        private void resetInterval()
-        {
-            var axis = Signal.ChartAreas[0].AxisX;
-            axis.Interval = 251;
-            axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
-        }
-
-        public void selectBar(int idx)
-        {
-            foreach (var p in CIV.Series[0].Points) { p.Color = Color.Empty; }
-            CIV.Series[0].Points[idx].Color = Color.Red;
-        }
-
         private void Signal_CursorPositionChanging(object sender, CursorEventArgs e)
         {
             int idx = (int)(e.NewPosition > 0 ? e.NewPosition : 0);
             var Y = Signal.Series[0].Points[idx].YValues[0];
             var XLabel = Signal.Series[0].Points[idx].AxisLabel;
 
-            for(int i = 0; i < _peaks.Length; i++) {
-                if (idx <= _peaks[i]) {
+            for (int i = 0; i < _peaks.Length; i++)
+            {
+                if (idx <= _peaks[i])
+                {
                     selectBar(i - 1 < 0 ? 0 : i - 1);
                     break;
                 }
             }
 
-            
+
             InfoBox.Text = String.Format("Время: {0}\tms: {1}\tY: {2}", XLabel, idx, Y);
         }
-
         private void HistogramDistributionMenuItem_Click(object sender, EventArgs e)
         {
             var points = CIV.Series[0].Points.Select(s => s.YValues[0]);
             new DistributionHistogram(points).ShowDialog();
         }
-
         private void скатерграммаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
             new Scatterogram(_peaks, jToken).ShowDialog();
+        }
+
+
+        // Utils
+        private string getTime(int ms)
+        {
+            TimeSpan ts = TimeSpan.FromMilliseconds(ms);
+            return ts.ToString(@"hh\:mm\:ss\.fff");
+        }
+        private void resetInterval()
+        {
+            var axis = Signal.ChartAreas[0].AxisX;
+            axis.Interval = 251;
+            axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
+        }
+        public void selectBar(int idx)
+        {
+            foreach (var p in CIV.Series[0].Points) { p.Color = Color.Empty; }
+            CIV.Series[0].Points[idx].Color = Color.Red;
+        }
+        public void ZoomAxis(Axis axis, double viewStart, double viewEnd)
+        {
+            axis.Interval = (viewEnd - viewStart) / 4;
+            axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
+            axis.ScaleView.Zoom(viewStart, viewEnd);
         }
     }
 }

@@ -12,14 +12,17 @@ namespace pulse.core
 {
     class CacheHandler
     {
+        /*   Variables defenition    */
         private Record _record;
         private JObject _cache;
 
         private string appdata = Path.Combine(Environment.GetFolderPath(
                 Environment.SpecialFolder.ApplicationData), "pulse");
 
+        /*  Getters & Setters    */
         public JObject Cache { get => _cache; }
 
+        /*  Main constructor    */
         public CacheHandler(Record record)
         {
             this._record = record;
@@ -28,17 +31,7 @@ namespace pulse.core
             else Create(_record);
         }
 
-        private string cachePath(Record record)
-        {
-            if (!Directory.Exists(appdata)) Directory.CreateDirectory(appdata);
-            return Path.Combine(appdata, record.getCacheName());
-        }
-
-        public bool cacheExists(Record record) {
-            var fileName = cachePath(record);
-            return File.Exists(fileName);
-        }
-        
+        /*  Main functions   */
         private void Create(Record record)
         {
             _cache = new JObject(
@@ -47,9 +40,7 @@ namespace pulse.core
 
             Update(record);
         }
-
         private void Upload(Record record) => _cache = JObject.Parse(File.ReadAllText(cachePath(record)));
-
         public void Write(JToken obj)
         {
             var key = obj.Path;
@@ -57,5 +48,18 @@ namespace pulse.core
             Update(_record);
         }
         public void Update(Record record) => File.WriteAllText(cachePath(record), _cache.ToString());
+        
+        /* Utils functions*/
+        private string cachePath(Record record)
+        {
+            if (!Directory.Exists(appdata)) Directory.CreateDirectory(appdata);
+            return Path.Combine(appdata, record.getCacheName());
+        }
+        public bool cacheExists(Record record)
+        {
+            var fileName = cachePath(record);
+            return File.Exists(fileName);
+        }
+
     }
 }
