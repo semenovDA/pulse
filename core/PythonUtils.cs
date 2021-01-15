@@ -7,7 +7,7 @@ using pulse.collection;
 
 namespace pulse.core
 {
-    class PythonUtils
+    class PythonUtils : CacheHandler
     {
         // Public variables
         static public string SCRIPT_VSRSTATS = "scripts/VSR_STATS.py";
@@ -21,16 +21,17 @@ namespace pulse.core
         public Record Record { get => _record; set => _record = value; }
 
         // Constructors
-        public PythonUtils(Record record)
-        {
-            _record = record;
-        }
+        public PythonUtils(Record record) : base(record) => _record = record;
 
         // Public functions
-        public string Excute(string script)
+        public JToken Excute(string script)
         {
             try
             {
+                string propretyName = formatPropretyName(script);
+                var cache = base.Cache["data"][propretyName];
+                if (cache != null) return cache;
+
                 string args = "-i " + Path.GetFullPath(_record.getFileName());
                 return run_cmd(script, args);
             } 
@@ -57,7 +58,7 @@ namespace pulse.core
                 throw ex;
             }
         }
-        private string run_cmd(string script, string args)
+        private JToken run_cmd(string script, string args)
         {
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = getRegistryValue(@"Software\Python\PythonCore\3.8\InstallPath", "ExecutablePath");
@@ -72,10 +73,18 @@ namespace pulse.core
                 {
                     string stderr = process.StandardError.ReadToEnd(); // Here are the exceptions from our Python script
                     string result = reader.ReadToEnd(); // Here is the result of StdOut(for example: print "test")
-                    Console.WriteLine(stderr);
-                    return result;
+                    var obj = JObject.Parse(result).First;
+                    base.Write(obj); // Save results to cache
+                    return obj.First;
                 }
             }
         }
+        private string formatPropretyName(string script) {
+            string key = "VSR_";
+            int s = script.IndexOf(key);
+            int e = script.IndexOf(".py");
+            return script.Substring(s + key.Length, e - s - key.Length).ToLower();
+        }
+
     }
 }

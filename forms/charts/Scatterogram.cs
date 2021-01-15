@@ -14,7 +14,7 @@ namespace pulse.forms.charts
 
     public partial class Scatterogram : Form
     {
-        private JObject stats;
+        private JToken stats;
 
         private void drawEllipse(double center, double h = 5, double w = 5, double angle = 0) {
 
@@ -29,7 +29,8 @@ namespace pulse.forms.charts
             }
         }
 
-        private void Initialize(int[] peaks, JObject stats) {
+        private void Initialize(int[] peaks, JToken stats) {
+
             for (int i = 1; i < peaks.Length - 1; i++) {
                 int x = Math.Abs(peaks[i] - peaks[i - 1]);
                 int y = Math.Abs(peaks[i] - peaks[i + 1]);
@@ -51,8 +52,9 @@ namespace pulse.forms.charts
             ScatterogramChart.ChartAreas[0].AxisX.Title = "RR (ms)";
             ScatterogramChart.ChartAreas[0].AxisY.Title = "RR[n-1] (ms)";
 
-            var sd1 = stats.GetValue("sd1").ToObject<double>();
-            var sd2 = stats.GetValue("sd2").ToObject<double>();
+            // TODO: Fix double first
+            var sd1 = stats["sd1"].ToObject<double>();
+            var sd2 = stats["sd2"].ToObject<double>();
 
             var center = ScatterogramChart.Series[0].Points
                 .Where(s => s.YValues[0] == s.XValue)
@@ -62,9 +64,10 @@ namespace pulse.forms.charts
             drawEllipse(center, sd1, sd2);
         }
 
-        public Scatterogram(int[] peaks, JObject res)
+        public Scatterogram(int[] peaks, JToken res)
         {
             InitializeComponent();
+
             Initialize(peaks, res);
             this.stats = res;
         }
@@ -73,8 +76,8 @@ namespace pulse.forms.charts
         {
             ScatterogramChart.Series[2].Points.Clear();
 
-            var sd1 = stats.GetValue("sd1").ToObject<double>();
-            var sd2 = stats.GetValue("sd2").ToObject<double>();
+            var sd1 = stats["sd1"].ToObject<double>();
+            var sd2 = stats["sd2"].ToObject<double>();
 
             var center = ScatterogramChart.Series[0].Points
                 .Where(s => s.YValues[0] == s.XValue)

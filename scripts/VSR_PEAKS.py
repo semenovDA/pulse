@@ -37,15 +37,9 @@ def main(argv):
             except Exception:
                 pass;
 
-    result = "";
-    arr  = getPeaks(np.array(arr));
-    
-    for i in range(len(arr)):
-        if(i == len(arr)- 1):
-            result = result + str(arr[i])
-        else:    
-            result = result + str(arr[i]) + " "
+    arr = getPeaks(np.array(arr));
             
-    print(result)
+    print('{' + 'peaks: {0}'.format(arr.tolist()) + '}')
 
 main(sys.argv[1:])
+

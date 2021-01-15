@@ -36,8 +36,10 @@ def main(argv):
                 arr.append(int(bit));
             except Exception:
                 pass;
-        
-    print(VSR(np.array(arr)).stats)
+
+    obj = {}
+    obj['stats'] = VSR(np.array(arr)).stats;
+    print(obj)
 
 
 main(sys.argv[1:])

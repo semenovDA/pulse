@@ -19,6 +19,7 @@ namespace pulse
         PythonUtils pyhton;
 
         Record _record;
+
         int[] _peaks;
         bool zoom = false;
 
@@ -29,13 +30,8 @@ namespace pulse
             axis.ScaleView.Zoom(viewStart, viewEnd);
         }
 
-        public void GraphicInstalization(Record record)
+        private void FillCharts(Record record)
         {
-            _record = record;
-            _record.get();
-
-            pyhton = new PythonUtils(_record);
-
             String rl;
             int tm = 0;
             int dol2 = 0;
@@ -45,10 +41,13 @@ namespace pulse
 
             Signal.ChartAreas[0].AxisX.LabelStyle.Format = "hh:mm:ss.fff";
 
-            string[] result = pyhton.Excute(PythonUtils.SCRIPT_VSRPEAKS).Split(' ');
-            _peaks = Array.ConvertAll(result, int.Parse);
+            _peaks = pyhton.Excute(PythonUtils.SCRIPT_VSRPEAKS)
+                            .Select(jv => (int)jv)
+                            .ToArray();
 
-            for (int i = 1; i < _peaks.Length; i++) {
+
+            for (int i = 1; i < _peaks.Length; i++)
+            {
                 CIV.Series[0].Points.AddXY(i, _peaks[i] - _peaks[i - 1]);
             }
 
@@ -76,9 +75,18 @@ namespace pulse
             }
         }
 
+        public void Initialize(Record record)
+        {
+            _record = record;
+            _record.get();
+
+            pyhton = new PythonUtils(_record);
+            FillCharts(_record);
+        }
+
         public Form2(Record record = null) { 
             InitializeComponent();
-            if(record != null) GraphicInstalization(record);
+            if(record != null) Initialize(record);
         }
         
         private void Signal_AxisViewChanging(object sender, ViewEventArgs e)
@@ -148,9 +156,8 @@ namespace pulse
 
         private void вСРToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String result = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
-            JObject jObject = JObject.Parse(result);
-            VSRStatistics statistics = new VSRStatistics(_record.patient, jObject);
+            JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
+            VSRStatistics statistics = new VSRStatistics(_record.patient, jToken);
             statistics.ShowDialog();
         }
 
@@ -226,9 +233,8 @@ namespace pulse
 
         private void скатерграммаToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            String result = pyhton.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
-            JObject jObject = JObject.Parse(result);
-            new Scatterogram(_peaks, jObject).ShowDialog();
+            JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
+            new Scatterogram(_peaks, jToken).ShowDialog();
         }
     }
 }

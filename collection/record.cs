@@ -14,10 +14,7 @@ namespace pulse.collection
         private Patient _patient;
 
         /* Main constructors */
-        public Record(string id)
-        {
-            _id = id;
-        }
+        public Record(string id) => _id = id;
         public Record(float duration, Patient patient)
         {
             _id = Guid.NewGuid().ToString();
@@ -68,6 +65,8 @@ namespace pulse.collection
             string savesDir = Properties.Settings.Default.savesPath;
             return savesDir + this.id + ".txt";
         }
+
+        public string getCacheName() => this.id + ".tmp";
 
     }
 }

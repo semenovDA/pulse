@@ -43,7 +43,7 @@ def main(argv):
     nni = VSR(arr).nn
     peaks = getPeaks(arr)
     res = poincare(nni = nni, rpeaks = peaks, show=False)
-    obj = {'sd1': res['sd1'], 'sd2': res['sd2']}
+    obj = {'poincare': {'sd1': res['sd1'], 'sd2': res['sd2']}}
     print(obj)
 
 main(sys.argv[1:])

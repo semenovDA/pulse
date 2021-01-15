@@ -82,7 +82,7 @@
             // вСРToolStripMenuItem
             // 
             this.вСРToolStripMenuItem.Name = "вСРToolStripMenuItem";
-            this.вСРToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.вСРToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.вСРToolStripMenuItem.Text = "ВСР";
             this.вСРToolStripMenuItem.Click += new System.EventHandler(this.вСРToolStripMenuItem_Click);
             // 
@@ -92,7 +92,7 @@
             this.скатерграммаToolStripMenuItem,
             this.HistogramDistributionMenuItem});
             this.диаграммыToolStripMenuItem.Name = "диаграммыToolStripMenuItem";
-            this.диаграммыToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.диаграммыToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.диаграммыToolStripMenuItem.Text = "Диаграммы";
             // 
             // скатерграммаToolStripMenuItem
@@ -112,7 +112,7 @@
             // спектрToolStripMenuItem
             // 
             this.спектрToolStripMenuItem.Name = "спектрToolStripMenuItem";
-            this.спектрToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.спектрToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.спектрToolStripMenuItem.Text = "Спектр";
             // 
             // видToolStripMenuItem
