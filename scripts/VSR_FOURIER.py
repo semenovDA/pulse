@@ -74,7 +74,7 @@ def main(argv):
     with open(path, "w") as outfile:  
         json.dump(obj, outfile)
     
-    print({"path": path})
+    print({"fourier": path})
 
 
 main(sys.argv[1:])
