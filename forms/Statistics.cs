@@ -16,7 +16,10 @@ namespace pulse.forms
         // Private functions
         private void Initialize()
         {
-            patientName.Text = String.Format("Пациент: {0}", _patient.fullName());
+            patientName.Text = _patient != null ?
+                String.Format("Пациент: {0}", _patient.fullName()) :
+                "Пациент: -"; 
+
             nni_counter.Text = _jToken["nni_counter"].ToObject<int>().ToString();
             nni_mean.Text = _jToken["nni_mean"].ToObject<double>().ToString("0.000");
             nni_min.Text = _jToken["nni_min"].ToObject<int>().ToString();

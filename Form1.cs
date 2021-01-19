@@ -308,7 +308,6 @@ namespace pulse
 
         private void открытьФайлыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form2 f2 = new Form2();
             string rl;
             int tm = 0;
             int x2 = 0;
@@ -321,40 +320,13 @@ namespace pulse
 
                 if (openFileDialog.ShowDialog() == DialogResult.OK)
                 {
-                    //Get the path of specified file
                     string filePath = openFileDialog.FileName;
 
-                    //Read the contents of the file into a stream
-                    var fileStream = openFileDialog.OpenFile();
+                    Record _record = new Record(filePath);
+                    _record.is_null = true;
 
-                    using (StreamReader f = new StreamReader(fileStream))
-                    {
-                        while (!f.EndOfStream)
-                        {
-                            rl = f.ReadLine();
-                            int dol2 = rl.IndexOf('$');
-                            if (dol2 != -1)
-                            {
-                                rl = rl.Trim('$');
-                                Console.WriteLine(rl);
-                                f2.CIV.Series[0].Points.AddXY(x2, rl);
-                                dol2 = 0;
-                                x2++;
-                            }
-                            else
-                            {
-                                if (rl != "")
-                                {
-                                    f2.Signal.Series[0].Points.AddXY(tm, rl);
-                                    f2.Signal.ChartAreas[0].AxisX.ScaleView.Zoom(x - 300, x);
-                                    tm++;
-                                }
-                            }
-                        }
-                        f.Close();
-                        x2 = 0;
-                        f2.ShowDialog();
-                    }
+                    Form2 f2 = new Form2(_record);
+                    f2.ShowDialog();
                 }
 
             }

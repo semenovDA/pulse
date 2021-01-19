@@ -12,9 +12,11 @@ namespace pulse.collection
         private float _duration;
         private String _comments;
         private Patient _patient;
+        private bool _null;
 
         /* Main constructors */
         public Record(string id) => _id = id;
+
         public Record(float duration, Patient patient)
         {
             _id = Guid.NewGuid().ToString();
@@ -52,16 +54,20 @@ namespace pulse.collection
         public float duration { get => _duration; set => _duration = value; }
         public string comments { get => _comments; set => _comments = value; }
         public Patient patient { get => _patient; set => _patient = value; }
+        public bool is_null { get => _null; set => _null = value; }
 
         /*  Database relations   */
         public void create() { new DBconnection().insert_record(this); }
         public void update() { new DBconnection().update_record(this); }
         public void delete() { new DBconnection().delete_record(this); }
-        public void get() { new DBconnection().fill_record(this); }
+        public void get() {
+            if (!is_null) new DBconnection().fill_record(this);
+        }
 
         /*  Utils functions */
         public string getFileName()
         {
+            if (_null) return this.id;
             string savesDir = Properties.Settings.Default.savesPath;
             return savesDir + this.id + ".txt";
         }

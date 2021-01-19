@@ -198,7 +198,6 @@ namespace pulse
             new Scatterogram(_peaks, jToken).ShowDialog();
         }
 
-
         // Utils
         private string getTime(int ms)
         {
