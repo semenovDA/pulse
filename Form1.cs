@@ -308,10 +308,6 @@ namespace pulse
 
         private void открытьФайлыToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            string rl;
-            int tm = 0;
-            int x2 = 0;
-
             using (OpenFileDialog openFileDialog = new OpenFileDialog())
             {
                 openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";

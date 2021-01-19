@@ -114,6 +114,7 @@
             this.спектрToolStripMenuItem.Name = "спектрToolStripMenuItem";
             this.спектрToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.спектрToolStripMenuItem.Text = "Спектр";
+            this.спектрToolStripMenuItem.Click += new System.EventHandler(this.спектрToolStripMenuItem_Click);
             // 
             // видToolStripMenuItem
             // 

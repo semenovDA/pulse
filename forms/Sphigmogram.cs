@@ -197,6 +197,11 @@ namespace pulse
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
             new Scatterogram(_peaks, jToken).ShowDialog();
         }
+        private void спектрToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRFOURIER);
+            new Spectrogram(jToken).ShowDialog();
+        }
 
         // Utils
         private string getTime(int ms)
@@ -221,5 +226,6 @@ namespace pulse
             axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
             axis.ScaleView.Zoom(viewStart, viewEnd);
         }
+
     }
 }
