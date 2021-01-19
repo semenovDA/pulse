@@ -50,5 +50,20 @@ namespace pulse.forms.charts
             InitializeComponent();
             FillChart(jToken);
         }
+
+        private void Spectogram_CursorPositionChanging(object sender, CursorEventArgs e)
+        {
+            int idx = (int)(e.NewPosition > 0 ? e.NewPosition : 0);
+            foreach(var series in Spectogram.Series) {
+                var arr = series.Points.Where(p => p.XValue == idx);
+                if(arr.Count() != 0) {
+                    var X = arr.First().AxisLabel;
+                    var Y = arr.First().YValues[0];
+                    infoBox.Text = String.Format("X:{0} Y:{1}", X, Y);
+                    break;  
+                }
+            }
+
+        }
     }
 }
