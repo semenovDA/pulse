@@ -49,6 +49,7 @@ namespace pulse.forms.charts
             Spectogram.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
             Spectogram.ChartAreas[0].CursorX.AutoScroll = true;
             Spectogram.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
+
         }
 
         private void FillChart(JObject jObject, String method)
@@ -58,10 +59,11 @@ namespace pulse.forms.charts
             var _power = jObject[method].SelectToken("power");
             var _freq_i = jObject[method].SelectToken("freq_i");
 
-            drawGraph(_freq, _power, _freq_i); 
+            var condition = (method == "welch" || method == "arr");
+            drawGraph(_freq, _power, _freq_i, condition); 
             FillLegend(_params, method);
         }
-        private void drawGraph(JToken freq, JToken power, JToken freq_i)
+        private void drawGraph(JToken freq, JToken power, JToken freq_i, bool drawLine)
         {
             int counter = 0;
             foreach (var point in freq.Zip(power, Tuple.Create))
@@ -70,14 +72,14 @@ namespace pulse.forms.charts
                 var y = point.Item2.Value<double>();
                 var key = searchKey(freq_i, counter);
 
-                if (key != null)
-                {
+                if (key != null) {
                     Spectogram.Series[key].Points.AddXY(counter, y);
-                    Spectogram.Series[key].Points.Last().AxisLabel = x.ToString();
+                    Spectogram.Series[key].Points.Last().AxisLabel = x.ToString("0.000");
                 }
-
-                Spectogram.Series["line"].Points.AddXY(counter, y);
-                Spectogram.Series["line"].Points.Last().AxisLabel = x.ToString();
+                if(drawLine)  {
+                    Spectogram.Series["line"].Points.AddXY(counter, y);
+                    Spectogram.Series["line"].Points.Last().AxisLabel = x.ToString("0.000");
+                }
 
                 counter++;
             }
@@ -104,7 +106,7 @@ namespace pulse.forms.charts
             for (int i= 0; i < bands.Length; i++)
             {
                 var band = bands[i];
-                var bandName = ((Newtonsoft.Json.Linq.JProperty)band).Name;
+                var bandName = ((JProperty)band).Name;
 
                 // Initialize lowest and highest frequencies
                 var low = band.First().First().Value<float>();
