@@ -184,7 +184,6 @@ namespace pulse
                 }
             }
 
-
             InfoBox.Text = String.Format("Время: {0}\tms: {1}\tY: {2}", XLabel, idx, Y);
         }
         private void HistogramDistributionMenuItem_Click(object sender, EventArgs e)
