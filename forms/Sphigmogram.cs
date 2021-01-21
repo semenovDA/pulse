@@ -197,10 +197,10 @@ namespace pulse
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
             new Scatterogram(_peaks, jToken).ShowDialog();
         }
-        private void спектрToolStripMenuItem_Click(object sender, EventArgs e)
+        private void welchToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRFOURIER);
-            new Spectrogram(jToken).ShowDialog();
+            JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRFREQUENCY);
+            new Spectrogram(jToken, Spectrogram.Method.Welch).ShowDialog();
         }
 
         // Utils
