@@ -14,6 +14,7 @@ namespace pulse.core
         static public string SCRIPT_VSRPEAKS = "scripts/VSR_PEAKS.py";
         static public string SCRIPT_VSRPOINCARE = "scripts/VSR_POINCARE.py";
         static public string SCRIPT_VSRFOURIER = "scripts/VSR_FOURIER.py";
+        static public string SCRIPT_VSRFREQUENCY = "scripts/VSR_FREQUENCY.py";
 
         // Private variables
         private Record _record;
