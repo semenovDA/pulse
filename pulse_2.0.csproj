@@ -260,6 +260,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Settings.cs" />
     <Content Include="icon.ico" />
+    <Content Include="scripts\VSR_FREQUENCY.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="scripts\VSR_FOURIER.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
