@@ -147,8 +147,7 @@ namespace pulse
         private void вСРToolStripMenuItem_Click(object sender, EventArgs e)
         {
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
-            VSRStatistics statistics = new VSRStatistics(_record.patient, jToken);
-            statistics.ShowDialog();
+            new VSRStatistics(_record.patient, jToken).Show();
         }
         private void ShowValuesCb_Click(object sender, EventArgs e)
         {
@@ -189,12 +188,12 @@ namespace pulse
         private void HistogramDistributionMenuItem_Click(object sender, EventArgs e)
         {
             var points = CIV.Series[0].Points.Select(s => s.YValues[0]);
-            new DistributionHistogram(points).ShowDialog();
+            new DistributionHistogram(points).Show();
         }
         private void скатерграммаToolStripMenuItem_Click(object sender, EventArgs e)
         {
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
-            new Scatterogram(_peaks, jToken).ShowDialog();
+            new Scatterogram(_peaks, jToken).Show();
         }
         private void powerSpectralHandler(object sender, EventArgs e)
         {
@@ -213,7 +212,7 @@ namespace pulse
                     break;
             }
 
-            new Spectrogram(jToken, method).ShowDialog();
+            new Spectrogram(jToken, method).Show();
         }
 
         // Utils
