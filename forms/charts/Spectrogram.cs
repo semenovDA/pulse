@@ -14,6 +14,8 @@ namespace pulse.forms.charts
         public enum Method
         {
             Welch,
+            Lomb,
+            Autoregressive,
         }
 
         private string searchKey(JToken jToken, int counter)
@@ -48,12 +50,12 @@ namespace pulse.forms.charts
             Spectogram.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
         }
 
-        private void WelchFill(JObject jObject)
+        private void drawGraph(JObject jObject, String method)
         {
-            var _params = jObject["welch"].SelectToken("params");
-            var _freq = jObject["welch"].SelectToken("freq");
-            var _power = jObject["welch"].SelectToken("power");
-            var _freq_i = jObject["welch"].SelectToken("freq_i");
+            var _params = jObject[method].SelectToken("params");
+            var _freq = jObject[method].SelectToken("freq");
+            var _power = jObject[method].SelectToken("power");
+            var _freq_i = jObject[method].SelectToken("freq_i");
 
             int counter = 0;
             foreach (var point in _freq.Zip(_power, Tuple.Create))
@@ -77,44 +79,17 @@ namespace pulse.forms.charts
             Spectogram.ChartAreas[0].AxisX.ScaleView.Zoom(0, max);
         }
 
-        private void FourierFill(JObject jObject)
-        {
-            double x = 0;
-            var step = 4.0 / (double.Parse(jObject["count"].ToString()));
-
-            foreach (var o in jObject)
-            {
-                string name = o.Key;
-                if (name == "count") continue;
-
-                foreach (var p in o.Value)
-                {
-                    Spectogram.Series[name].Points.AddXY(x, double.Parse(p.ToString()));
-                    Spectogram.Series[name].Points.Last().AxisLabel = (step * x).ToString();
-                    x++;
-                }
-            }
-        }
-
-        private void FillChart(JToken jToken, Method method)
-        {
-            JObject jObject = JObject.Parse(File.ReadAllText(jToken.ToString()));
-            switch(method)
-            {
-                case Method.Welch:
-                    WelchFill(jObject);
-                    break;
-
-                default:
-                    throw new Exception("No such method");
-            }
-            defaultChartArea();
-        }
-
         public Spectrogram(JToken jToken, Method method)
         {
             InitializeComponent();
-            FillChart(jToken, method);
+
+            JObject jObject = JObject.Parse(File.ReadAllText(jToken.ToString()));
+
+            if (method == Method.Welch) drawGraph(jObject, "welch");
+            else if (method == Method.Lomb) drawGraph(jObject, "lomb");
+            else if (method == Method.Autoregressive) drawGraph(jObject, "ar");
+
+            defaultChartArea();
         }
 
         private void Spectogram_CursorPositionChanging(object sender, CursorEventArgs e)

@@ -197,10 +197,24 @@ namespace pulse
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
             new Scatterogram(_peaks, jToken).ShowDialog();
         }
-        private void welchToolStripMenuItem_Click(object sender, EventArgs e)
+        private void powerSpectralHandler(object sender, EventArgs e)
         {
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRFREQUENCY);
-            new Spectrogram(jToken, Spectrogram.Method.Welch).ShowDialog();
+            var method = Spectrogram.Method.Welch;
+
+            switch (sender.ToString().ToLower()) {
+                case "welch":
+                    method = Spectrogram.Method.Welch;
+                    break;
+                case "lomb-scargle":
+                    method = Spectrogram.Method.Lomb;
+                    break;
+                case "autoregressive":
+                    method = Spectrogram.Method.Autoregressive;
+                    break;
+            }
+
+            new Spectrogram(jToken, method).ShowDialog();
         }
 
         // Utils
@@ -226,6 +240,5 @@ namespace pulse
             axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
             axis.ScaleView.Zoom(viewStart, viewEnd);
         }
-
     }
 }

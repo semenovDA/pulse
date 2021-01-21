@@ -125,21 +125,23 @@
             // welchToolStripMenuItem
             // 
             this.welchToolStripMenuItem.Name = "welchToolStripMenuItem";
-            this.welchToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.welchToolStripMenuItem.Text = "Welch ";
-            this.welchToolStripMenuItem.Click += new System.EventHandler(this.welchToolStripMenuItem_Click);
+            this.welchToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.welchToolStripMenuItem.Text = "Welch";
+            this.welchToolStripMenuItem.Click += new System.EventHandler(this.powerSpectralHandler);
             // 
             // lombScargleToolStripMenuItem
             // 
             this.lombScargleToolStripMenuItem.Name = "lombScargleToolStripMenuItem";
-            this.lombScargleToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.lombScargleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.lombScargleToolStripMenuItem.Text = "Lomb-Scargle";
+            this.lombScargleToolStripMenuItem.Click += new System.EventHandler(this.powerSpectralHandler);
             // 
             // autoregressiveToolStripMenuItem
             // 
             this.autoregressiveToolStripMenuItem.Name = "autoregressiveToolStripMenuItem";
-            this.autoregressiveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.autoregressiveToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.autoregressiveToolStripMenuItem.Text = "Autoregressive";
+            this.autoregressiveToolStripMenuItem.Click += new System.EventHandler(this.powerSpectralHandler);
             // 
             // видToolStripMenuItem
             // 
