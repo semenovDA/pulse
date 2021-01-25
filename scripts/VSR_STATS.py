@@ -1,7 +1,7 @@
 import os, sys, getopt
 import numpy as np
 import warnings
-from VSRstats import VSR
+from VSRstats.time_domain import time_domain
 warnings.filterwarnings("ignore")
 
 def openFile(filename):
@@ -28,17 +28,17 @@ def main(argv):
          inputfile = arg
 
     data = openFile(inputfile).split('\n');
-    arr = []
+    signal = []
 
     for bit in data:
         if not (bit == ''):
             try:
-                arr.append(int(bit));
+                signal.append(int(bit));
             except Exception:
                 pass;
 
     obj = {}
-    obj['stats'] = VSR(np.array(arr)).stats;
+    obj['stats'] = time_domain(signal).stats
     print(obj)
 
 
