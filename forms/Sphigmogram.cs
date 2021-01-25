@@ -174,10 +174,8 @@ namespace pulse
             var Y = Signal.Series[0].Points[idx].YValues[0];
             var XLabel = Signal.Series[0].Points[idx].AxisLabel;
 
-            for (int i = 0; i < _peaks.Length; i++)
-            {
-                if (idx <= _peaks[i])
-                {
+            for (int i = 0; i < _peaks.Length; i++) {
+                if (idx <= _peaks[i]) {
                     selectBar(i - 1 < 0 ? 0 : i - 1);
                     break;
                 }
