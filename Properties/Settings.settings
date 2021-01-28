@@ -6,7 +6,7 @@
       <Value Profile="(Default)">'|DataDirectory|\main.db'</Value>
     </Setting>
     <Setting Name="savesPath" Type="System.String" Scope="User">
-      <Value Profile="(Default)">saves/</Value>
+      <Value Profile="(Default)" />
     </Setting>
   </Settings>
 </SettingsFile>

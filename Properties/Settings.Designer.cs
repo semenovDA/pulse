@@ -37,7 +37,7 @@ namespace pulse.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("saves/")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string savesPath {
             get {
                 return ((string)(this["savesPath"]));
