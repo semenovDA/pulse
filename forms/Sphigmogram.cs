@@ -30,7 +30,7 @@ namespace pulse
         }
 
         /*  Main Functions */
-        private void setView()
+        private void SetView()
         {
             double max = Signal.Series[0].Points.Max(p => p.YValues[0]);
             double min = Signal.Series[0].Points.Min(p => p.YValues[0]);
@@ -61,7 +61,7 @@ namespace pulse
 
             CIV.ChartAreas[0].AxisX.ScaleView.Zoom(0, _peaks.Length / 2);
 
-            resetInterval();
+            ResetInterval();
         }
         private void FillCharts(Record record)
         {
@@ -95,11 +95,11 @@ namespace pulse
                     if (rl != "" && dol2 == -1)
                     {
                         Signal.Series[0].Points.AddXY(tm, rl);
-                        Signal.Series[0].Points.Last().AxisLabel = getTime(tm);
+                        Signal.Series[0].Points.Last().AxisLabel = GetTime(tm);
                         if (_peaks.Contains(tm))
                         {
                             Signal.Series[1].Points.AddXY(tm, rl);
-                            Signal.Series[1].Points.Last().AxisLabel = getTime(tm);
+                            Signal.Series[1].Points.Last().AxisLabel = GetTime(tm);
                         }
                         tm++;
                     }
@@ -142,9 +142,9 @@ namespace pulse
                 Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, 1000);
             }
         }
-        private void Form2_Load(object sender, EventArgs e) => setView();
-        private void сбросToolStripMenuItem_Click(object sender, EventArgs e) => setView();
-        private void вСРToolStripMenuItem_Click(object sender, EventArgs e)
+        private void Form2_Load(object sender, EventArgs e) => SetView();
+        private void ResetViewToolStripMenuItem_Click(object sender, EventArgs e) => SetView();
+        private void StatisticsToolStripMenuItem_Click(object sender, EventArgs e)
         {
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
             new VSRStatistics(_record.patient, jToken).Show();
@@ -176,7 +176,7 @@ namespace pulse
 
             for (int i = 0; i < _peaks.Length; i++) {
                 if (idx <= _peaks[i]) {
-                    selectBar(i - 1 < 0 ? 0 : i - 1);
+                    SelectBar(i - 1 < 0 ? 0 : i - 1);
                     break;
                 }
             }
@@ -188,12 +188,12 @@ namespace pulse
             var points = CIV.Series[0].Points.Select(s => s.YValues[0]);
             new DistributionHistogram(points).Show();
         }
-        private void скатерграммаToolStripMenuItem_Click(object sender, EventArgs e)
+        private void ScattergramToolStripMenuItem_Click(object sender, EventArgs e)
         {
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
             new Scatterogram(_peaks, jToken).Show();
         }
-        private void powerSpectralHandler(object sender, EventArgs e)
+        private void PowerSpectralHandler(object sender, EventArgs e)
         {
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRFREQUENCY);
             var method = Spectrogram.Method.Welch;
@@ -214,18 +214,18 @@ namespace pulse
         }
 
         // Utils
-        private string getTime(int ms)
+        private string GetTime(int ms)
         {
             TimeSpan ts = TimeSpan.FromMilliseconds(ms);
             return ts.ToString(@"hh\:mm\:ss\.fff");
         }
-        private void resetInterval()
+        private void ResetInterval()
         {
             var axis = Signal.ChartAreas[0].AxisX;
             axis.Interval = 251;
             axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
         }
-        public void selectBar(int idx)
+        public void SelectBar(int idx)
         {
             foreach (var p in CIV.Series[0].Points) { p.Color = Color.Empty; }
             CIV.Series[0].Points[idx].Color = Color.Red;
