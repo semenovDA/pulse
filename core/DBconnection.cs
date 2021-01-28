@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Data;
 using System.Data.SQLite;
+using System.Windows.Forms;
 using pulse.collection;
 
 namespace pulse.core
@@ -41,7 +42,10 @@ namespace pulse.core
                 sqlConnection = new SQLiteConnection(connectionString);
                 sqlConnection.Open();
             }
-            catch (Exception e) { throw e; }
+            catch (Exception exp)
+            {
+                MessageBox.Show("Ошибка. Невозможно подключится к БД.\n Подробнее: " + exp.Message);
+            }
             finally { sqlConnection.Close(); }
         }
 

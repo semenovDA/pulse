@@ -33,7 +33,7 @@ namespace pulse
                     dataGridView1[10, i] = new DataGridViewLinkCell();
                 }
             }
-            catch { MessageBox.Show("Ошибка подключения к базе данных!"); }
+            catch(Exception e) { MessageBox.Show("Ошибка. Невозможно подключится к БД.\n Подробнее: " + e.Message); }
         }
         
         public void ReloadData()
@@ -46,7 +46,7 @@ namespace pulse
                 фИОToolStripMenuItem.Visible = false;
                 _state = PATIENT_DIALOG;
             }
-            catch {  MessageBox.Show("Ошибка подключения к базе данных!"); }
+            catch (Exception e) { MessageBox.Show("Ошибка. Невозможно подключится к БД.\n Подробнее: " + e.Message); }
         }
 
         private void Form3_Load(object sender, EventArgs e) { LoadData(); }
@@ -168,10 +168,7 @@ namespace pulse
                 }
 
             }
-            catch(Exception exp)
-            {
-                Console.WriteLine(exp);
-            }
+            catch (Exception exp) { MessageBox.Show("Ошибка. Невозможно подключится к БД.\n Подробнее: " + exp.Message); }
         }
 
     }
