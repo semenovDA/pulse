@@ -18,7 +18,7 @@ namespace pulse.forms
     {
         // Private variables
 
-        private static string _mapPath = "files/map.json";
+        private static string _mapPath = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "files/map.json");
         private JToken _jToken;
         private Patient _patient;
 
