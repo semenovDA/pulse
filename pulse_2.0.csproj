@@ -272,6 +272,9 @@
     <Content Include="scripts\VSR_POINCARE.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="scripts\VSR_TEST.py">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="scripts\VSR_STATS.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
