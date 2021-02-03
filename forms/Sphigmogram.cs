@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -14,14 +15,27 @@ using pulse.forms.charts;
 
 namespace pulse
 {
+    enum TimeSet {
+        MS = 0,
+        SEC = 1
+    }
+
     public partial class Form2 : Form
     {
         /* Variables definition */
         PythonUtils pyhton;
         Record _record;
 
+        public const int ms = 1000;
+        public const int sec = 1;
+
+        /* Temp variables */
         int[] _peaks;
         bool zoom = false;
+
+        double HZ = 0;
+        double HZstep = 0;
+        double timestep = 0;
 
         /* Main constructor    */
         public Form2(Record record = null) { 
@@ -37,7 +51,9 @@ namespace pulse
 
             Signal.ChartAreas[0].AxisY.ScaleView.Size = max - min;
             Signal.ChartAreas[0].AxisY.ScaleView.Zoom(min - 10, max + 10);
-            Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, 2000);
+
+            var length = Signal.Series[0].Points.Last().XValue / 10;
+            Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, length);
 
             // Set AxisX scrollbar style
             Signal.ChartAreas[0].AxisX.ScrollBar.Size = 10;
@@ -60,52 +76,30 @@ namespace pulse
             Signal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
 
             CIV.ChartAreas[0].AxisX.ScaleView.Zoom(0, _peaks.Length / 2);
-
+            
             ResetInterval();
         }
-        private void FillCharts(Record record)
+
+        private void FillCharts(List<int> signal)
         {
-            String rl;
-            int tm = 0;
-            int dol2 = 0;
-
-            Signal.Series[0].XValueType = ChartValueType.Time;
-            Signal.Series[1].XValueType = ChartValueType.Time;
-
             Signal.ChartAreas[0].AxisX.LabelStyle.Format = "hh:mm:ss.fff";
 
-            _peaks = pyhton.Excute(PythonUtils.SCRIPT_VSRPEAKS)
-                            .Select(jv => (int)jv)
-                            .ToArray();
-
-
-            for (int i = 1; i < _peaks.Length; i++)
-            {
-                CIV.Series[0].Points.AddXY(i, _peaks[i] - _peaks[i - 1]);
+            for (int i = 1; i < _peaks.Length; i++) {
+                var Y = (_peaks[i] * HZstep) - (_peaks[i - 1] * HZstep);
+                CIV.Series[0].Points.AddXY(i, Y / ms);
             }
 
-            string filename = record.getFileName();
-
-            using (StreamReader f = new StreamReader(filename))
-            {
-                while (!f.EndOfStream)
-                {
-                    rl = f.ReadLine();
-                    dol2 = rl.IndexOf('$');
-                    if (rl != "" && dol2 == -1)
-                    {
-                        Signal.Series[0].Points.AddXY(tm, rl);
-                        Signal.Series[0].Points.Last().AxisLabel = GetTime(tm);
-                        if (_peaks.Contains(tm))
-                        {
-                            Signal.Series[1].Points.AddXY(tm, rl);
-                            Signal.Series[1].Points.Last().AxisLabel = GetTime(tm);
-                        }
-                        tm++;
-                    }
+            var step = 0;
+            for (double i = 0; i < timestep; i += HZstep) {
+                Signal.Series[0].Points.AddXY(step, signal[step]);
+                Signal.Series[0].Points.Last().AxisLabel = GetTime((int)i);
+                if (_peaks.Contains(step)) {
+                    Signal.Series[1].Points.AddXY(step, signal[step]);
+                    Signal.Series[1].Points.Last().AxisLabel = GetTime((int)i);
                 }
-                f.Close();
+                step ++;
             }
+
         }
         public void Initialize(Record record)
         {
@@ -113,7 +107,21 @@ namespace pulse
             _record.get();
 
             pyhton = new PythonUtils(_record);
-            FillCharts(_record);
+
+            _peaks = pyhton.Excute(PythonUtils.SCRIPT_VSRPEAKS)
+                           .Select(jv => (int)jv)
+                           .ToArray();
+
+            var filename = record.getFileName();
+            var signal = File.ReadLines(filename)
+                             .Select(s => int.Parse(s))
+                             .ToList();
+
+            HZ = signal.Count() / record.duration;
+            HZstep = ms / HZ;
+            timestep = record.duration * ms;
+
+            FillCharts(signal);
         }
 
         /*  Events  */
@@ -166,22 +174,25 @@ namespace pulse
             var p = _peaks[idx == 0 ? idx : idx - 1];
             var r = _peaks[idx];
 
-            ZoomAxis(Signal.ChartAreas[0].AxisX, p - 50, r + 50);
+            var startView = (p - 50) < 0 ? p : (p - 50);
+            ZoomAxis(Signal.ChartAreas[0].AxisX, startView, r + 50);
         }
         private void Signal_CursorPositionChanging(object sender, CursorEventArgs e)
         {
             int idx = (int)(e.NewPosition > 0 ? e.NewPosition : 0);
+
             var Y = Signal.Series[0].Points[idx].YValues[0];
             var XLabel = Signal.Series[0].Points[idx].AxisLabel;
+            int msLabel = (int)((e.NewPosition > 0 ? e.NewPosition : 0) * HZstep);
 
-            for (int i = 0; i < _peaks.Length; i++) {
+            for (int i = 1; i < _peaks.Length; i++) {
                 if (idx <= _peaks[i]) {
                     SelectBar(i - 1 < 0 ? 0 : i - 1);
                     break;
                 }
             }
 
-            InfoBox.Text = String.Format("Время: {0}\tms: {1}\tY: {2}", XLabel, idx, Y);
+            InfoBox.Text = String.Format("Время: {0}\tms: {1}\tY: {2}", XLabel, msLabel, Y);
         }
         private void HistogramDistributionMenuItem_Click(object sender, EventArgs e)
         {
@@ -222,8 +233,8 @@ namespace pulse
         private void ResetInterval()
         {
             var axis = Signal.ChartAreas[0].AxisX;
-            axis.Interval = 251;
-            axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
+            axis.Interval = 100;
+
         }
         public void SelectBar(int idx)
         {
@@ -233,8 +244,9 @@ namespace pulse
         public void ZoomAxis(Axis axis, double viewStart, double viewEnd)
         {
             axis.Interval = (viewEnd - viewStart) / 4;
-            axis.IntervalOffset = (-axis.Minimum) % axis.Interval;
             axis.ScaleView.Zoom(viewStart, viewEnd);
         }
+
     }
+
 }

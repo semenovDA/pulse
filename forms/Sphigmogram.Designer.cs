@@ -261,7 +261,7 @@
             legend1.LegendStyle = System.Windows.Forms.DataVisualization.Charting.LegendStyle.Row;
             legend1.Name = "Legend1";
             this.CIV.Legends.Add(legend1);
-            this.CIV.Location = new System.Drawing.Point(0, 371);
+            this.CIV.Location = new System.Drawing.Point(0, 355);
             this.CIV.Margin = new System.Windows.Forms.Padding(0);
             this.CIV.Name = "CIV";
             this.CIV.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -274,7 +274,7 @@
             series1.Name = "Series1";
             series1.XValueType = System.Windows.Forms.DataVisualization.Charting.ChartValueType.Double;
             this.CIV.Series.Add(series1);
-            this.CIV.Size = new System.Drawing.Size(824, 275);
+            this.CIV.Size = new System.Drawing.Size(824, 291);
             this.CIV.TabIndex = 13;
             this.CIV.Text = "chart2";
             this.CIV.CursorPositionChanging += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.CursorEventArgs>(this.CIV_CursorPositionChanged);
@@ -292,7 +292,7 @@
             this.tableLayoutPanel1.RowCount = 3;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 5.929919F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 94.07008F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 274F));
+            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 290F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
             this.tableLayoutPanel1.Size = new System.Drawing.Size(824, 646);
@@ -305,7 +305,10 @@
             chartArea2.AlignmentStyle = System.Windows.Forms.DataVisualization.Charting.AreaAlignmentStyles.PlotPosition;
             chartArea2.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
             chartArea2.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea2.AxisX.MajorTickMark.Interval = 0D;
+            chartArea2.AxisX.MajorTickMark.IntervalOffset = 0D;
             chartArea2.AxisX.ScrollBar.IsPositionedInside = false;
+            chartArea2.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
             chartArea2.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
             chartArea2.AxisY.ScrollBar.Enabled = false;
             chartArea2.BorderWidth = 0;
@@ -316,11 +319,11 @@
             chartArea2.InnerPlotPosition.Y = 5F;
             chartArea2.Name = "ChartArea1";
             chartArea2.Position.Auto = false;
-            chartArea2.Position.Height = 100F;
+            chartArea2.Position.Height = 80F;
             chartArea2.Position.Width = 100F;
             this.Signal.ChartAreas.Add(chartArea2);
             this.Signal.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Signal.Location = new System.Drawing.Point(3, 25);
+            this.Signal.Location = new System.Drawing.Point(3, 24);
             this.Signal.Name = "Signal";
             series2.ChartArea = "ChartArea1";
             series2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
@@ -337,7 +340,7 @@
             series3.Name = "Series2";
             this.Signal.Series.Add(series2);
             this.Signal.Series.Add(series3);
-            this.Signal.Size = new System.Drawing.Size(818, 343);
+            this.Signal.Size = new System.Drawing.Size(818, 328);
             this.Signal.TabIndex = 14;
             this.Signal.Text = "Signal";
             this.Signal.CursorPositionChanging += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.CursorEventArgs>(this.Signal_CursorPositionChanging);
