@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace pulse.core
 {
-    class CacheHandler
+    public class CacheHandler
     {
         /*   Variables defenition    */
         private Record _record;

@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace pulse.core
 {
-    class PythonUtils : CacheHandler
+    public class PythonUtils : CacheHandler
     {
         // Public variables
         static public string SCRIPT_VSRSTATS = "scripts/VSR_STATS.py";
