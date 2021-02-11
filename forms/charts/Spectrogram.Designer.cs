@@ -29,6 +29,7 @@ namespace pulse.forms.charts
         /// </summary>
         private void InitializeComponent()
         {
+            System.Windows.Forms.DataVisualization.Charting.TextAnnotation textAnnotation1 = new System.Windows.Forms.DataVisualization.Charting.TextAnnotation();
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
@@ -66,6 +67,10 @@ namespace pulse.forms.charts
             // 
             // Spectogram
             // 
+            textAnnotation1.ClipToChartArea = "ChartArea1";
+            textAnnotation1.Name = "TextAnnotation1";
+            textAnnotation1.Text = "TextAnnotation1";
+            this.Spectogram.Annotations.Add(textAnnotation1);
             chartArea1.Name = "ChartArea1";
             this.Spectogram.ChartAreas.Add(chartArea1);
             this.Spectogram.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -94,6 +99,7 @@ namespace pulse.forms.charts
             series5.ChartArea = "ChartArea1";
             series5.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Spline;
             series5.Color = System.Drawing.Color.Gray;
+            series5.IsVisibleInLegend = false;
             series5.Name = "line";
             this.Spectogram.Series.Add(series1);
             this.Spectogram.Series.Add(series2);

@@ -22,7 +22,7 @@ namespace pulse.forms.charts
         private string searchKey(JToken jToken, int counter)
         {
             foreach (var k in jToken.Children()) {
-                var key = ((Newtonsoft.Json.Linq.JProperty)k).Name;
+                var key = ((JProperty)k).Name;
                 if (k.Values().Contains(counter)) return key;
             }
             return null;

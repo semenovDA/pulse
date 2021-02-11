@@ -1,4 +1,6 @@
-﻿using pulse.core;
+﻿using Newtonsoft.Json.Linq;
+using pulse.core;
+using pulse.graphics;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -50,6 +52,20 @@ namespace pulse.collection
                     (peaks[i] - peaks[i - 1]));
             }
             return points;
+        }
+
+        public JObject computeFrequency()
+        {
+            var jToken = base.Excute(PythonUtils.SCRIPT_VSRFREQUENCY);
+            return JObject.Parse(File.ReadAllText(jToken.ToString()));
+        }
+        public JToken computeFrequency(Spectogram.Method method)
+        {
+            var obj = computeFrequency();
+            if (method == Spectogram.Method.Welch) return obj["welch"];
+            else if (method == Spectogram.Method.Lomb) return obj["lomb"];
+            else if (method == Spectogram.Method.Autoregressive) return obj["ar"];
+            else return obj;
         }
     }
 }

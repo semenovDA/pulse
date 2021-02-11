@@ -13,6 +13,7 @@ namespace pulse.forms
     public partial class AnalysisForm : Form
     {
         Signal _signal;
+        Dictionary<string, string> charts = new Dictionary<string, string>();
 
         bool mouse_is_down = false;
         int _rows = 1;
@@ -29,9 +30,15 @@ namespace pulse.forms
 
         private void Initialize()
         {
-            var histogram = new ListViewItem("Гисторграмма распределение");
-            histogram.Tag = "DISTRIBUTION_HISTOGRAM";
-            listView1.Items.Add(histogram);
+            charts.Add("Гисторграмма распределение", "DISTRIBUTION_HISTOGRAM");
+            charts.Add("Спектограмма Welch", "WELCH_SPECTOGRAM");
+            charts.Add("Спектограмма Lomb-Scargle", "LOMB_SPECTOGRAM");
+            charts.Add("Спектограмма Autoregressive", "AR_SPECTOGRAM");
+
+            foreach (KeyValuePair<string, string> kvp in charts) {
+                var chart = new ListViewItem(kvp.Key) { Tag = kvp.Value };
+                listView1.Items.Add(chart);
+            }
         }
 
         private Chart GetChart(string chartname)
@@ -41,6 +48,15 @@ namespace pulse.forms
             {
                 case "DISTRIBUTION_HISTOGRAM":
                     chart = new Histogram(_signal).chart;
+                    break;
+                case "WELCH_SPECTOGRAM":
+                    chart = new Spectogram(_signal, Spectogram.Method.Welch).chart;
+                    break;
+                case "LOMB_SPECTOGRAM":
+                    chart = new Spectogram(_signal, Spectogram.Method.Lomb).chart;
+                    break;
+                case "AR_SPECTOGRAM":
+                    chart = new Spectogram(_signal, Spectogram.Method.Autoregressive).chart;
                     break;
             }
 
