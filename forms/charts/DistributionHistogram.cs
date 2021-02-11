@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MathNet.Numerics.Statistics;
 using MathNet.Numerics.Distributions;
@@ -34,7 +30,6 @@ namespace pulse.forms.charts
 
         private void FillValues(IEnumerable<double> points)
         {
-
             foreach (var u in points.Distinct()) {
                 Histogram.Series[0].Points.AddXY(u, points.Where(p => p == u).Count());
             }

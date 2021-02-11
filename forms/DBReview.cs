@@ -155,9 +155,7 @@ namespace pulse
                                     try
                                     {
                                         String id = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
-                                        Record record = new Record(id);
-                                        System.IO.File.Delete(@"saves/" + id + ".txt");
-                                        record.delete();
+                                        new Record(id).delete();
                                     }
                                     catch { MessageBox.Show("Ошибка"); }
                                     finally { dataGridView1.Rows.RemoveAt(e.RowIndex); }

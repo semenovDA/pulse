@@ -47,6 +47,7 @@
             this.welchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lombScargleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoregressiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.AllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.видToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowValuesCb = new System.Windows.Forms.ToolStripMenuItem();
             this.FocusSignalCb = new System.Windows.Forms.ToolStripMenuItem();
@@ -77,7 +78,8 @@
             this.анализToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.вСРToolStripMenuItem,
             this.диаграммыToolStripMenuItem,
-            this.спектрToolStripMenuItem});
+            this.спектрToolStripMenuItem,
+            this.AllToolStripMenuItem});
             this.анализToolStripMenuItem.Name = "анализToolStripMenuItem";
             this.анализToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
             this.анализToolStripMenuItem.Text = "Анализ";
@@ -142,6 +144,13 @@
             this.autoregressiveToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.autoregressiveToolStripMenuItem.Text = "Autoregressive";
             this.autoregressiveToolStripMenuItem.Click += new System.EventHandler(this.PowerSpectralHandler);
+            // 
+            // AllToolStripMenuItem
+            // 
+            this.AllToolStripMenuItem.Name = "AllToolStripMenuItem";
+            this.AllToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.AllToolStripMenuItem.Text = "Все";
+            this.AllToolStripMenuItem.Click += new System.EventHandler(this.AllToolStripMenuItem_Click);
             // 
             // видToolStripMenuItem
             // 
@@ -219,10 +228,11 @@
             chartArea1.AxisX.MaximumAutoSize = 85F;
             chartArea1.AxisX.MinorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
             chartArea1.AxisX.MinorTickMark.Enabled = true;
-            chartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.Transparent;
-            chartArea1.AxisX.ScrollBar.ButtonColor = System.Drawing.Color.Gray;
+            chartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisX.ScrollBar.ButtonColor = System.Drawing.Color.White;
+            chartArea1.AxisX.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chartArea1.AxisX.ScrollBar.LineColor = System.Drawing.Color.Black;
-            chartArea1.AxisX.ScrollBar.Size = 20D;
+            chartArea1.AxisX.ScrollBar.Size = 10D;
             chartArea1.AxisX2.ScrollBar.Enabled = false;
             chartArea1.AxisY.Crossing = -1.7976931348623157E+308D;
             chartArea1.AxisY.InterlacedColor = System.Drawing.Color.White;
@@ -245,6 +255,7 @@
             chartArea1.AxisY.ScrollBar.ButtonColor = System.Drawing.Color.Gray;
             chartArea1.AxisY.ScrollBar.LineColor = System.Drawing.Color.Black;
             chartArea1.AxisY.ScrollBar.Size = 20D;
+            chartArea1.CursorX.IsUserEnabled = true;
             chartArea1.CursorX.SelectionColor = System.Drawing.Color.Silver;
             chartArea1.Name = "ChartArea1";
             chartArea1.Position.Auto = false;
@@ -307,11 +318,16 @@
             chartArea2.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
             chartArea2.AxisX.MajorTickMark.Interval = 0D;
             chartArea2.AxisX.MajorTickMark.IntervalOffset = 0D;
-            chartArea2.AxisX.ScrollBar.IsPositionedInside = false;
+            chartArea2.AxisX.ScrollBar.BackColor = System.Drawing.Color.LightGray;
+            chartArea2.AxisX.ScrollBar.ButtonColor = System.Drawing.Color.White;
+            chartArea2.AxisX.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
+            chartArea2.AxisX.ScrollBar.Size = 10D;
             chartArea2.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
             chartArea2.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
             chartArea2.AxisY.ScrollBar.Enabled = false;
             chartArea2.BorderWidth = 0;
+            chartArea2.CursorX.IsUserEnabled = true;
+            chartArea2.CursorX.IsUserSelectionEnabled = true;
             chartArea2.InnerPlotPosition.Auto = false;
             chartArea2.InnerPlotPosition.Height = 85F;
             chartArea2.InnerPlotPosition.Width = 87F;
@@ -400,5 +416,6 @@
         private System.Windows.Forms.ToolStripMenuItem welchToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem lombScargleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autoregressiveToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem AllToolStripMenuItem;
     }
 }

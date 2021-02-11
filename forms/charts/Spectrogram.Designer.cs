@@ -41,6 +41,7 @@ namespace pulse.forms.charts
             this.infoBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel3 = new System.Windows.Forms.TableLayoutPanel();
+            this.powerTextBox = new System.Windows.Forms.RichTextBox();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.panel4 = new System.Windows.Forms.Panel();
             this.HFtextBox = new System.Windows.Forms.RichTextBox();
@@ -53,7 +54,6 @@ namespace pulse.forms.charts
             this.tableLayoutPanel4 = new System.Windows.Forms.TableLayoutPanel();
             this.ULFtextBox = new System.Windows.Forms.RichTextBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.powerTextBox = new System.Windows.Forms.RichTextBox();
             ((System.ComponentModel.ISupportInitialize)(this.Spectogram)).BeginInit();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
@@ -168,6 +168,17 @@ namespace pulse.forms.charts
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 149F));
             this.tableLayoutPanel3.Size = new System.Drawing.Size(377, 478);
             this.tableLayoutPanel3.TabIndex = 1;
+            // 
+            // powerTextBox
+            // 
+            this.powerTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.powerTextBox.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.powerTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.powerTextBox.Location = new System.Drawing.Point(3, 331);
+            this.powerTextBox.Name = "powerTextBox";
+            this.powerTextBox.Size = new System.Drawing.Size(182, 144);
+            this.powerTextBox.TabIndex = 4;
+            this.powerTextBox.Text = "";
             // 
             // tableLayoutPanel7
             // 
@@ -308,17 +319,6 @@ namespace pulse.forms.charts
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(38, 18);
             this.panel1.TabIndex = 1;
-            // 
-            // powerTextBox
-            // 
-            this.powerTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.powerTextBox.Cursor = System.Windows.Forms.Cursors.Arrow;
-            this.powerTextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.powerTextBox.Location = new System.Drawing.Point(3, 331);
-            this.powerTextBox.Name = "powerTextBox";
-            this.powerTextBox.Size = new System.Drawing.Size(182, 144);
-            this.powerTextBox.TabIndex = 4;
-            this.powerTextBox.Text = "";
             // 
             // Spectrogram
             // 

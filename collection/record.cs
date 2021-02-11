@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using pulse.core;
+using pulse.utils;
 
 namespace pulse.collection
 {
@@ -16,13 +17,13 @@ namespace pulse.collection
 
         /* Main constructors */
         public Record(string id) => _id = id;
-
         public Record(float duration, Patient patient)
         {
             _id = Guid.NewGuid().ToString();
             _time = DateTime.Now;
             _duration = duration;
             _patient = patient;
+
         }
         public Record(float duration, int patient)
         {
@@ -59,7 +60,10 @@ namespace pulse.collection
         /*  Database relations   */
         public void create() { new DBconnection().insert_record(this); }
         public void update() { new DBconnection().update_record(this); }
-        public void delete() { new DBconnection().delete_record(this); }
+        public void delete() { 
+            new DBconnection().delete_record(this);
+            File.Delete(getFileName());
+        }
         public void get() {
             if (!is_null) new DBconnection().fill_record(this);
         }
@@ -71,8 +75,6 @@ namespace pulse.collection
             string savesDir = Properties.Settings.Default.savesPath;
             return savesDir + this.id + ".txt";
         }
-
         public string getCacheName() => this.id + ".tmp";
-
     }
 }

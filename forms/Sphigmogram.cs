@@ -25,17 +25,12 @@ namespace pulse
         /* Variables definition */
         PythonUtils pyhton;
         Record _record;
+        Signal _signal;
 
         public const int ms = 1000;
-        public const int sec = 1;
 
         /* Temp variables */
-        int[] _peaks;
         bool zoom = false;
-
-        double HZ = 0;
-        double HZstep = 0;
-        double timestep = 0;
 
         /* Main constructor    */
         public Form2(Record record = null) { 
@@ -55,45 +50,23 @@ namespace pulse
             var length = Signal.Series[0].Points.Last().XValue / 10;
             Signal.ChartAreas[0].AxisX.ScaleView.Zoom(0, length);
 
-            // Set AxisX scrollbar style
-            Signal.ChartAreas[0].AxisX.ScrollBar.Size = 10;
-            Signal.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
-            Signal.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-            Signal.ChartAreas[0].AxisX.ScrollBar.BackColor = Color.LightGray;
-            Signal.ChartAreas[0].AxisX.ScrollBar.ButtonColor = Color.White;
+            CIV.ChartAreas[0].AxisX.ScaleView.Zoom(0, _signal.peaks.Length / 2);
 
-            CIV.ChartAreas[0].AxisX.ScrollBar.Size = 10;
-            CIV.ChartAreas[0].AxisX.ScrollBar.ButtonStyle = ScrollBarButtonStyles.SmallScroll;
-            CIV.ChartAreas[0].AxisX.ScrollBar.IsPositionedInside = true;
-            CIV.ChartAreas[0].AxisX.ScrollBar.BackColor = Color.LightGray;
-            CIV.ChartAreas[0].AxisX.ScrollBar.ButtonColor = Color.White;
-
-            // Settings
-            CIV.ChartAreas[0].CursorX.IsUserEnabled = true;
-
-            Signal.ChartAreas[0].CursorX.IsUserEnabled = true;
-            Signal.ChartAreas[0].CursorX.IsUserSelectionEnabled = true;
-            Signal.ChartAreas[0].AxisX.ScaleView.Zoomable = true;
-
-            CIV.ChartAreas[0].AxisX.ScaleView.Zoom(0, _peaks.Length / 2);
-            
-            ResetInterval();
+            Signal.ChartAreas[0].AxisX.Interval = 100;
         }
 
         private void FillCharts(List<int> signal)
         {
             Signal.ChartAreas[0].AxisX.LabelStyle.Format = "hh:mm:ss.fff";
 
-            for (int i = 1; i < _peaks.Length; i++) {
-                var Y = (_peaks[i] * HZstep) - (_peaks[i - 1] * HZstep);
-                CIV.Series[0].Points.AddXY(i, Y / ms);
-            }
+            var RR = _signal.computeRR();
+            for (int i = 0; i < RR.Count; i++) { CIV.Series[0].Points.AddXY(i, RR[i]); }
 
             var step = 0;
-            for (double i = 0; i < timestep; i += HZstep) {
+            for (double i = 0; i < _signal.timestep; i += _signal.HZstep) {
                 Signal.Series[0].Points.AddXY(step, signal[step]);
                 Signal.Series[0].Points.Last().AxisLabel = GetTime((int)i);
-                if (_peaks.Contains(step)) {
+                if (_signal.peaks.Contains(step)) {
                     Signal.Series[1].Points.AddXY(step, signal[step]);
                     Signal.Series[1].Points.Last().AxisLabel = GetTime((int)i);
                 }
@@ -107,21 +80,9 @@ namespace pulse
             _record.get();
 
             pyhton = new PythonUtils(_record);
+            _signal = new Signal(record);
 
-            _peaks = pyhton.Excute(PythonUtils.SCRIPT_VSRPEAKS)
-                           .Select(jv => (int)jv)
-                           .ToArray();
-
-            var filename = record.getFileName();
-            var signal = File.ReadLines(filename)
-                             .Select(s => int.Parse(s))
-                             .ToList();
-
-            HZ = signal.Count() / record.duration;
-            HZstep = ms / HZ;
-            timestep = record.duration * ms;
-
-            FillCharts(signal);
+            FillCharts(_signal.signal);
         }
 
         /*  Events  */
@@ -171,8 +132,8 @@ namespace pulse
         {
             int idx = (int)e.NewPosition;
 
-            var p = _peaks[idx == 0 ? idx : idx - 1];
-            var r = _peaks[idx];
+            var p = _signal.peaks[idx == 0 ? idx : idx - 1];
+            var r = _signal.peaks[idx];
 
             var startView = (p - 50) < 0 ? p : (p - 50);
             ZoomAxis(Signal.ChartAreas[0].AxisX, startView, r + 50);
@@ -183,10 +144,10 @@ namespace pulse
 
             var Y = Signal.Series[0].Points[idx].YValues[0];
             var XLabel = Signal.Series[0].Points[idx].AxisLabel;
-            int msLabel = (int)((e.NewPosition > 0 ? e.NewPosition : 0) * HZstep);
+            int msLabel = (int)((e.NewPosition > 0 ? e.NewPosition : 0) * _signal.HZstep);
 
-            for (int i = 1; i < _peaks.Length; i++) {
-                if (idx <= _peaks[i]) {
+            for (int i = 1; i < _signal.peaks.Length; i++) {
+                if (idx <= _signal.peaks[i]) {
                     SelectBar(i - 1 < 0 ? 0 : i - 1);
                     break;
                 }
@@ -202,7 +163,7 @@ namespace pulse
         private void ScattergramToolStripMenuItem_Click(object sender, EventArgs e)
         {
             JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
-            new Scatterogram(_peaks, jToken).Show();
+            new Scatterogram(_signal.peaks, jToken).Show();
         }
         private void PowerSpectralHandler(object sender, EventArgs e)
         {
@@ -223,18 +184,16 @@ namespace pulse
 
             new Spectrogram(jToken, method).Show();
         }
+        private void AllToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            new AnalysisForm(_signal).Show();
+        }
 
         // Utils
         private string GetTime(int ms)
         {
             TimeSpan ts = TimeSpan.FromMilliseconds(ms);
             return ts.ToString(@"hh\:mm\:ss\.fff");
-        }
-        private void ResetInterval()
-        {
-            var axis = Signal.ChartAreas[0].AxisX;
-            axis.Interval = 100;
-
         }
         public void SelectBar(int idx)
         {
