@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using pulse.core;
-using pulse.utils;
 
 namespace pulse.collection
 {
