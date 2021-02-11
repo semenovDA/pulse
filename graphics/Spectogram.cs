@@ -21,13 +21,13 @@ namespace pulse.graphics
             Autoregressive,
         }
 
-        public Spectogram(Signal signal, Method method)
+        public Spectogram(collection.Signal signal, Method method)
         {
             InitializeComponent();
             Initialize(signal, method);
         }
 
-        public void Initialize(Signal signal, Method method)
+        public void Initialize(collection.Signal signal, Method method)
         {
             var jToken = signal.computeFrequency(method);
 

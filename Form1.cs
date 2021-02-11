@@ -321,7 +321,7 @@ namespace pulse
                     Record _record = new Record(filePath);
                     _record.is_null = true;
 
-                    Form2 f2 = new Form2(_record);
+                    Sphigmogram f2 = new Sphigmogram(_record);
                     f2.ShowDialog();
                 }
 

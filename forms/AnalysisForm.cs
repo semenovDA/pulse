@@ -12,14 +12,14 @@ namespace pulse.forms
 {
     public partial class AnalysisForm : Form
     {
-        Signal _signal;
+        collection.Signal _signal;
         Dictionary<string, string> charts = new Dictionary<string, string>();
 
         bool mouse_is_down = false;
         int _rows = 1;
         int _columns = 1;
 
-        public AnalysisForm(Signal signal)
+        public AnalysisForm(collection.Signal signal)
         {
             InitializeComponent();
             _signal = signal;
@@ -30,6 +30,7 @@ namespace pulse.forms
 
         private void Initialize()
         {
+            charts.Add("Сигнал", "SIGNAL");
             charts.Add("Гисторграмма распределение", "DISTRIBUTION_HISTOGRAM");
             charts.Add("Спектограмма Welch", "WELCH_SPECTOGRAM");
             charts.Add("Спектограмма Lomb-Scargle", "LOMB_SPECTOGRAM");
@@ -46,6 +47,9 @@ namespace pulse.forms
             Chart chart = null;
             switch(chartname)
             {
+                case "SIGNAL":
+                    chart = new graphics.Signal(_signal).chart;
+                    break;
                 case "DISTRIBUTION_HISTOGRAM":
                     chart = new Histogram(_signal).chart;
                     break;

@@ -10,13 +10,13 @@ namespace pulse.graphics
 {
     public partial class Histogram : Component
     {
-        public Histogram(Signal signal)
+        public Histogram(collection.Signal signal)
         {
             InitializeComponent();
             FillValues(signal.computeRR(false));
         }
 
-        public Histogram(IContainer container, Signal signal)
+        public Histogram(IContainer container, collection.Signal signal)
         {
             container.Add(this);
             InitializeComponent();

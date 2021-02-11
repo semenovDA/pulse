@@ -20,7 +20,7 @@ namespace pulse
         SEC = 1
     }
 
-    public partial class Form2 : Form
+    public partial class Sphigmogram : Form
     {
         /* Variables definition */
         PythonUtils pyhton;
@@ -33,7 +33,7 @@ namespace pulse
         bool zoom = false;
 
         /* Main constructor    */
-        public Form2(Record record = null) { 
+        public Sphigmogram(Record record = null) { 
             InitializeComponent();
             if(record != null) Initialize(record);
         }
@@ -190,7 +190,7 @@ namespace pulse
         }
 
         // Utils
-        private string GetTime(int ms)
+        public static string GetTime(int ms)
         {
             TimeSpan ts = TimeSpan.FromMilliseconds(ms);
             return ts.ToString(@"hh\:mm\:ss\.fff");

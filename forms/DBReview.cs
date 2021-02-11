@@ -143,7 +143,7 @@ namespace pulse
                         case 0:
                             {
                                 String task = dataGridView1.Rows[e.RowIndex].Cells[2].Value.ToString();
-                                Form2 f2 = new Form2(new Record(task));
+                                Sphigmogram f2 = new Sphigmogram(new Record(task));
                                 f2.ShowDialog();
                                 break;
                             }

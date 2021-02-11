@@ -1,6 +1,6 @@
 ﻿namespace pulse
 {
-    partial class Form2
+    partial class Sphigmogram
     {
         /// <summary>
         /// Required designer variable.
@@ -36,7 +36,7 @@
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form2));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Sphigmogram));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.анализToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.вСРToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();

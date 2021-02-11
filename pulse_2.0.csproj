@@ -269,6 +269,12 @@
     <Compile Include="graphics\Histogram.Designer.cs">
       <DependentUpon>Histogram.cs</DependentUpon>
     </Compile>
+    <Compile Include="graphics\Signal.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="graphics\Signal.Designer.cs">
+      <DependentUpon>Signal.cs</DependentUpon>
+    </Compile>
     <Compile Include="graphics\Spectogram.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -335,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="graphics\Histogram.resx">
       <DependentUpon>Histogram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="graphics\Signal.resx">
+      <DependentUpon>Signal.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="graphics\Spectogram.resx">
       <DependentUpon>Spectogram.cs</DependentUpon>
