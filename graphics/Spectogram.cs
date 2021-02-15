@@ -1,13 +1,8 @@
 ﻿using Newtonsoft.Json.Linq;
 using pulse.collection;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace pulse.graphics
@@ -21,13 +16,13 @@ namespace pulse.graphics
             Autoregressive,
         }
 
-        public Spectogram(collection.Signal signal, Method method)
+        public Spectogram(Signal signal, Method method)
         {
             InitializeComponent();
             Initialize(signal, method);
         }
 
-        public void Initialize(collection.Signal signal, Method method)
+        public void Initialize(Signal signal, Method method)
         {
             var jToken = signal.computeFrequency(method);
 
