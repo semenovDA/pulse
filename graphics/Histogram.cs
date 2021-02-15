@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Drawing;
 using System.Linq;
 using MathNet.Numerics.Distributions;
+using pulse.forms;
 
 namespace pulse.graphics
 {
@@ -29,6 +30,14 @@ namespace pulse.graphics
             List<double> points = signal.computeRR();
             for (var i = 0; i < points.Count; i++) chart.Series[0].Points.AddXY(i + 1, points[i]);
             chart.ChartAreas[0].AxisX.ScaleView.Zoom(0, signal.peaks.Length / 2);
+        }
+
+        public void Show(string title = "Гистограмма распределение")
+        {
+            var emptyFrom = new Empty();
+            emptyFrom.Text = title;
+            emptyFrom.workspace.Controls.Add(chart);
+            emptyFrom.Show();
         }
 
         private List<PointF> NormalDistribution(List<double> points, bool sample = false)

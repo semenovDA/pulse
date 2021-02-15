@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json.Linq;
 using pulse.collection;
+using pulse.forms;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace pulse.graphics
 {
-    public partial class Spectogram : Component
+    public partial class Spectrogram : Component
     {
         public enum Method
         {
@@ -16,7 +17,7 @@ namespace pulse.graphics
             Autoregressive,
         }
 
-        public Spectogram(Signal signal, Method method)
+        public Spectrogram(Signal signal, Method method)
         {
             InitializeComponent();
             Initialize(signal, method);
@@ -114,6 +115,13 @@ namespace pulse.graphics
 
             var max = searchMax(freq_i);
             chart.ChartAreas[0].AxisX.ScaleView.Zoom(0, max);
+        }
+        public void Show(string title = "Cпектральный анализ")
+        {
+            var emptyFrom = new Empty();
+            emptyFrom.Text = title;
+            emptyFrom.workspace.Controls.Add(chart);
+            emptyFrom.Show();
         }
 
         /* Utils */
