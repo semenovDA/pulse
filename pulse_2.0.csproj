@@ -203,23 +203,11 @@
     <Compile Include="forms\AnalysisForm.designer.cs">
       <DependentUpon>AnalysisForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="forms\charts\DistributionHistogram.cs">
+    <Compile Include="forms\Empty.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="forms\charts\DistributionHistogram.Designer.cs">
-      <DependentUpon>DistributionHistogram.cs</DependentUpon>
-    </Compile>
-    <Compile Include="forms\charts\Scatterogram.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="forms\charts\Scatterogram.Designer.cs">
-      <DependentUpon>Scatterogram.cs</DependentUpon>
-    </Compile>
-    <Compile Include="forms\charts\Spectrogram.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="forms\charts\Spectrogram.Designer.cs">
-      <DependentUpon>Spectrogram.cs</DependentUpon>
+    <Compile Include="forms\Empty.Designer.cs">
+      <DependentUpon>Empty.cs</DependentUpon>
     </Compile>
     <Compile Include="forms\Sphigmogram.cs">
       <SubType>Form</SubType>
@@ -269,6 +257,12 @@
     <Compile Include="graphics\Histogram.Designer.cs">
       <DependentUpon>Histogram.cs</DependentUpon>
     </Compile>
+    <Compile Include="graphics\Scatterogram.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="graphics\Scatterogram.Designer.cs">
+      <DependentUpon>Scatterogram.cs</DependentUpon>
+    </Compile>
     <Compile Include="graphics\SignalChart.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -309,14 +303,8 @@
     <EmbeddedResource Include="forms\AnalysisForm.resx">
       <DependentUpon>AnalysisForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="forms\charts\DistributionHistogram.resx">
-      <DependentUpon>DistributionHistogram.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="forms\charts\Scatterogram.resx">
-      <DependentUpon>Scatterogram.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="forms\charts\Spectrogram.resx">
-      <DependentUpon>Spectrogram.cs</DependentUpon>
+    <EmbeddedResource Include="forms\Empty.resx">
+      <DependentUpon>Empty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Sphigmogram.resx">
       <DependentUpon>Sphigmogram.cs</DependentUpon>
@@ -341,6 +329,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="graphics\Histogram.resx">
       <DependentUpon>Histogram.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="graphics\Scatterogram.resx">
+      <DependentUpon>Scatterogram.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="graphics\SignalChart.resx">
       <DependentUpon>SignalChart.cs</DependentUpon>
