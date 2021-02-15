@@ -48,9 +48,11 @@ namespace pulse.graphics
             chartArea1.AxisX.ScrollBar.ButtonColor = System.Drawing.Color.White;
             chartArea1.AxisX.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
             chartArea1.AxisX.ScrollBar.Size = 10D;
+            chartArea1.AxisX.Title = "Seconds";
             chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
             chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
             chartArea1.AxisY.ScrollBar.Enabled = false;
+            chartArea1.AxisY.Title = "Amplitude";
             chartArea1.BorderWidth = 0;
             chartArea1.CursorX.IsUserEnabled = true;
             chartArea1.CursorX.IsUserSelectionEnabled = true;

@@ -39,7 +39,9 @@ namespace pulse.graphics
             // chart
             // 
             chartArea1.AxisX.ScrollBar.Enabled = false;
+            chartArea1.AxisX.Title = "RR (ms)";
             chartArea1.AxisY.ScrollBar.Enabled = false;
+            chartArea1.AxisY.Title = "RR[n-1] (ms)";
             chartArea1.Name = "ChartArea1";
             this.chart.ChartAreas.Add(chartArea1);
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;

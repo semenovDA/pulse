@@ -23,6 +23,9 @@ namespace pulse.graphics
             List<double> points = signal.computeRR(false);
             foreach (var u in points.Distinct()) chart.Series[0].Points.AddXY(u, points.Where(p => p == u).Count());
             foreach (var p in NormalDistribution(points)) chart.Series[1].Points.AddXY(p.X, p.Y * points.Count());
+
+            chart.ChartAreas[0].AxisX.Title = "RR";
+            chart.ChartAreas[0].AxisY.Title = "Count";
         }
 
         private void FillValues(Signal signal)
@@ -30,6 +33,9 @@ namespace pulse.graphics
             List<double> points = signal.computeRR();
             for (var i = 0; i < points.Count; i++) chart.Series[0].Points.AddXY(i + 1, points[i]);
             chart.ChartAreas[0].AxisX.ScaleView.Zoom(0, signal.peaks.Length / 2);
+
+            chart.ChartAreas[0].AxisX.Title = "RR number";
+            chart.ChartAreas[0].AxisY.Title = "Seconds";
         }
 
         public void Show(string title = "Гистограмма распределение")
