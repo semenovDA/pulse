@@ -13,7 +13,7 @@ namespace pulse.core
         // Public variables
         static public string SCRIPT_VSRSTATS = "scripts/VSR_STATS.py";
         static public string SCRIPT_VSRPEAKS = "scripts/VSR_PEAKS.py";
-        static public string SCRIPT_VSRPOINCARE = "scripts/VSR_POINCARE.py";
+        static public string SCRIPT_VSRNONLINEAR = "scripts/VSR_NONLINEAR.py";
         static public string SCRIPT_VSRFOURIER = "scripts/VSR_FOURIER.py";
 
         static public string SCRIPT_VSRFREQUENCY = "scripts/VSR_FREQUENCY.py";
