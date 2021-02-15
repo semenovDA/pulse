@@ -25,7 +25,7 @@ namespace pulse.graphics
 
         public void Initialize(Signal signal, Method method)
         {
-            var jToken = signal.computeFrequency(method);
+            var jToken = signal.ComputeFrequency(method);
 
             var _params = jToken.SelectToken("params");
             var _freq = jToken.SelectToken("freq");

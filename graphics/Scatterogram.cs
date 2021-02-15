@@ -31,7 +31,7 @@ namespace pulse.graphics
         }
         private void Initialize()
         {
-            var stats = _signal.computePoincare();
+            var poincare = _signal.ComputePoincare();
             var peaks = _signal.computePeaks();
 
             for (int i = 1; i < peaks.Length - 1; i++)
@@ -53,12 +53,9 @@ namespace pulse.graphics
             chart.ChartAreas[0].AxisX.ScaleView.Zoom(min_x, max_x);
             chart.ChartAreas[0].AxisY.ScaleView.Zoom(min_y, max_y);
 
-            chart.ChartAreas[0].AxisX.Title = "RR (ms)";
-            chart.ChartAreas[0].AxisY.Title = "RR[n-1] (ms)";
-
             // TODO: Fix double first
-            var sd1 = stats["sd1"].ToObject<double>();
-            var sd2 = stats["sd2"].ToObject<double>();
+            var sd1 = poincare["sd1"].ToObject<double>();
+            var sd2 = poincare["sd2"].ToObject<double>();
 
             var center = chart.Series[0].Points
                 .Where(s => s.YValues[0] == s.XValue)

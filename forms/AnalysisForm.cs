@@ -2,7 +2,6 @@
 using pulse.graphics;
 using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -16,7 +15,6 @@ namespace pulse.forms
         List<Page> pages = new List<Page>() { new Page(1, 1) };
 
         bool mouse_is_down = false;
-        int _rows = 1;
         int _page = 0;
         
         public AnalysisForm(Signal signal)
