@@ -37,7 +37,7 @@ namespace pulse.forms
             this.label2 = new System.Windows.Forms.Label();
             this.ColumnsCount = new System.Windows.Forms.NumericUpDown();
             this.RowsCount = new System.Windows.Forms.NumericUpDown();
-            this.vScrollBar1 = new System.Windows.Forms.VScrollBar();
+            this.pageScrollBar = new System.Windows.Forms.VScrollBar();
             this.mainPanel = new System.Windows.Forms.Panel();
             this.workspace = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1.SuspendLayout();
@@ -55,7 +55,7 @@ namespace pulse.forms
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 2, 0);
-            this.tableLayoutPanel1.Controls.Add(this.vScrollBar1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this.pageScrollBar, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.mainPanel, 1, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
@@ -176,14 +176,17 @@ namespace pulse.forms
             0});
             this.RowsCount.ValueChanged += new System.EventHandler(this.RowsCount_ValueChanged);
             // 
-            // vScrollBar1
+            // pageScrollBar
             // 
-            this.vScrollBar1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.vScrollBar1.Location = new System.Drawing.Point(2, 2);
-            this.vScrollBar1.Margin = new System.Windows.Forms.Padding(2);
-            this.vScrollBar1.Name = "vScrollBar1";
-            this.vScrollBar1.Size = new System.Drawing.Size(16, 524);
-            this.vScrollBar1.TabIndex = 1;
+            this.pageScrollBar.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pageScrollBar.LargeChange = 1;
+            this.pageScrollBar.Location = new System.Drawing.Point(2, 2);
+            this.pageScrollBar.Margin = new System.Windows.Forms.Padding(2);
+            this.pageScrollBar.Maximum = 1;
+            this.pageScrollBar.Name = "pageScrollBar";
+            this.pageScrollBar.Size = new System.Drawing.Size(16, 524);
+            this.pageScrollBar.TabIndex = 1;
+            this.pageScrollBar.Scroll += new System.Windows.Forms.ScrollEventHandler(this.pageScrollBar_Scroll);
             // 
             // mainPanel
             // 
@@ -197,6 +200,7 @@ namespace pulse.forms
             // workspace
             // 
             this.workspace.AllowDrop = true;
+            this.workspace.AutoSize = true;
             this.workspace.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Outset;
             this.workspace.ColumnCount = 1;
             this.workspace.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -223,6 +227,7 @@ namespace pulse.forms
             ((System.ComponentModel.ISupportInitialize)(this.ColumnsCount)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.RowsCount)).EndInit();
             this.mainPanel.ResumeLayout(false);
+            this.mainPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -231,7 +236,7 @@ namespace pulse.forms
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.Panel mainPanel;
-        private System.Windows.Forms.VScrollBar vScrollBar1;
+        private System.Windows.Forms.VScrollBar pageScrollBar;
         private System.Windows.Forms.ListView listView1;
         private System.Windows.Forms.TableLayoutPanel workspace;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;

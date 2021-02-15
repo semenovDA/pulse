@@ -8,15 +8,17 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace pulse.forms
 {
+
     public partial class AnalysisForm : Form
     {
         Signal _signal;
         Dictionary<string, string> charts = new Dictionary<string, string>();
+        List<Page> pages = new List<Page>() { new Page(1, 1) };
 
         bool mouse_is_down = false;
         int _rows = 1;
-        int _columns = 1;
-
+        int _page = 0;
+        
         public AnalysisForm(Signal signal)
         {
             InitializeComponent();
@@ -72,39 +74,41 @@ namespace pulse.forms
 
             return chart;
         }
-        private Panel GetSegment()
-        {
-            Panel panel = new Panel();
-            panel.Dock = DockStyle.Fill;
-            panel.AllowDrop = true;
-            panel.DragDrop += workspace_DragDrop;
-            panel.DragEnter += workspace_DragEnter;
-            return panel;
-        }
+
         private void workspaceSetup()
         {
-            workspace.ColumnCount = _columns;
-            workspace.RowCount = _rows;
+            var page = pages[_page];
+            ColumnsCount.Value = pages[_page].columns;
+            RowsCount.Value = pages[_page].rows;
+
+            workspace.ColumnCount = page.columns;
+            workspace.RowCount = page.rows;
 
             workspace.ColumnStyles.Clear();
             workspace.RowStyles.Clear();
             workspace.Controls.Clear();
 
-            workspace.BackColor = Color.White;
-            workspace.AutoSize = true;
-
-            for (int i = 0; i < _columns; i++) {
+            for (int i = 0; i < page.columns; i++) {
                 workspace.ColumnStyles.Add(
-                    new ColumnStyle(SizeType.Percent, 100 / _columns));
+                    new ColumnStyle(SizeType.Percent, 100 / page.columns));
             }
-            for (int i = 0; i < _rows; i++) {
+            for (int i = 0; i < page.rows; i++) {
                 workspace.RowStyles.Add(
-                    new RowStyle(SizeType.Percent, 100 / _rows));
+                    new RowStyle(SizeType.Percent, 100 / page.rows));
             }
 
-            for (int i = 0; i < _rows * _columns; i++) {
-                workspace.Controls.Add(GetSegment());
+            foreach(var columns in page.panels) {
+                foreach (var graphic in columns) {
+
+                    graphic.panel.Dock = DockStyle.Fill;
+                    graphic.panel.AllowDrop = true;
+                    graphic.panel.DragDrop += workspace_DragDrop;
+                    graphic.panel.DragEnter += workspace_DragEnter;
+
+                    workspace.Controls.Add(graphic.panel);
+                }
             }
+
         }
         private void listView1_MouseDown(object sender, MouseEventArgs e) => mouse_is_down = true;
         private void listView1_MouseMove(object sender, MouseEventArgs e)
@@ -114,26 +118,104 @@ namespace pulse.forms
             if (selected_items.Count <= 0) return;
             listView1.DoDragDrop(selected_items[0].Tag, DragDropEffects.Copy | DragDropEffects.Move);
         }
-        private void workspace_DragDrop(object sender, DragEventArgs e)
+        public void workspace_DragDrop(object sender, DragEventArgs e)
         {
             var chart = GetChart(e.Data.GetData(DataFormats.Text).ToString());
+            ((Control)sender).Controls.Clear();
             ((Control)sender).Controls.Add(chart);
+            pages[_page].MarkAsCharted((Panel)sender);
+                        
             mouse_is_down = false;
         }
-        private void workspace_DragEnter(object sender, DragEventArgs e)
+        public void workspace_DragEnter(object sender, DragEventArgs e)
         {
             if (e.Data.GetDataPresent(DataFormats.Text)) e.Effect = DragDropEffects.Copy;
             else e.Effect = DragDropEffects.None;
         }
         private void RowsCount_ValueChanged(object sender, EventArgs e)
         {
-            _rows = (int)RowsCount.Value;
+            if (pages[_page].rows == (int)RowsCount.Value) return;
+            pages[_page].onRowsChanged((int)RowsCount.Value);
             workspaceSetup();
         }
         private void ColumnsCount_ValueChanged(object sender, EventArgs e)
         {
-            _columns = (int)ColumnsCount.Value;
+            if (pages[_page].columns == (int)ColumnsCount.Value) return;
+            pages[_page].onColumnChanged((int)ColumnsCount.Value);
             workspaceSetup();
         }
+
+        private void pageScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
+            if (e.NewValue >= pages.Count) {
+                pages.Add(new Page(1, 1));
+                ((ScrollBar)sender).Maximum = pages.Count;
+            }
+            if(e.NewValue != _page) {
+                _page = e.NewValue;
+                workspaceSetup();
+            }
+        }
+
+    }
+
+    public class Graphic
+    {
+        public Panel panel;
+        public bool charted;
+
+        public Graphic(Panel panel, bool charted)
+        {
+            this.panel = panel;
+            this.charted = charted;
+        }
+    }
+
+    public class Page
+    {
+        public int columns;
+        public int rows;
+        public List<List<Graphic>> panels = new List<List<Graphic>>();
+
+        public Page(int columns, int rows)
+        {
+            this.columns = columns;
+            this.rows = rows;
+
+            for (int i = 0; i < columns; i++) {
+                var col = new List<Graphic>();
+                for (int j = 0; j < rows; j++) col.Add(new Graphic(new Panel(), false));
+                panels.Add(col);
+            }
+        }
+
+        public void MarkAsCharted(Panel panel)
+        {
+            foreach(var cols in panels) {
+                foreach(var graph in cols) {
+                    if (graph.panel == panel) graph.charted = true;
+                }
+            }
+        }
+
+        public void onColumnChanged(int columns)
+        {
+            if(this.columns < columns) {
+                var col = new List<Graphic>();
+                for (int j = 0; j < rows; j++) col.Add(new Graphic(new Panel(), false));
+                panels.Add(col);
+            } 
+            else panels.RemoveAt(panels.Count - 1);
+            this.columns = columns;
+        }
+        public void onRowsChanged(int rows)
+        {
+            foreach (var col in panels) {
+                if (this.rows < rows) col.Add(new Graphic(new Panel(), false));
+                else col.RemoveAt(col.Count - 1);
+            }
+            this.rows = rows;
+        }
+ 
     }
 }
