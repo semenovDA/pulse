@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using pulse.collection;
+using System;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace pulse.graphics
 {
-    public partial class Signal : Component
+    public partial class SignalChart : Component
     {
 
-        public Signal(collection.Signal signal)
+        public SignalChart(Signal signal)
         {
             InitializeComponent();
             FillCharts(signal);
             setView();
         }
 
-        private void FillCharts(collection.Signal signal)
+        private void FillCharts(Signal signal)
         {
             chart.ChartAreas[0].AxisX.LabelStyle.Format = "hh:mm:ss.fff";
 
@@ -26,12 +23,12 @@ namespace pulse.graphics
             for (double i = 0; i < signal.timestep; i += signal.HZstep)
             {
                 chart.Series[0].Points.AddXY(step, signal.signal[step]);
-                chart.Series[0].Points.Last().AxisLabel = Sphigmogram.GetTime((int)i);
+                chart.Series[0].Points.Last().AxisLabel = GetTime((int)i);
 
                 if (signal.peaks.Contains(step))
                 {
                     chart.Series[1].Points.AddXY(step, signal.signal[step]);
-                    chart.Series[1].Points.Last().AxisLabel = Sphigmogram.GetTime((int)i);
+                    chart.Series[1].Points.Last().AxisLabel = GetTime((int)i);
                 }
                 step++;
             }
@@ -51,6 +48,12 @@ namespace pulse.graphics
 
 
             chart.ChartAreas[0].AxisX.Interval = 100;
+        }
+
+        public static string GetTime(int ms)
+        {
+            TimeSpan ts = TimeSpan.FromMilliseconds(ms);
+            return ts.ToString(@"hh\:mm\:ss\.fff");
         }
     }
 }

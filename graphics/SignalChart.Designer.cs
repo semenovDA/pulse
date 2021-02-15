@@ -1,7 +1,7 @@
 ﻿
 namespace pulse.graphics
 {
-    partial class Signal
+    partial class SignalChart
     {
         /// <summary>
         /// Обязательная переменная конструктора.
