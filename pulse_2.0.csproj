@@ -288,7 +288,7 @@
     <Content Include="scripts\VSR_PEAKS.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="scripts\VSR_POINCARE.py">
+    <Content Include="scripts\VSR_NONLINEAR.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="scripts\VSR_TEST.py">
