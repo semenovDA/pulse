@@ -34,12 +34,9 @@ namespace pulse.collection
                        .Select(s => int.Parse(s))
                        .ToList();
         }
-        public int[] computePeaks()
-        {
-            return base.Excute(PythonUtils.SCRIPT_VSRPEAKS)
-                       .Select(jv => (int)jv)
-                       .ToArray();
-        }
+        public int[] computePeaks() => base.Excute(PythonUtils.SCRIPT_VSRPEAKS)
+                                           .Select(jv => (int)jv)
+                                           .ToArray();
         public List<double> computeRR(bool timesteped = true)
         {
             List<double> points = new List<double>();
@@ -50,22 +47,28 @@ namespace pulse.collection
             }
             return points;
         }
-        public JObject computeFrequency()
+        public JObject ComputeFrequency()
         {
             var jToken = base.Excute(PythonUtils.SCRIPT_VSRFREQUENCY);
             return JObject.Parse(File.ReadAllText(jToken.ToString()));
         }
-        public JToken computeFrequency(Spectrogram.Method method)
+        public JToken ComputeFrequency(Spectrogram.Method method)
         {
-            var obj = computeFrequency();
+            var obj = ComputeFrequency();
             if (method == Spectrogram.Method.Welch) return obj["welch"];
             else if (method == Spectrogram.Method.Lomb) return obj["lomb"];
             else if (method == Spectrogram.Method.Autoregressive) return obj["ar"];
             else return obj;
         }
-        public JToken computePoincare()
+        public JToken ComputePoincare()
         {
-            return base.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
+            var jToken = base.Excute(PythonUtils.SCRIPT_VSRNONLINEAR);
+            return JObject.Parse(File.ReadAllText(jToken.ToString()))["poincare"];
+        }
+        public JToken ComputeACF()
+        {
+            var jToken = base.Excute(PythonUtils.SCRIPT_VSRNONLINEAR);
+            return JObject.Parse(File.ReadAllText(jToken.ToString()))["ACF"];
         }
     }
 }
