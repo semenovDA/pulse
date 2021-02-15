@@ -97,7 +97,7 @@ namespace pulse.forms
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(3, 3);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(198, 324);
+            this.listView1.Size = new System.Drawing.Size(188, 324);
             this.listView1.TabIndex = 2;
             this.listView1.UseCompatibleStateImageBehavior = false;
             this.listView1.View = System.Windows.Forms.View.List;
@@ -111,7 +111,7 @@ namespace pulse.forms
             this.label1.Location = new System.Drawing.Point(1, 345);
             this.label1.Margin = new System.Windows.Forms.Padding(1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(202, 18);
+            this.label1.Size = new System.Drawing.Size(192, 18);
             this.label1.TabIndex = 3;
             this.label1.Text = "Количество строк:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -123,7 +123,7 @@ namespace pulse.forms
             this.label2.Location = new System.Drawing.Point(1, 404);
             this.label2.Margin = new System.Windows.Forms.Padding(1);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(202, 19);
+            this.label2.Size = new System.Drawing.Size(192, 19);
             this.label2.TabIndex = 4;
             this.label2.Text = "Количество столбцов:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -143,7 +143,7 @@ namespace pulse.forms
             0,
             0});
             this.ColumnsCount.Name = "ColumnsCount";
-            this.ColumnsCount.Size = new System.Drawing.Size(198, 20);
+            this.ColumnsCount.Size = new System.Drawing.Size(188, 20);
             this.ColumnsCount.TabIndex = 5;
             this.ColumnsCount.Value = new decimal(new int[] {
             1,
@@ -167,7 +167,7 @@ namespace pulse.forms
             0,
             0});
             this.RowsCount.Name = "RowsCount";
-            this.RowsCount.Size = new System.Drawing.Size(198, 20);
+            this.RowsCount.Size = new System.Drawing.Size(188, 20);
             this.RowsCount.TabIndex = 6;
             this.RowsCount.Value = new decimal(new int[] {
             1,

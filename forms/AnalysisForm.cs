@@ -34,6 +34,7 @@ namespace pulse.forms
             charts.Add("Спектограмма Welch", "WELCH_SPECTOGRAM");
             charts.Add("Спектограмма Lomb-Scargle", "LOMB_SPECTOGRAM");
             charts.Add("Спектограмма Autoregressive", "AR_SPECTOGRAM");
+            charts.Add("Скатерограмма", "POINCARE_SCATTERGRAM");
 
             foreach (KeyValuePair<string, string> kvp in charts) {
                 var chart = new ListViewItem(kvp.Key) { Tag = kvp.Value };
@@ -56,13 +57,16 @@ namespace pulse.forms
                     chart = new Histogram(_signal, false).chart;
                     break;
                 case "WELCH_SPECTOGRAM":
-                    chart = new Spectogram(_signal, Spectogram.Method.Welch).chart;
+                    chart = new Spectrogram(_signal, Spectrogram.Method.Welch).chart;
                     break;
                 case "LOMB_SPECTOGRAM":
-                    chart = new Spectogram(_signal, Spectogram.Method.Lomb).chart;
+                    chart = new Spectrogram(_signal, Spectrogram.Method.Lomb).chart;
                     break;
                 case "AR_SPECTOGRAM":
-                    chart = new Spectogram(_signal, Spectogram.Method.Autoregressive).chart;
+                    chart = new Spectrogram(_signal, Spectrogram.Method.Autoregressive).chart;
+                    break;
+                case "POINCARE_SCATTERGRAM":
+                    chart = new Scatterogram(_signal).chart;
                     break;
             }
 
