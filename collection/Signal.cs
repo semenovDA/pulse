@@ -27,7 +27,6 @@ namespace pulse.collection
             timestep = _record.duration * ms;
             peaks = computePeaks();
         }
-
         public List<int> readSignal(Record record)
         {
             var filename = record.getFileName();
@@ -35,14 +34,12 @@ namespace pulse.collection
                        .Select(s => int.Parse(s))
                        .ToList();
         }
-
         public int[] computePeaks()
         {
             return base.Excute(PythonUtils.SCRIPT_VSRPEAKS)
                        .Select(jv => (int)jv)
                        .ToArray();
         }
-
         public List<double> computeRR(bool timesteped = true)
         {
             List<double> points = new List<double>();
@@ -53,19 +50,22 @@ namespace pulse.collection
             }
             return points;
         }
-
         public JObject computeFrequency()
         {
             var jToken = base.Excute(PythonUtils.SCRIPT_VSRFREQUENCY);
             return JObject.Parse(File.ReadAllText(jToken.ToString()));
         }
-        public JToken computeFrequency(Spectogram.Method method)
+        public JToken computeFrequency(Spectrogram.Method method)
         {
             var obj = computeFrequency();
-            if (method == Spectogram.Method.Welch) return obj["welch"];
-            else if (method == Spectogram.Method.Lomb) return obj["lomb"];
-            else if (method == Spectogram.Method.Autoregressive) return obj["ar"];
+            if (method == Spectrogram.Method.Welch) return obj["welch"];
+            else if (method == Spectrogram.Method.Lomb) return obj["lomb"];
+            else if (method == Spectrogram.Method.Autoregressive) return obj["ar"];
             else return obj;
+        }
+        public JToken computePoincare()
+        {
+            return base.Excute(PythonUtils.SCRIPT_VSRPOINCARE);
         }
     }
 }
