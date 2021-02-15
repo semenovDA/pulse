@@ -1,10 +1,8 @@
 ﻿using pulse.collection;
-using pulse.core;
 using pulse.graphics;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -12,14 +10,14 @@ namespace pulse.forms
 {
     public partial class AnalysisForm : Form
     {
-        collection.Signal _signal;
+        Signal _signal;
         Dictionary<string, string> charts = new Dictionary<string, string>();
 
         bool mouse_is_down = false;
         int _rows = 1;
         int _columns = 1;
 
-        public AnalysisForm(collection.Signal signal)
+        public AnalysisForm(Signal signal)
         {
             InitializeComponent();
             _signal = signal;
@@ -31,7 +29,8 @@ namespace pulse.forms
         private void Initialize()
         {
             charts.Add("Сигнал", "SIGNAL");
-            charts.Add("Гисторграмма распределение", "DISTRIBUTION_HISTOGRAM");
+            charts.Add("Гисторграмма распределение RR", "DISTRIBUTION_HISTOGRAM_RR");
+            charts.Add("Гисторграмма распределение сигнала", "DISTRIBUTION_HISTOGRAM_SIGNAL");
             charts.Add("Спектограмма Welch", "WELCH_SPECTOGRAM");
             charts.Add("Спектограмма Lomb-Scargle", "LOMB_SPECTOGRAM");
             charts.Add("Спектограмма Autoregressive", "AR_SPECTOGRAM");
@@ -48,10 +47,13 @@ namespace pulse.forms
             switch(chartname)
             {
                 case "SIGNAL":
-                    chart = new graphics.Signal(_signal).chart;
+                    chart = new SignalChart(_signal).chart;
                     break;
-                case "DISTRIBUTION_HISTOGRAM":
+                case "DISTRIBUTION_HISTOGRAM_RR":
                     chart = new Histogram(_signal).chart;
+                    break;
+                case "DISTRIBUTION_HISTOGRAM_SIGNAL":
+                    chart = new Histogram(_signal, false).chart;
                     break;
                 case "WELCH_SPECTOGRAM":
                     chart = new Spectogram(_signal, Spectogram.Method.Welch).chart;
@@ -100,19 +102,13 @@ namespace pulse.forms
                 workspace.Controls.Add(GetSegment());
             }
         }
-        private void listView1_MouseDown(object sender, MouseEventArgs e)
-        {
-            mouse_is_down = true;
-        }
+        private void listView1_MouseDown(object sender, MouseEventArgs e) => mouse_is_down = true;
         private void listView1_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!mouse_is_down || e.Button == MouseButtons.Right) return;
+            if (!mouse_is_down || e.Button != MouseButtons.Left) return;
             var selected_items = ((ListView)sender).SelectedItems;
             if (selected_items.Count <= 0) return;
-            var next = selected_items.GetEnumerator();
-            next.MoveNext();
-            var str = ((ListViewItem)next.Current).Tag;
-            listView1.DoDragDrop(str, DragDropEffects.Copy | DragDropEffects.Move);
+            listView1.DoDragDrop(selected_items[0].Tag, DragDropEffects.Copy | DragDropEffects.Move);
         }
         private void workspace_DragDrop(object sender, DragEventArgs e)
         {

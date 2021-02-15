@@ -52,8 +52,8 @@ namespace pulse.forms
             this.tableLayoutPanel1.BackColor = System.Drawing.SystemColors.Window;
             this.tableLayoutPanel1.ColumnCount = 3;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 79.36508F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 20.63492F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 200F));
             this.tableLayoutPanel1.Controls.Add(this.tableLayoutPanel3, 2, 0);
             this.tableLayoutPanel1.Controls.Add(this.vScrollBar1, 0, 0);
             this.tableLayoutPanel1.Controls.Add(this.mainPanel, 1, 0);
@@ -62,7 +62,7 @@ namespace pulse.forms
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(798, 528);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1034, 528);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
             // tableLayoutPanel3
@@ -76,7 +76,7 @@ namespace pulse.forms
             this.tableLayoutPanel3.Controls.Add(this.ColumnsCount, 0, 6);
             this.tableLayoutPanel3.Controls.Add(this.RowsCount, 0, 3);
             this.tableLayoutPanel3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tableLayoutPanel3.Location = new System.Drawing.Point(640, 3);
+            this.tableLayoutPanel3.Location = new System.Drawing.Point(837, 3);
             this.tableLayoutPanel3.Name = "tableLayoutPanel3";
             this.tableLayoutPanel3.RowCount = 8;
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -87,19 +87,20 @@ namespace pulse.forms
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 21F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 73F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(155, 522);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(194, 522);
             this.tableLayoutPanel3.TabIndex = 1;
             // 
             // listView1
             // 
             this.listView1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.listView1.GridLines = true;
             this.listView1.HideSelection = false;
             this.listView1.Location = new System.Drawing.Point(3, 3);
             this.listView1.Name = "listView1";
-            this.listView1.Size = new System.Drawing.Size(117, 324);
+            this.listView1.Size = new System.Drawing.Size(198, 324);
             this.listView1.TabIndex = 2;
             this.listView1.UseCompatibleStateImageBehavior = false;
-            this.listView1.View = System.Windows.Forms.View.SmallIcon;
+            this.listView1.View = System.Windows.Forms.View.List;
             this.listView1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseDown);
             this.listView1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.listView1_MouseMove);
             // 
@@ -110,7 +111,7 @@ namespace pulse.forms
             this.label1.Location = new System.Drawing.Point(1, 345);
             this.label1.Margin = new System.Windows.Forms.Padding(1);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(121, 18);
+            this.label1.Size = new System.Drawing.Size(202, 18);
             this.label1.TabIndex = 3;
             this.label1.Text = "Количество строк:";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -122,7 +123,7 @@ namespace pulse.forms
             this.label2.Location = new System.Drawing.Point(1, 404);
             this.label2.Margin = new System.Windows.Forms.Padding(1);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(121, 19);
+            this.label2.Size = new System.Drawing.Size(202, 19);
             this.label2.TabIndex = 4;
             this.label2.Text = "Количество столбцов:";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -142,7 +143,7 @@ namespace pulse.forms
             0,
             0});
             this.ColumnsCount.Name = "ColumnsCount";
-            this.ColumnsCount.Size = new System.Drawing.Size(117, 20);
+            this.ColumnsCount.Size = new System.Drawing.Size(198, 20);
             this.ColumnsCount.TabIndex = 5;
             this.ColumnsCount.Value = new decimal(new int[] {
             1,
@@ -166,7 +167,7 @@ namespace pulse.forms
             0,
             0});
             this.RowsCount.Name = "RowsCount";
-            this.RowsCount.Size = new System.Drawing.Size(117, 20);
+            this.RowsCount.Size = new System.Drawing.Size(198, 20);
             this.RowsCount.TabIndex = 6;
             this.RowsCount.Value = new decimal(new int[] {
             1,
@@ -190,7 +191,7 @@ namespace pulse.forms
             this.mainPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mainPanel.Location = new System.Drawing.Point(23, 3);
             this.mainPanel.Name = "mainPanel";
-            this.mainPanel.Size = new System.Drawing.Size(611, 522);
+            this.mainPanel.Size = new System.Drawing.Size(808, 522);
             this.mainPanel.TabIndex = 0;
             // 
             // workspace
@@ -204,14 +205,14 @@ namespace pulse.forms
             this.workspace.Name = "workspace";
             this.workspace.RowCount = 1;
             this.workspace.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.workspace.Size = new System.Drawing.Size(611, 522);
+            this.workspace.Size = new System.Drawing.Size(808, 522);
             this.workspace.TabIndex = 0;
             // 
             // AnalysisForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(798, 528);
+            this.ClientSize = new System.Drawing.Size(1034, 528);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "AnalysisForm";

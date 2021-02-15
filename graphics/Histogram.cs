@@ -10,30 +10,25 @@ namespace pulse.graphics
 {
     public partial class Histogram : Component
     {
-        public Histogram(collection.Signal signal)
+        public Histogram(Signal signal, bool normal_disribution = true)
         {
             InitializeComponent();
-            FillValues(signal.computeRR(false));
+            if (normal_disribution) FillDistribution(signal);
+            else FillValues(signal);
         }
 
-        public Histogram(IContainer container, collection.Signal signal)
+        private void FillDistribution(Signal signal)
         {
-            container.Add(this);
-            InitializeComponent();
-            FillValues(signal.computeRR(false));
+            List<double> points = signal.computeRR(false);
+            foreach (var u in points.Distinct()) chart.Series[0].Points.AddXY(u, points.Where(p => p == u).Count());
+            foreach (var p in NormalDistribution(points)) chart.Series[1].Points.AddXY(p.X, p.Y * points.Count());
         }
 
-        private void FillValues(List<double> points)
+        private void FillValues(Signal signal)
         {
-            foreach (var u in points.Distinct())
-            {
-                chart.Series[0].Points.AddXY(u, points.Where(p => p == u).Count());
-            }
-
-            foreach (var p in NormalDistribution(points))
-            {
-                chart.Series[1].Points.AddXY(p.X, p.Y * points.Count());
-            }
+            List<double> points = signal.computeRR();
+            for (var i = 0; i < points.Count; i++) chart.Series[0].Points.AddXY(i + 1, points[i]);
+            chart.ChartAreas[0].AxisX.ScaleView.Zoom(0, signal.peaks.Length / 2);
         }
 
         private List<PointF> NormalDistribution(List<double> points, bool sample = false)

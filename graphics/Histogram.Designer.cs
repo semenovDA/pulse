@@ -38,6 +38,11 @@ namespace pulse.graphics
             // 
             // chart
             // 
+            chartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.LightGray;
+            chartArea1.AxisX.ScrollBar.ButtonColor = System.Drawing.Color.White;
+            chartArea1.AxisX.ScrollBar.ButtonStyle = System.Windows.Forms.DataVisualization.Charting.ScrollBarButtonStyles.SmallScroll;
+            chartArea1.AxisX.ScrollBar.Size = 10D;
+            chartArea1.CursorX.IsUserEnabled = true;
             chartArea1.Name = "ChartArea1";
             this.chart.ChartAreas.Add(chartArea1);
             this.chart.Dock = System.Windows.Forms.DockStyle.Fill;
