@@ -35,7 +35,7 @@ namespace pulse.graphics
 
         }
 
-        private void setView()
+        public void setView()
         {
             double max = chart.Series[0].Points.Max(p => p.YValues[0]);
             double min = chart.Series[0].Points.Min(p => p.YValues[0]);
@@ -45,7 +45,6 @@ namespace pulse.graphics
 
             var length = chart.Series[0].Points.Last().XValue / 10;
             chart.ChartAreas[0].AxisX.ScaleView.Zoom(0, length);
-
 
             chart.ChartAreas[0].AxisX.Interval = 100;
         }

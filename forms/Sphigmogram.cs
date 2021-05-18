@@ -13,10 +13,10 @@ namespace pulse
     public partial class Sphigmogram : Form
     {
         /* Variables definition */
-        PythonUtils pyhton;
         Record _record;
         Signal _signal;
 
+        SignalChart signalObject;
         Chart signalChart;
         Chart histogramChart;
 
@@ -31,10 +31,10 @@ namespace pulse
             _record = record;
             _record.get();
 
-            pyhton = new PythonUtils(_record);
             _signal = new Signal(record);
 
-            signalChart = new SignalChart(_signal).chart;
+            signalObject = new SignalChart(_signal);
+            signalChart = signalObject.chart;
             signalChart.CursorPositionChanged += Signal_CursorPositionChanging;
             workspace.Controls.Add(signalChart, 0, 1);
 
@@ -46,7 +46,7 @@ namespace pulse
         /*  Events  */
         private void StatisticsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            JToken jToken = pyhton.Excute(PythonUtils.SCRIPT_VSRSTATS);
+            JToken jToken = _signal.ComputeStatistics();
             new VSRStatistics(_record.patient, jToken).Show();
         }
         private void ShowValuesCb_Click(object sender, EventArgs e)
@@ -84,6 +84,9 @@ namespace pulse
         }
         private void HistogramDistributionMenuItem_Click(object sender, EventArgs e) => new Histogram(_signal, true).Show();
         private void ScattergramToolStripMenuItem_Click(object sender, EventArgs e) => new Scatterogram(_signal).Show();
+        private void сбросToolStripMenuItem_Click(object sender, EventArgs e) => signalObject.setView();
+        private void аКФToolStripMenuItem_Click(object sender, EventArgs e) => new ACFChart(_signal).Show();
+        private void пАРСToolStripMenuItem_Click(object sender, EventArgs e) => new ParsRating(_signal).Show();
         private void PowerSpectralHandler(object sender, EventArgs e)
         {
             var method = Spectrogram.Method.Welch;
@@ -119,7 +122,6 @@ namespace pulse
             axis.Interval = (viewEnd - viewStart) / 4;
             axis.ScaleView.Zoom(viewStart, viewEnd);
         }
-
     }
 
 }

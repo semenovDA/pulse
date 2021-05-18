@@ -39,6 +39,8 @@
             this.welchToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.lombScargleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.autoregressiveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.аКФToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.пАРСToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.видToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowValuesCb = new System.Windows.Forms.ToolStripMenuItem();
@@ -66,6 +68,8 @@
             this.вСРToolStripMenuItem,
             this.диаграммыToolStripMenuItem,
             this.спектрToolStripMenuItem,
+            this.аКФToolStripMenuItem,
+            this.пАРСToolStripMenuItem,
             this.AllToolStripMenuItem});
             this.анализToolStripMenuItem.Name = "анализToolStripMenuItem";
             this.анализToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
@@ -132,6 +136,20 @@
             this.autoregressiveToolStripMenuItem.Text = "Autoregressive";
             this.autoregressiveToolStripMenuItem.Click += new System.EventHandler(this.PowerSpectralHandler);
             // 
+            // аКФToolStripMenuItem
+            // 
+            this.аКФToolStripMenuItem.Name = "аКФToolStripMenuItem";
+            this.аКФToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.аКФToolStripMenuItem.Text = "АКФ";
+            this.аКФToolStripMenuItem.Click += new System.EventHandler(this.аКФToolStripMenuItem_Click);
+            // 
+            // пАРСToolStripMenuItem
+            // 
+            this.пАРСToolStripMenuItem.Name = "пАРСToolStripMenuItem";
+            this.пАРСToolStripMenuItem.Size = new System.Drawing.Size(211, 22);
+            this.пАРСToolStripMenuItem.Text = "ПАРС";
+            this.пАРСToolStripMenuItem.Click += new System.EventHandler(this.пАРСToolStripMenuItem_Click);
+            // 
             // AllToolStripMenuItem
             // 
             this.AllToolStripMenuItem.Name = "AllToolStripMenuItem";
@@ -160,6 +178,7 @@
             this.сбросToolStripMenuItem.Name = "сбросToolStripMenuItem";
             this.сбросToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
             this.сбросToolStripMenuItem.Text = "Сброс";
+            this.сбросToolStripMenuItem.Click += new System.EventHandler(this.сбросToolStripMenuItem_Click);
             // 
             // workspace
             // 
@@ -227,5 +246,7 @@
         private System.Windows.Forms.ToolStripMenuItem lombScargleToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem autoregressiveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem AllToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem аКФToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem пАРСToolStripMenuItem;
     }
 }

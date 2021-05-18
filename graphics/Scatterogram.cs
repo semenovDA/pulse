@@ -1,38 +1,35 @@
-﻿using pulse.collection;
+﻿using Newtonsoft.Json.Linq;
+using pulse.collection;
 using pulse.forms;
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 
 namespace pulse.graphics
 {
     public partial class Scatterogram : Component
     {
-        Signal _signal;
-
         public Scatterogram(Signal signal)
         {
             InitializeComponent();
-            _signal = signal;
-            Initialize();
+            Initialize(signal);
         }
-        private void drawEllipse(double center, double h = 5, double w = 5, double angle = 0)
+        private void drawEllipse(float[] x, float[] y)
         {
-            var rot = angle * Math.PI / 180.0;
+            Pen redPen = new Pen(Color.Red, 2);
+            Graphics g = chart.CreateGraphics();
+            PointF[] points = new PointF[x.Length];
 
-            for (int i = -180; i < 180; i++)
-            {
-                // TODO: check formula
-                var t = i * Math.PI / 180.0;
-                var x = w * Math.Cos(t) * Math.Cos(rot) - h * Math.Sin(t) * Math.Sin(rot) + center;
-                var y = h * Math.Sin(t) * Math.Cos(rot) + w * Math.Cos(t) * Math.Sin(rot) + center;
-                chart.Series[2].Points.AddXY(x, y);
-            }
+            for(int i = 0; i < x.Length; i++) points.Append(new PointF(x[i], y[i]));
+
+            g.DrawLines(redPen, points);
+            g.DrawCurve(redPen, points);
         }
-        private void Initialize()
+        private void Initialize(Signal signal)
         {
-            var poincare = _signal.ComputePoincare();
-            var peaks = _signal.computePeaks();
+            var poincare = signal.ComputePoincare();
+            var peaks = signal.computePeaks();
 
             for (int i = 1; i < peaks.Length - 1; i++)
             {
@@ -53,16 +50,10 @@ namespace pulse.graphics
             chart.ChartAreas[0].AxisX.ScaleView.Zoom(min_x, max_x);
             chart.ChartAreas[0].AxisY.ScaleView.Zoom(min_y, max_y);
 
-            // TODO: Fix double first
-            var sd1 = poincare["sd1"].ToObject<double>();
-            var sd2 = poincare["sd2"].ToObject<double>();
+            float[] ellipse_x = poincare.SelectToken("ellipse.x").ToObject<float[]>();
+            float[] ellipse_y = poincare.SelectToken("ellipse.y").ToObject<float[]>();
 
-            var center = chart.Series[0].Points
-                .Where(s => s.YValues[0] == s.XValue)
-                .Select(s => s.XValue)
-                .Average();
-
-            drawEllipse(center, sd1, sd2);
+            drawEllipse(ellipse_x, ellipse_y);
         }
         public void Show(string title = "Скатерграмма")
         {
