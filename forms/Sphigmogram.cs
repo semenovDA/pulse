@@ -4,7 +4,6 @@ using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using Newtonsoft.Json.Linq;
 using pulse.collection;
-using pulse.core;
 using pulse.forms;
 using pulse.graphics;
 
@@ -82,11 +81,6 @@ namespace pulse
 
             InfoBox.Text = String.Format("Время: {0}\tms: {1}\tY: {2}", XLabel, msLabel, Y);
         }
-        private void HistogramDistributionMenuItem_Click(object sender, EventArgs e) => new Histogram(_signal, true).Show();
-        private void ScattergramToolStripMenuItem_Click(object sender, EventArgs e) => new Scatterogram(_signal).Show();
-        private void сбросToolStripMenuItem_Click(object sender, EventArgs e) => signalObject.setView();
-        private void аКФToolStripMenuItem_Click(object sender, EventArgs e) => new ACFChart(_signal).Show();
-        private void пАРСToolStripMenuItem_Click(object sender, EventArgs e) => new ParsRating(_signal).Show();
         private void PowerSpectralHandler(object sender, EventArgs e)
         {
             var method = Spectrogram.Method.Welch;
@@ -109,7 +103,14 @@ namespace pulse
 
             new Spectrogram(_signal, method).Show(title);
         }
+
+        /* Graphic events */
+        private void HistogramDistributionMenuItem_Click(object sender, EventArgs e) => new Histogram(_signal, true).Show();
+        private void ScattergramToolStripMenuItem_Click(object sender, EventArgs e) => new Scatterogram(_signal).Show();
         private void AllToolStripMenuItem_Click(object sender, EventArgs e) => new AnalysisForm(_signal).Show();
+        private void аКФToolStripMenuItem_Click(object sender, EventArgs e) => new ACFChart(_signal).Show();
+        private void пАРСToolStripMenuItem_Click(object sender, EventArgs e) => new ParsRating(_signal).Show();
+        private void сбросToolStripMenuItem_Click(object sender, EventArgs e) => signalObject.setView();
 
         // Utils
         public void SelectBar(int idx)
@@ -123,5 +124,4 @@ namespace pulse
             axis.ScaleView.Zoom(viewStart, viewEnd);
         }
     }
-
 }
