@@ -35,6 +35,7 @@ namespace pulse.forms
             charts.Add("Спектограмма Lomb-Scargle", "LOMB_SPECTOGRAM");
             charts.Add("Спектограмма Autoregressive", "AR_SPECTOGRAM");
             charts.Add("Скатерограмма", "POINCARE_SCATTERGRAM");
+            charts.Add("Автокорреляционная функция", "AUTOCORRELATION_FUNCTION");
 
             foreach (KeyValuePair<string, string> kvp in charts) {
                 var chart = new ListViewItem(kvp.Key) { Tag = kvp.Value };
@@ -67,6 +68,9 @@ namespace pulse.forms
                     break;
                 case "POINCARE_SCATTERGRAM":
                     chart = new Scatterogram(_signal).chart;
+                    break;
+                case "AUTOCORRELATION_FUNCTION":
+                    chart = new ACFChart(_signal).chart;
                     break;
             }
 

@@ -209,6 +209,12 @@
     <Compile Include="forms\Empty.Designer.cs">
       <DependentUpon>Empty.cs</DependentUpon>
     </Compile>
+    <Compile Include="forms\ParsRating.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="forms\ParsRating.Designer.cs">
+      <DependentUpon>ParsRating.cs</DependentUpon>
+    </Compile>
     <Compile Include="forms\Sphigmogram.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -250,6 +256,12 @@
     </Compile>
     <Compile Include="forms\Statistics.Designer.cs">
       <DependentUpon>Statistics.cs</DependentUpon>
+    </Compile>
+    <Compile Include="graphics\ACFChart.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="graphics\ACFChart.Designer.cs">
+      <DependentUpon>ACFChart.cs</DependentUpon>
     </Compile>
     <Compile Include="graphics\Histogram.cs">
       <SubType>Component</SubType>
@@ -306,6 +318,9 @@
     <EmbeddedResource Include="forms\Empty.resx">
       <DependentUpon>Empty.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="forms\ParsRating.resx">
+      <DependentUpon>ParsRating.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="forms\Sphigmogram.resx">
       <DependentUpon>Sphigmogram.cs</DependentUpon>
     </EmbeddedResource>
@@ -326,6 +341,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="forms\Statistics.resx">
       <DependentUpon>Statistics.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="graphics\ACFChart.resx">
+      <DependentUpon>ACFChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="graphics\Histogram.resx">
       <DependentUpon>Histogram.cs</DependentUpon>
