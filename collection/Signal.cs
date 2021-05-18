@@ -70,5 +70,8 @@ namespace pulse.collection
             var jToken = base.Excute(PythonUtils.SCRIPT_VSRNONLINEAR);
             return JObject.Parse(File.ReadAllText(jToken.ToString()))["ACF"];
         }
+
+        public JToken ComputePars() => base.Excute(PythonUtils.SCRIPT_VSRPARS);
+        public JToken ComputeStatistics() => base.Excute(PythonUtils.SCRIPT_VSRSTATS);
     }
 }
