@@ -7,7 +7,6 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace pulse.forms
 {
-
     public partial class AnalysisForm : Form
     {
         Signal _signal;
@@ -146,7 +145,6 @@ namespace pulse.forms
             pages[_page].onColumnChanged((int)ColumnsCount.Value);
             workspaceSetup();
         }
-
         private void pageScrollBar_Scroll(object sender, ScrollEventArgs e)
         {
             if (e.NewValue >= pages.Count) {
@@ -165,7 +163,6 @@ namespace pulse.forms
     {
         public Panel panel;
         public bool charted;
-
         public Graphic(Panel panel, bool charted)
         {
             this.panel = panel;
@@ -178,7 +175,6 @@ namespace pulse.forms
         public int columns;
         public int rows;
         public List<List<Graphic>> panels = new List<List<Graphic>>();
-
         public Page(int columns, int rows)
         {
             this.columns = columns;
@@ -190,7 +186,6 @@ namespace pulse.forms
                 panels.Add(col);
             }
         }
-
         public void MarkAsCharted(Panel panel)
         {
             foreach(var cols in panels) {
@@ -199,7 +194,6 @@ namespace pulse.forms
                 }
             }
         }
-
         public void onColumnChanged(int columns)
         {
             if(this.columns < columns) {
