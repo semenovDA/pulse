@@ -2,7 +2,6 @@
 using System.Drawing;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
-using Newtonsoft.Json.Linq;
 using pulse.collection;
 using pulse.forms;
 using pulse.graphics;
@@ -43,11 +42,6 @@ namespace pulse
         }
 
         /*  Events  */
-        private void StatisticsToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            JToken jToken = _signal.ComputeStatistics();
-            new VSRStatistics(_record.patient, jToken).Show();
-        }
         private void ShowValuesCb_Click(object sender, EventArgs e)
         {
             ShowValuesCb.Checked = !ShowValuesCb.Checked;
@@ -111,6 +105,7 @@ namespace pulse
         private void аКФToolStripMenuItem_Click(object sender, EventArgs e) => new ACFChart(_signal).Show();
         private void пАРСToolStripMenuItem_Click(object sender, EventArgs e) => new ParsRating(_signal).Show();
         private void сбросToolStripMenuItem_Click(object sender, EventArgs e) => signalObject.setView();
+        private void StatisticsToolStripMenuItem_Click(object sender, EventArgs e) => new VSRStatistics(_record.patient, _signal).Show();
 
         // Utils
         public void SelectBar(int idx)

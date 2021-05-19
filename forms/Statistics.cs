@@ -17,10 +17,7 @@ namespace pulse.forms
     public partial class VSRStatistics : Form
     {
         // Private variables
-
         private static string _mapPath = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "files/map.json");
-        private JToken _jToken;
-        private Patient _patient;
 
         // Private functions
         private List<Statistic> assertMap(JToken jToken) {
@@ -55,14 +52,14 @@ namespace pulse.forms
             return list;
         }
 
-        private void Initialize()
+        private void Initialize(Patient patient, Signal signal)
         {
-
-            patientName.Text = _patient != null ?
-                String.Format("Пациент: {0}", _patient.fullName()) :
+            var jToken = signal.ComputeStatistics();
+            patientName.Text = patient != null ?
+                String.Format("Пациент: {0}", patient.fullName()) :
                 "Пациент: -";
 
-            List<Statistic> list = assertMap(_jToken);
+            List<Statistic> list = assertMap(jToken);
 
             foreach (var stat in list) {
                 if(stat.type == Type.BASIC) basic.Rows.Add(stat.key, stat.value, stat.name);
@@ -73,13 +70,10 @@ namespace pulse.forms
         }
 
         // Main constructor
-        public VSRStatistics(Patient patient, JToken jToken)
+        public VSRStatistics(Patient patient, Signal signal)
         {
-            _jToken = jToken;
-            _patient = patient;
-
             InitializeComponent();
-            Initialize();
+            Initialize(patient, signal);
         }
 
     }
