@@ -17,17 +17,13 @@ namespace pulse.forms
 
         public void Initialize(Signal signal)
         {
-            var number = (int)signal.ComputePars()["stats"];
+            var number = (int)signal.ComputePars();
             foreach(var label in GetAllControls(this).OfType<Label>()) {
                 var isNumeric = int.TryParse(label.Text, out int n);
                 if (isNumeric && n != number) 
                     label.Font = new Font(DefaultFont, FontStyle.Regular);
             }
-
-            var text = new Label();
-            text.Text = "↓";
-
-            pointer.Controls.Add(text, number - 1, 0);
+            pointer.Controls.Add(new Label { Text = "↓" }, number - 1, 0);
         }
 
         /* Utils */

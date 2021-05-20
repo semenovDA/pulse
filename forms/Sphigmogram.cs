@@ -11,7 +11,7 @@ namespace pulse
     public partial class Sphigmogram : Form
     {
         /* Variables definition */
-        Record _record;
+        Patient _patient;
         Signal _signal;
 
         SignalChart signalObject;
@@ -26,10 +26,9 @@ namespace pulse
 
         public void Initialize(Record record)
         {
-            _record = record;
-            _record.get();
-
+            record.get();
             _signal = new Signal(record);
+            _patient = record.patient;
 
             signalObject = new SignalChart(_signal);
             signalChart = signalObject.chart;
@@ -105,7 +104,7 @@ namespace pulse
         private void аКФToolStripMenuItem_Click(object sender, EventArgs e) => new ACFChart(_signal).Show();
         private void пАРСToolStripMenuItem_Click(object sender, EventArgs e) => new ParsRating(_signal).Show();
         private void сбросToolStripMenuItem_Click(object sender, EventArgs e) => signalObject.setView();
-        private void StatisticsToolStripMenuItem_Click(object sender, EventArgs e) => new VSRStatistics(_record.patient, _signal).Show();
+        private void StatisticsToolStripMenuItem_Click(object sender, EventArgs e) => new VSRStatistics(_patient, _signal).Show();
 
         // Utils
         public void SelectBar(int idx)

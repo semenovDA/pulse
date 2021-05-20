@@ -70,10 +70,10 @@ namespace pulse.collection
         /*  Utils functions */
         public string getFileName()
         {
-            if (_null) return this.id;
+            if (_null) return id;
             string savesDir = Properties.Settings.Default.savesPath;
-            return savesDir + this.id + ".txt";
+            return savesDir + id + ".txt";
         }
-        public string getCacheName() => this.id + ".tmp";
+        public string getCacheName() => id + ".tmp";
     }
 }
