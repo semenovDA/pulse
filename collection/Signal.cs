@@ -73,5 +73,10 @@ namespace pulse.collection
 
         public JToken ComputePars() => base.Excute(PythonUtils.SCRIPT_VSRPARS);
         public JToken ComputeStatistics() => base.Excute(PythonUtils.SCRIPT_VSRSTATS);
+        public JToken ComputeCustomScript(string path)
+        {
+            var jToken = base.Excute(path, false);
+            return JObject.Parse(File.ReadAllText(jToken.ToString()));
+        }
     }
 }

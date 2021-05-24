@@ -56,6 +56,7 @@
             this.цветСеткиToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.цветГрафикаToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.настройкиToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.moduleAddition = new System.Windows.Forms.ToolStripMenuItem();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
@@ -295,7 +296,8 @@
             this.базаДанныхToolStripMenuItem,
             this.открытьФайлыToolStripMenuItem,
             this.цветаToolStripMenuItem,
-            this.настройкиToolStripMenuItem});
+            this.настройкиToolStripMenuItem,
+            this.moduleAddition});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(800, 24);
@@ -353,6 +355,13 @@
             this.настройкиToolStripMenuItem.Size = new System.Drawing.Size(79, 20);
             this.настройкиToolStripMenuItem.Text = "Настройки";
             this.настройкиToolStripMenuItem.Click += new System.EventHandler(this.настройкиToolStripMenuItem_Click);
+            // 
+            // moduleAddition
+            // 
+            this.moduleAddition.Name = "moduleAddition";
+            this.moduleAddition.Size = new System.Drawing.Size(115, 20);
+            this.moduleAddition.Text = "Добавить модуль";
+            this.moduleAddition.Click += new System.EventHandler(this.moduleAddition_Click);
             // 
             // colorDialog1
             // 
@@ -510,6 +519,7 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.ToolStripMenuItem настройкиToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem moduleAddition;
     }
 }
 

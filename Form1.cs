@@ -273,11 +273,7 @@ namespace pulse
             }
         }
 
-        private void базаДанныхToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            DBReview f3 = new DBReview();
-            f3.ShowDialog();
-        }
+        private void базаДанныхToolStripMenuItem_Click(object sender, EventArgs e) => new DBReview().ShowDialog();
 
         private void цветФонаToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -365,11 +361,8 @@ namespace pulse
             comboBox1.Items.AddRange(portes);
         }
 
-        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Settings settings = new Settings();
-            settings.ShowDialog();
-        }
+        private void настройкиToolStripMenuItem_Click(object sender, EventArgs e) => new Settings().ShowDialog();
+        private void moduleAddition_Click(object sender, EventArgs e) => new CustomScript().Show();
     }
 
 }
