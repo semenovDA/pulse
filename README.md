@@ -2,6 +2,7 @@
 ## How to add your own python script module.
 ### Rules
 Python script should save the result of the analysis as JSON file in the next folder: `C:\Users\Admin\AppData\Roaming\pulse`. 
+[!] The name of the saved file should be as the input filename with prefix `ANALYSIS_NAME`_FILENAME.
 For the input the program will give you a path to a signal `.txt` file as an argument.
 ### Keys
 There is two acceptable data types:
