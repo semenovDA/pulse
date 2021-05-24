@@ -31,7 +31,7 @@ namespace pulse.core
         public PythonUtils(Record record) : base(record) => _record = record;
 
         // Public functions
-        public JToken Excute(string script)
+        public JToken Excute(string script, bool base_path = true)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace pulse.core
                 if (cache != null) return cache;
 
                 string args = "-i " + Path.GetFullPath(_record.getFileName());
-                return run_cmd(script, args);
+                return run_cmd(script, args, base_path);
             } 
             catch(Exception e)
             {
@@ -91,7 +91,7 @@ namespace pulse.core
             }
             catch { InstallPython(); }
 
-            try { return run_cmd(SCRIPT_VSRTEST, ""); } 
+            try { return run_cmd(SCRIPT_VSRTEST, "", true); } 
             catch { return null;  }
         }
 
@@ -147,9 +147,9 @@ namespace pulse.core
             }
         }
 
-        private JToken run_cmd(string script, string args)
+        public JToken run_cmd(string script, string args, bool base_path = false)
         {
-            var path = AppDomain.CurrentDomain.BaseDirectory;
+            var path = base_path ? AppDomain.CurrentDomain.BaseDirectory : "";
 
             ProcessStartInfo start = new ProcessStartInfo();
             start.FileName = getRegistryValue(@"Software\Python\PythonCore", "ExecutablePath");
