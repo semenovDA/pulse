@@ -17,13 +17,14 @@ namespace pulse
             var path = AppDomain.CurrentDomain.BaseDirectory + @"saves\";
             if (Properties.Settings.Default.savesPath == "") Properties.Settings.Default.savesPath = path;
 
+            path = AppDomain.CurrentDomain.BaseDirectory + @"files\scripts.json";
+            if (Properties.Settings.Default.scriptsFile == "") Properties.Settings.Default.scriptsFile = path;
+
             DirectoryInfo drInfo = new DirectoryInfo(Properties.Settings.Default.savesPath);
             if (!drInfo.Exists) { drInfo.Create(); }
 
             PythonUtils pu = new PythonUtils(new collection.Record("test"));
-            var res = pu.checkRequirements();
-            if (res == null)
-            {
+            if (pu.checkRequirements() == null) {
                 MessageBox.Show("Необходимые пакеты не установлены !\n" +
                     "Не завершайте работу пока пакеты устанавливаются ...");
                 pu.InstallRequirements();
