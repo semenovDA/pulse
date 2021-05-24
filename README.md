@@ -26,3 +26,69 @@ The attributes of chart object in `{"charts": []}` is next:
 4. star
 5. triangle
 6. squere
+
+## Examples
+**Grapical:**
+```json
+{
+  "type":"graphical",
+  "data":{
+    "charts":[
+      {
+        "type":"scatter",
+        "color":"red",
+        "markerStyle":"circle",
+        "markerSize":10,
+        "x":[
+          1,
+          2,
+          3,
+          4
+        ],
+        "y":[
+          1,
+          2,
+          3,
+          4
+        ]
+      },
+      {
+        "type":"line",
+        "color":"blue",
+        "x":[
+          1,
+          2,
+          3,
+          4
+        ],
+        "y":[
+          1,
+          2,
+          3,
+          4
+        ]
+      }
+    ]
+  }
+}
+```
+**Table:**
+```json
+{
+  "type":"table",
+  "data":{
+    "IC":32.907451029206918,
+    "(LF/HF)av":0.63430649508275283,
+    "ULFav":0.0060460735828449146,
+    "VLFav":0.0730950045118496,
+    "LFav":2.4053702814533495,
+    "HFav":3.7921262041302923,
+    "ULF":0.096326632237495269,
+    "VLF":1.1645567195855942,
+    "LF":38.322593220496792,
+    "HF":60.416523427680104,
+    "TP":6.2766375636783369,
+    "SI":0.0042032163742690056
+  }
+}
+```
