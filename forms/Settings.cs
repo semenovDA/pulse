@@ -59,7 +59,7 @@ namespace pulse.forms
             string filePath = GetFilePath();
             if (filePath == null) return;
 
-            string connString = String.Format(DBconnection.connString, filePath);
+            string connString = string.Format(DBconnection.connString, filePath);
 
             try { new DBconnection(connString); }
             catch(Exception exp) {
