@@ -1,7 +1,9 @@
 ﻿using pulse.collection;
 using pulse.graphics;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -35,6 +37,11 @@ namespace pulse.forms
             charts.Add("Спектограмма Autoregressive", "AR_SPECTOGRAM");
             charts.Add("Скатерограмма", "POINCARE_SCATTERGRAM");
             charts.Add("Автокорреляционная функция", "AUTOCORRELATION_FUNCTION");
+            charts.Add("Оценка ПАРС", "PARS_RATING");
+
+            foreach(DictionaryEntry script in CustomScript.readScripts()) {
+                charts.Add((string)script.Key, script.Key.ToString().ToUpper());
+            }
 
             foreach (KeyValuePair<string, string> kvp in charts) {
                 var chart = new ListViewItem(kvp.Key) { Tag = kvp.Value };
@@ -42,9 +49,9 @@ namespace pulse.forms
             }
         }
 
-        private Chart GetChart(string chartname)
+        private Control GetChart(string chartname)
         {
-            Chart chart = null;
+            Control chart = null;
             switch(chartname)
             {
                 case "SIGNAL":
@@ -70,6 +77,18 @@ namespace pulse.forms
                     break;
                 case "AUTOCORRELATION_FUNCTION":
                     chart = new ACFChart(_signal).chart;
+                    break;
+                case "PARS_RATING":
+                    chart = new ParsRating(_signal).main;
+                    break;
+                default:
+                    var key = charts.FirstOrDefault(x => x.Value == chartname).Key;
+                    var path = Properties.Settings.Default.scriptsFile;
+                    var scripts = CustomScript.readScripts();
+                    if (!scripts.ContainsKey(key)) break;
+                    var form = new CustomForm(_signal, scripts[key]);
+                    if (form.isGraphical) chart = form.chart;
+                    else chart = form.data;
                     break;
             }
 
@@ -158,7 +177,6 @@ namespace pulse.forms
         }
 
     }
-
     public class Graphic
     {
         public Panel panel;
@@ -169,7 +187,6 @@ namespace pulse.forms
             this.charted = charted;
         }
     }
-
     public class Page
     {
         public int columns;

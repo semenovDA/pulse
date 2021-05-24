@@ -63,7 +63,7 @@ namespace pulse.forms
             this.main.ColumnCount = 3;
             this.main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.93309F));
             this.main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.06692F));
-            this.main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 121F));
+            this.main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 122F));
             this.main.Controls.Add(this.label1, 1, 1);
             this.main.Controls.Add(this.tableLayoutPanel2, 1, 2);
             this.main.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -85,7 +85,7 @@ namespace pulse.forms
             this.label1.Location = new System.Drawing.Point(124, 27);
             this.label1.Margin = new System.Windows.Forms.Padding(3);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(425, 19);
+            this.label1.Size = new System.Drawing.Size(424, 19);
             this.label1.TabIndex = 0;
             this.label1.Text = "Оценка функционального состояния";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -112,7 +112,7 @@ namespace pulse.forms
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 69.81132F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 103F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(425, 291);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(424, 291);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -336,7 +336,7 @@ namespace pulse.forms
             this.label2.Location = new System.Drawing.Point(262, 36);
             this.label2.Margin = new System.Windows.Forms.Padding(3);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(159, 65);
+            this.label2.Size = new System.Drawing.Size(158, 65);
             this.label2.TabIndex = 3;
             this.label2.Text = "Физиологическая норма";
             this.label2.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -349,7 +349,7 @@ namespace pulse.forms
             this.label3.Location = new System.Drawing.Point(262, 108);
             this.label3.Margin = new System.Windows.Forms.Padding(3);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(159, 97);
+            this.label3.Size = new System.Drawing.Size(158, 97);
             this.label3.TabIndex = 4;
             this.label3.Text = "Донозологическое состояния\r\nПреморбидные состояния";
             this.label3.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -362,7 +362,7 @@ namespace pulse.forms
             this.label4.Location = new System.Drawing.Point(262, 212);
             this.label4.Margin = new System.Windows.Forms.Padding(3);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(159, 75);
+            this.label4.Size = new System.Drawing.Size(158, 75);
             this.label4.TabIndex = 5;
             this.label4.Text = "Срыв адаптации";
             this.label4.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -412,8 +412,6 @@ namespace pulse.forms
         }
 
         #endregion
-
-        private System.Windows.Forms.TableLayoutPanel main;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel2;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel3;
@@ -433,5 +431,6 @@ namespace pulse.forms
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TableLayoutPanel pointer;
+        public System.Windows.Forms.TableLayoutPanel main;
     }
 }

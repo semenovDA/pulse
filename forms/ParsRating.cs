@@ -8,7 +8,6 @@ namespace pulse.forms
 {
     public partial class ParsRating : Form
     {
-
         public ParsRating(Signal signal)
         {
             InitializeComponent();
