@@ -317,9 +317,6 @@
     <Content Include="scripts\VSR_FOURIER.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="scripts\VSR_PARS.py">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="scripts\VSR_NONLINEAR.py">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

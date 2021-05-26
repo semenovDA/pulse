@@ -3,6 +3,7 @@ import argparse, json
 import numpy as np
 import warnings
 from VSRstats.time_domain import time_domain
+from VSRstats.pars_rating import pars_rating
 warnings.filterwarnings("ignore")
 
 def openFile(filename):
@@ -30,8 +31,8 @@ for bit in data:
 obj = {}
 obj['stats'] = time_domain(signal).stats if(args.hz==None)\
                else time_domain(signal, args.hz).stats
-obj['pars'] = pars_rating(signal).stats}) if(args.hz==None)\
-              else {"pars": pars_rating(signal, args.hz).stats}
+obj['pars'] = pars_rating(signal).stats if(args.hz==None)\
+              else pars_rating(signal, args.hz).stats
 
 for key in obj['stats']:
     obj['stats'][key] = float(obj['stats'][key])
