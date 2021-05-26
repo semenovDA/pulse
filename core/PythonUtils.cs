@@ -15,9 +15,6 @@ namespace pulse.core
         static public string SCRIPT_VSRSIGNAL = "scripts/VSR_SIGNAL.py";
         static public string SCRIPT_VSRNONLINEAR = "scripts/VSR_NONLINEAR.py";
         static public string SCRIPT_VSRFOURIER = "scripts/VSR_FOURIER.py";
-
-        static public string SCRIPT_VSRPARS = "scripts/VSR_PARS.py";
-
         static public string SCRIPT_VSRFREQUENCY = "scripts/VSR_FREQUENCY.py";
         static public string SCRIPT_VSRTEST = "scripts/VSR_TEST.py";
 

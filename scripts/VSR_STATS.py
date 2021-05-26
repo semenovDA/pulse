@@ -30,6 +30,8 @@ for bit in data:
 obj = {}
 obj['stats'] = time_domain(signal).stats if(args.hz==None)\
                else time_domain(signal, args.hz).stats
+obj['pars'] = pars_rating(signal).stats}) if(args.hz==None)\
+              else {"pars": pars_rating(signal, args.hz).stats}
 
 for key in obj['stats']:
     obj['stats'][key] = float(obj['stats'][key])

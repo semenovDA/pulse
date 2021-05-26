@@ -73,7 +73,7 @@ namespace pulse.collection
         }
         public JToken ComputePoincare() => base.Excute(SCRIPT_VSRNONLINEAR)["poincare"];
         public JToken ComputeACF() => base.Excute(SCRIPT_VSRNONLINEAR)["ACF"];
-        public JToken ComputePars() => base.Excute(SCRIPT_VSRPARS);
+        public JToken ComputePars() => base.Excute(SCRIPT_VSRSTATS)["pars"];
         public JToken ComputeStatistics() => base.Excute(SCRIPT_VSRSTATS)["stats"];
         public void RecomputeAnalysis()
         {
