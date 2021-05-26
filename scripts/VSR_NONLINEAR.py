@@ -1,4 +1,5 @@
-import os, sys, getopt
+import os
+import argparse
 import numpy as np
 import warnings
 import json
@@ -8,48 +9,36 @@ warnings.filterwarnings("ignore")
 
 def openFile(filename):
     try:
-        filename = filename[1:]
-        f = open(filename, "r")
-        return f.read();
+        return open(filename, "r").read()
     except Exception as e:
-        print('Failed to open ' + filename);
+        print('Failed to open ' + filename)
         print(str(e))
 
-def main(argv):
-    inputfile = ''
-    try:
-      opts, args = getopt.getopt(argv, "hi:",["ifile="])
-    except getopt.GetoptError:
-      print('usage: test.py -i <inputfile>')
-      sys.exit(2)
-    for opt, arg in opts:
-      if opt == '-h':
-         print('usage: test.py -i <inputfile>')
-         sys.exit()
-      elif opt in ("-i", "--ifile"):
-         inputfile = arg
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', type=str, action='store')
+parser.add_argument('-hz', type=int, action='store')
+args = parser.parse_args()
 
-    data = openFile(inputfile).split('\n');
-    filename = os.path.basename(inputfile)
-    filename = filename[:-4]
-    signal = []
+data = openFile(args.i).split('\n');
+signal = []
 
-    for bit in data:
-        if not (bit == ''):
-            try:
-                signal.append(int(bit));
-            except Exception:
-                pass;
+for bit in data:
+    if not (bit == ''):
+        try:
+            signal.append(int(bit));
+        except Exception:
+            pass;
+obj = {}
+signal = np.array(signal)
+obj = nonlinear(signal).stats if(args.hz==None)\
+                   else nonlinear(signal, args.hz).stats
+obj['update'] = 'false'                 
 
-    signal = np.array(signal)
+filename = os.path.basename(args.i)[:-4]
 
-    obj = nonlinear(signal).stats
+path = os.getenv('APPDATA')
+path = os.path.join(path, 'pulse', "{}_NONLINEAR.json".format(filename))
+with open(path, "w") as outfile:  
+    json.dump(obj, outfile)
 
-    path = os.getenv('APPDATA')
-    path = os.path.join(path, 'pulse', "{}_NONLINEAR.json".format(filename))
-    with open(path, "w") as outfile:  
-        json.dump(obj, outfile)
-
-    print({"nonlinear": path})
-
-main(sys.argv[1:])
+print({"nonlinear": path})

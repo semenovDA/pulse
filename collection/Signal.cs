@@ -13,6 +13,7 @@ namespace pulse.collection
 
         public Record record { get; set; }
         public List<int> signal { get; set; }
+        public double[] norm_signal { get; set; }
         public int[] peaks { get; set; }
         public double Hz { get; set; }
         public double HZstep { get; set; }
@@ -26,6 +27,7 @@ namespace pulse.collection
             HZstep = ms / Hz;
             timestep = _record.duration * ms;
             peaks = computePeaks();
+            norm_signal = normalizeSignal();
         }
         public List<int> readSignal(Record record)
         {
@@ -34,9 +36,23 @@ namespace pulse.collection
                        .Select(s => int.Parse(s))
                        .ToList();
         }
-        public int[] computePeaks() => base.Excute(PythonUtils.SCRIPT_VSRPEAKS)
-                                           .Select(jv => (int)jv)
-                                           .ToArray();
+        public int[] computePeaks()
+        {
+            string[] args = { string.Format("-hz {0:0}", 220) };
+            var result = base.Excute(PythonUtils.SCRIPT_VSRSIGNAL);
+            return result["peaks"].Select(jv => (int)jv).ToArray();
+        }
+        public double[] normalizeSignal()
+        {
+            var result = base.Excute(SCRIPT_VSRSIGNAL);
+            return result["normalized"].Select(jv => (double)jv).ToArray();
+        }
+        public double[] computeFiltredSignal()
+        {
+            string[] args = { string.Format("-hz {0:0}", 220) };
+            var result = base.Excute(SCRIPT_VSRSIGNAL);
+            return result["filtered"].Select(jv => (double)jv).ToArray();
+        }
         public List<double> computeRR(bool timesteped = true)
         {
             List<double> points = new List<double>();
@@ -47,32 +63,28 @@ namespace pulse.collection
             }
             return points;
         }
-        public JObject ComputeFrequency()
-        {
-            var jToken = base.Excute(PythonUtils.SCRIPT_VSRFREQUENCY);
-            return JObject.Parse(File.ReadAllText(jToken.ToString()));
-        }
         public JToken ComputeFrequency(Spectrogram.Method method)
         {
-            var obj = ComputeFrequency();
+            var obj = base.Excute(SCRIPT_VSRFREQUENCY);
             if (method == Spectrogram.Method.Welch) return obj["welch"];
             else if (method == Spectrogram.Method.Lomb) return obj["lomb"];
             else if (method == Spectrogram.Method.Autoregressive) return obj["ar"];
             else return obj;
         }
-        public JToken ComputePoincare()
+        public JToken ComputePoincare() => base.Excute(SCRIPT_VSRNONLINEAR)["poincare"];
+        public JToken ComputeACF() => base.Excute(SCRIPT_VSRNONLINEAR)["ACF"];
+        public JToken ComputePars() => base.Excute(SCRIPT_VSRPARS);
+        public JToken ComputeStatistics() => base.Excute(SCRIPT_VSRSTATS)["stats"];
+        public void RecomputeAnalysis()
         {
-            var jToken = base.Excute(PythonUtils.SCRIPT_VSRNONLINEAR);
-            return JObject.Parse(File.ReadAllText(jToken.ToString()))["poincare"];
+            var cacheHandler = new CacheHandler(record);
+            var signalPath = formatPropretyName(SCRIPT_VSRSIGNAL);
+            cacheHandler.Cache["data"][signalPath]["peaks"] = new JArray(peaks);
+            cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRNONLINEAR)]["update"] = "true";
+            cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRSTATS)]["update"] = "true";
+            cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRFREQUENCY)]["update"] = "true";
+            cacheHandler.Update();
         }
-        public JToken ComputeACF()
-        {
-            var jToken = base.Excute(PythonUtils.SCRIPT_VSRNONLINEAR);
-            return JObject.Parse(File.ReadAllText(jToken.ToString()))["ACF"];
-        }
-
-        public JToken ComputePars() => base.Excute(PythonUtils.SCRIPT_VSRPARS);
-        public JToken ComputeStatistics() => base.Excute(PythonUtils.SCRIPT_VSRSTATS);
         public JToken ComputeCustomScript(string path)
         {
             var jToken = base.Excute(path, false);

@@ -30,12 +30,12 @@ namespace pulse.graphics
 
         private void FillValues(Signal signal)
         {
-            List<double> points = signal.computeRR();
-            for (var i = 0; i < points.Count; i++) chart.Series[0].Points.AddXY(i + 1, points[i]);
+            List<double> points = signal.computeRR(true);
+            for (var i = 0; i < points.Count; i++) chart.Series[0].Points.AddXY(i + 1, points[i] * Signal.ms);
             chart.ChartAreas[0].AxisX.ScaleView.Zoom(0, signal.peaks.Length / 2);
 
             chart.ChartAreas[0].AxisX.Title = "RR number";
-            chart.ChartAreas[0].AxisY.Title = "Seconds";
+            chart.ChartAreas[0].AxisY.Title = "ms";
         }
 
         public void Show(string title = "Гистограмма распределение")

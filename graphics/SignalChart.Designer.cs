@@ -32,6 +32,7 @@ namespace pulse.graphics
             System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
             System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
             System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.chart = new System.Windows.Forms.DataVisualization.Charting.Chart();
             ((System.ComponentModel.ISupportInitialize)(this.chart)).BeginInit();
             // 
@@ -42,6 +43,7 @@ namespace pulse.graphics
             chartArea1.AlignmentStyle = System.Windows.Forms.DataVisualization.Charting.AreaAlignmentStyles.PlotPosition;
             chartArea1.AxisX.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
             chartArea1.AxisX.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
+            chartArea1.AxisX.MajorGrid.Enabled = false;
             chartArea1.AxisX.MajorTickMark.Interval = 0D;
             chartArea1.AxisX.MajorTickMark.IntervalOffset = 0D;
             chartArea1.AxisX.ScrollBar.BackColor = System.Drawing.Color.LightGray;
@@ -50,12 +52,14 @@ namespace pulse.graphics
             chartArea1.AxisX.ScrollBar.Size = 10D;
             chartArea1.AxisX.Title = "Seconds";
             chartArea1.AxisY.Enabled = System.Windows.Forms.DataVisualization.Charting.AxisEnabled.True;
+            chartArea1.AxisY.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.NotSet;
             chartArea1.AxisY.MajorGrid.LineDashStyle = System.Windows.Forms.DataVisualization.Charting.ChartDashStyle.Dot;
             chartArea1.AxisY.ScrollBar.Enabled = false;
             chartArea1.AxisY.Title = "Amplitude";
             chartArea1.BorderWidth = 0;
             chartArea1.CursorX.IsUserEnabled = true;
             chartArea1.CursorX.IsUserSelectionEnabled = true;
+            chartArea1.CursorX.LineColor = System.Drawing.Color.Green;
             chartArea1.InnerPlotPosition.Auto = false;
             chartArea1.InnerPlotPosition.Height = 85F;
             chartArea1.InnerPlotPosition.Width = 87F;
@@ -68,6 +72,7 @@ namespace pulse.graphics
             this.chart.Name = "chart";
             series1.ChartArea = "ChartArea1";
             series1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series1.Color = System.Drawing.Color.LightSkyBlue;
             series1.MarkerSize = 10;
             series1.Name = "Series1";
             series2.ChartArea = "ChartArea1";
@@ -79,11 +84,18 @@ namespace pulse.graphics
             series2.MarkerSize = 10;
             series2.MarkerStyle = System.Windows.Forms.DataVisualization.Charting.MarkerStyle.Triangle;
             series2.Name = "Series2";
+            series3.ChartArea = "ChartArea1";
+            series3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+            series3.Enabled = false;
+            series3.Name = "Series3";
             this.chart.Series.Add(series1);
             this.chart.Series.Add(series2);
+            this.chart.Series.Add(series3);
             this.chart.Size = new System.Drawing.Size(818, 328);
             this.chart.TabIndex = 14;
             this.chart.Text = "chart";
+            this.chart.AxisViewChanging += new System.EventHandler<System.Windows.Forms.DataVisualization.Charting.ViewEventArgs>(this.chart_AxisViewChanging);
+            this.chart.DoubleClick += new System.EventHandler(this.chart_DoubleClick);
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
 
         }

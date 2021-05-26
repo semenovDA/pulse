@@ -2,4 +2,4 @@ import VSRstats
 import spectrum
 import pyhrv
 
-print({'requirements': 'ok'})
+print({'test': {'requirements': 'ok'}})

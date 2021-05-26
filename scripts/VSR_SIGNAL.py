@@ -1,8 +1,7 @@
 import os, sys
-import argparse, json
 import numpy as np
-import warnings
-from VSRstats.time_domain import time_domain
+import argparse, warnings, json
+from VSRstats.tools import *
 warnings.filterwarnings("ignore")
 
 def openFile(filename):
@@ -28,19 +27,24 @@ for bit in data:
             pass;
 
 obj = {}
-obj['stats'] = time_domain(signal).stats if(args.hz==None)\
-               else time_domain(signal, args.hz).stats
+obj["peaks"] = getPeaks(np.array(signal)) if(args.hz==None)\
+               else getPeaks(np.array(signal), args.hz)
+obj["filtered"] = filterdSignal(np.array(signal)) if(args.hz==None)\
+                  else filterdSignal(np.array(signal), args.hz)
 
-for key in obj['stats']:
-    obj['stats'][key] = float(obj['stats'][key])
+obj["filtered"] = normalize(obj["filtered"])
+obj["normalized"] = normalize(signal)
 
-obj['update'] = 'false'
+# Format ndarray to list
+obj["peaks"] = list([float(i) for i in obj["peaks"]])
+obj["filtered"] = list([float(i) for i in obj["filtered"]])
+obj["normalized"] = list([float(i) for i in obj["normalized"]])
 
 filename = os.path.basename(args.i)[:-4]
 
 path = os.getenv('APPDATA')
-path = os.path.join(path, 'pulse', "{}_STATS.json".format(filename))
+path = os.path.join(path, 'pulse', "{}_SIGNAL.json".format(filename))
 with open(path, "w") as outfile:  
     json.dump(obj, outfile)
 
-print({"stats": path})
+print({"signal": path})

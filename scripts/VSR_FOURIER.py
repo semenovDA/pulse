@@ -1,4 +1,5 @@
-import os, sys, getopt
+import os, sys
+import argparse
 import numpy as np
 import warnings
 import json
@@ -27,54 +28,41 @@ def extract_bands(ft, freq):
 
 def openFile(filename):
     try:
-        filename = filename[1:]
-        f = open(filename, "r")
-        return f.read();
+        return open(filename, "r").read();
     except Exception as e:
         print('Failed to open ' + filename);
         print(str(e))
 
-def main(argv):
-    inputfile = ''
-    try:
-      opts, args = getopt.getopt(argv, "hi:",["ifile="])
-    except getopt.GetoptError:
-      print('usage: test.py -i <inputfile>')
-      sys.exit(2)
-    for opt, arg in opts:
-      if opt == '-h':
-         print('usage: test.py -i <inputfile>')
-         sys.exit()
-      elif opt in ("-i", "--ifile"):
-         inputfile = arg
+parser = argparse.ArgumentParser()
+parser.add_argument('-i', type=str, action='store')
+args = parser.parse_args()
 
-    data = openFile(inputfile).split('\n');
-    filename = os.path.basename(inputfile)
-    filename = filename[:-4]
-    arr = []
+data = openFile(args.i).split('\n');
+signal = []
 
-    for bit in data:
-        if not (bit == ''):
-            try:
-                arr.append(int(bit));
-            except Exception:
-                pass;
+for bit in data:
+    if not (bit == ''):
+        try:
+            signal.append(int(bit));
+        except Exception:
+            pass;
 
-    freq, ft = fourier_transform(arr)
-    arr = extract_bands(ft, freq)
+freq, ft = fourier_transform(arr)
+arr = extract_bands(ft, freq)
 
-    obj = { "count": sum([len(v) for v in arr]),
-            "ulf": list(arr[0]),
-            "vlf": list(arr[1]),
-            "lf": list(arr[2]),
-            "hf": list(arr[3]) }
+obj = { "count": sum([len(v) for v in arr]),
+        "ulf": list(arr[0]),
+        "vlf": list(arr[1]),
+        "lf": list(arr[2]),
+        "hf": list(arr[3]) }
 
-    path = os.getenv('APPDATA')
-    path = os.path.join(path, 'pulse', "{}.json".format(filename))
-    with open(path, "w") as outfile:  
-        json.dump(obj, outfile)
+obj['update'] = 'false'    
+
+filename = os.path.basename(args.i)[:-4]
+
+path = os.getenv('APPDATA')
+path = os.path.join(path, 'pulse', "{}.json".format(filename))
+with open(path, "w") as outfile:  
+    json.dump(obj, outfile)
     
-    print({"fourier": path})
-
-
-main(sys.argv[1:])
+print({"fourier": path})

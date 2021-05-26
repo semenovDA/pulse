@@ -42,7 +42,10 @@
             this.аКФToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.пАРСToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.AllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.правкаToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.addCardioIntervals = new System.Windows.Forms.ToolStripMenuItem();
             this.видToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filtred = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowValuesCb = new System.Windows.Forms.ToolStripMenuItem();
             this.сбросToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.workspace = new System.Windows.Forms.TableLayoutPanel();
@@ -55,6 +58,7 @@
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.анализToolStripMenuItem,
+            this.правкаToolStripMenuItem,
             this.видToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
@@ -157,26 +161,49 @@
             this.AllToolStripMenuItem.Text = "Все";
             this.AllToolStripMenuItem.Click += new System.EventHandler(this.AllToolStripMenuItem_Click);
             // 
+            // правкаToolStripMenuItem
+            // 
+            this.правкаToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.addCardioIntervals});
+            this.правкаToolStripMenuItem.Name = "правкаToolStripMenuItem";
+            this.правкаToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.правкаToolStripMenuItem.Text = "Правка";
+            // 
+            // addCardioIntervals
+            // 
+            this.addCardioIntervals.Name = "addCardioIntervals";
+            this.addCardioIntervals.Size = new System.Drawing.Size(237, 22);
+            this.addCardioIntervals.Text = "Дополнить кардиоинтервалы";
+            this.addCardioIntervals.Click += new System.EventHandler(this.addCardioIntervals_Click);
+            // 
             // видToolStripMenuItem
             // 
             this.видToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.filtred,
             this.ShowValuesCb,
             this.сбросToolStripMenuItem});
             this.видToolStripMenuItem.Name = "видToolStripMenuItem";
             this.видToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.видToolStripMenuItem.Text = "Вид";
             // 
+            // filtred
+            // 
+            this.filtred.Name = "filtred";
+            this.filtred.Size = new System.Drawing.Size(141, 22);
+            this.filtred.Text = "Фильтрация";
+            this.filtred.Click += new System.EventHandler(this.filtred_Click);
+            // 
             // ShowValuesCb
             // 
             this.ShowValuesCb.Name = "ShowValuesCb";
-            this.ShowValuesCb.Size = new System.Drawing.Size(127, 22);
+            this.ShowValuesCb.Size = new System.Drawing.Size(141, 22);
             this.ShowValuesCb.Text = "Значения";
             this.ShowValuesCb.Click += new System.EventHandler(this.ShowValuesCb_Click);
             // 
             // сбросToolStripMenuItem
             // 
             this.сбросToolStripMenuItem.Name = "сбросToolStripMenuItem";
-            this.сбросToolStripMenuItem.Size = new System.Drawing.Size(127, 22);
+            this.сбросToolStripMenuItem.Size = new System.Drawing.Size(141, 22);
             this.сбросToolStripMenuItem.Text = "Сброс";
             this.сбросToolStripMenuItem.Click += new System.EventHandler(this.сбросToolStripMenuItem_Click);
             // 
@@ -248,5 +275,8 @@
         private System.Windows.Forms.ToolStripMenuItem AllToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem аКФToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem пАРСToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem filtred;
+        private System.Windows.Forms.ToolStripMenuItem правкаToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem addCardioIntervals;
     }
 }

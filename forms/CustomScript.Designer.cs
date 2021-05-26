@@ -29,6 +29,7 @@ namespace pulse.forms
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CustomScript));
             this.main = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.excute = new System.Windows.Forms.Button();
@@ -74,7 +75,7 @@ namespace pulse.forms
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 35.25424F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 64.74577F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 30F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 90F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 91F));
             this.tableLayoutPanel1.Controls.Add(this.excute, 1, 5);
             this.tableLayoutPanel1.Controls.Add(this.label1, 0, 3);
             this.tableLayoutPanel1.Controls.Add(this.filePath, 1, 3);
@@ -98,7 +99,7 @@ namespace pulse.forms
             // 
             this.excute.Location = new System.Drawing.Point(108, 113);
             this.excute.Name = "excute";
-            this.excute.Size = new System.Drawing.Size(188, 23);
+            this.excute.Size = new System.Drawing.Size(187, 23);
             this.excute.TabIndex = 3;
             this.excute.Text = "Добавить";
             this.excute.UseVisualStyleBackColor = true;
@@ -121,13 +122,13 @@ namespace pulse.forms
             this.filePath.Dock = System.Windows.Forms.DockStyle.Fill;
             this.filePath.Location = new System.Drawing.Point(108, 63);
             this.filePath.Name = "filePath";
-            this.filePath.Size = new System.Drawing.Size(188, 20);
+            this.filePath.Size = new System.Drawing.Size(187, 20);
             this.filePath.TabIndex = 0;
             // 
             // choosepath
             // 
             this.choosepath.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.choosepath.Location = new System.Drawing.Point(299, 60);
+            this.choosepath.Location = new System.Drawing.Point(298, 60);
             this.choosepath.Margin = new System.Windows.Forms.Padding(0);
             this.choosepath.Name = "choosepath";
             this.choosepath.Size = new System.Drawing.Size(30, 25);
@@ -153,7 +154,7 @@ namespace pulse.forms
             this.name.Dock = System.Windows.Forms.DockStyle.Fill;
             this.name.Location = new System.Drawing.Point(108, 23);
             this.name.Name = "name";
-            this.name.Size = new System.Drawing.Size(188, 20);
+            this.name.Size = new System.Drawing.Size(187, 20);
             this.name.TabIndex = 5;
             // 
             // infoBox
@@ -193,8 +194,9 @@ namespace pulse.forms
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(535, 498);
             this.Controls.Add(this.main);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CustomScript";
-            this.Text = "CustomScript";
+            this.Text = "Нестандартный скрипт";
             this.main.ResumeLayout(false);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.tableLayoutPanel1.PerformLayout();

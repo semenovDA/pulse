@@ -1,8 +1,12 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using pulse.collection;
+using pulse.core;
 using pulse.forms;
 using pulse.graphics;
 
@@ -29,7 +33,11 @@ namespace pulse
             record.get();
             _signal = new Signal(record);
             _patient = record.patient;
+            setCharts();
+        }
 
+        public void setCharts()
+        {
             signalObject = new SignalChart(_signal);
             signalChart = signalObject.chart;
             signalChart.CursorPositionChanged += Signal_CursorPositionChanging;
@@ -96,7 +104,39 @@ namespace pulse
 
             new Spectrogram(_signal, method).Show(title);
         }
+        private void filtred_Click(object sender, EventArgs e)
+        {
+            if (filtred.Checked)
+            {
+                signalChart.Series[0].Color = Color.FromArgb(250, Color.LightSkyBlue);
+                signalChart.Series[2].Enabled = false;
+            }
+            else
+            {
+                signalChart.Series[0].Color = Color.FromArgb(150, Color.LightSkyBlue);
+                signalChart.Series[2].Enabled = true;
+            }
+            filtred.Checked = !filtred.Checked;
+        }
+        private void addCardioIntervals_Click(object sender, EventArgs e)
+        {
+            List<int> arr = new List<int>(_signal.peaks);
+            foreach (var annotation in signalChart.Annotations)
+            {
+                if (!annotation.AllowMoving) continue;
+                var value = (int)annotation.X;
+                arr.Insert(closestIndex(arr, value), value);
+            }
 
+            _signal.peaks = arr.ToArray();
+
+            workspace.Controls.Remove(signalChart);
+            workspace.Controls.Remove(histogramChart);
+
+            _signal.RecomputeAnalysis();
+
+            setCharts();
+        }
         /* Graphic events */
         private void HistogramDistributionMenuItem_Click(object sender, EventArgs e) => new Histogram(_signal, true).Show();
         private void ScattergramToolStripMenuItem_Click(object sender, EventArgs e) => new Scatterogram(_signal).Show();
@@ -116,6 +156,14 @@ namespace pulse
         {
             axis.Interval = (viewEnd - viewStart) / 4;
             axis.ScaleView.Zoom(viewStart, viewEnd);
+        }
+
+        private int closestIndex(List<int> arr, int number)
+        {
+            foreach (var i in arr) {
+                if (i >= number) return arr.IndexOf(i);
+            }
+            return 0;
         }
     }
 }
