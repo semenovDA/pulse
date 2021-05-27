@@ -16,6 +16,7 @@ def openFile(filename):
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', type=str, action='store')
 parser.add_argument('-hz', type=int, action='store')
+parser.add_argument('-peaks', type=str, action='store')
 args = parser.parse_args()
 
 data = openFile(args.i).split('\n');
@@ -28,11 +29,12 @@ for bit in data:
         except Exception:
             pass;
 
+if not (args.peaks is None):
+    args.peaks = np.array(args.peaks.split(';'), dtype=np.dtype(int))
+
 obj = {}
-obj['stats'] = time_domain(signal).stats if(args.hz==None)\
-               else time_domain(signal, args.hz).stats
-obj['pars'] = pars_rating(signal).stats if(args.hz==None)\
-              else pars_rating(signal, args.hz).stats
+obj['stats'] = time_domain(signal, args.hz, args.peaks).stats
+obj['pars'] = pars_rating(signal, args.hz, args.peaks).stats
 
 for key in obj['stats']:
     obj['stats'][key] = float(obj['stats'][key])

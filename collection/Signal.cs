@@ -38,8 +38,8 @@ namespace pulse.collection
         }
         public int[] computePeaks()
         {
-            string[] args = { string.Format("-hz {0:0}", 220) };
-            var result = base.Excute(PythonUtils.SCRIPT_VSRSIGNAL);
+            string[] args = { string.Format("-hz {0:0}", 220) }; // TODO: fix HZ amount
+            var result = base.Excute(SCRIPT_VSRSIGNAL);
             return result["peaks"].Select(jv => (int)jv).ToArray();
         }
         public double[] normalizeSignal()
@@ -65,24 +65,45 @@ namespace pulse.collection
         }
         public JToken ComputeFrequency(Spectrogram.Method method)
         {
-            var obj = base.Excute(SCRIPT_VSRFREQUENCY);
+            string[] args = { string.Format("-peaks {0}", string.Join(";", peaks)) };
+            var obj = base.Excute(SCRIPT_VSRFREQUENCY, true, args);
             if (method == Spectrogram.Method.Welch) return obj["welch"];
             else if (method == Spectrogram.Method.Lomb) return obj["lomb"];
             else if (method == Spectrogram.Method.Autoregressive) return obj["ar"];
             else return obj;
         }
-        public JToken ComputePoincare() => base.Excute(SCRIPT_VSRNONLINEAR)["poincare"];
-        public JToken ComputeACF() => base.Excute(SCRIPT_VSRNONLINEAR)["ACF"];
-        public JToken ComputePars() => base.Excute(SCRIPT_VSRSTATS)["pars"];
-        public JToken ComputeStatistics() => base.Excute(SCRIPT_VSRSTATS)["stats"];
+        public JToken ComputePoincare() {
+            string[] args = { string.Format("-peaks {0}", string.Join(";", peaks)) };
+            return base.Excute(SCRIPT_VSRNONLINEAR, true, args)["poincare"];
+        }
+        public JToken ComputeACF() {
+            string[] args = { string.Format("-peaks {0}", string.Join(";", peaks)) };
+            return base.Excute(SCRIPT_VSRNONLINEAR, true, args)["ACF"];
+        }
+        public JToken ComputePars()
+        {
+            string[] args = { string.Format("-peaks {0}", string.Join(";", peaks)) };
+            return base.Excute(SCRIPT_VSRSTATS, true, args)["pars"];
+        }
+        public JToken ComputeStatistics() {
+            string[] args = { string.Format("-peaks {0}", string.Join(";", peaks)) };
+            return base.Excute(SCRIPT_VSRSTATS, true, args)["stats"];
+        }
         public void RecomputeAnalysis()
         {
             var cacheHandler = new CacheHandler(record);
             var signalPath = formatPropretyName(SCRIPT_VSRSIGNAL);
             cacheHandler.Cache["data"][signalPath]["peaks"] = new JArray(peaks);
-            cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRNONLINEAR)]["update"] = "true";
-            cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRSTATS)]["update"] = "true";
-            cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRFREQUENCY)]["update"] = "true";
+            
+            if(cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRNONLINEAR)] != null)
+                cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRNONLINEAR)]["update"] = "true";
+
+            if (cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRSTATS)] != null)
+                cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRSTATS)]["update"] = "true";
+
+            if (cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRFREQUENCY)] != null)
+                cacheHandler.Cache["data"][formatPropretyName(SCRIPT_VSRFREQUENCY)]["update"] = "true";
+            
             cacheHandler.Update();
         }
         public JToken ComputeCustomScript(string path)

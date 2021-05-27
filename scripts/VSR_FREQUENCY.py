@@ -17,6 +17,7 @@ def openFile(filename):
 parser = argparse.ArgumentParser()
 parser.add_argument('-i', type=str, action='store')
 parser.add_argument('-hz', type=int, action='store')
+parser.add_argument('-peaks', type=str, action='store')
 args = parser.parse_args()
 
 data = openFile(args.i).split('\n');
@@ -29,8 +30,10 @@ for bit in data:
         except Exception:
             pass;
 
-obj = frequency_domain(signal).stats if(args.hz==None)\
-      else frequency_domain(signal, args.hz).stats
+if not (args.peaks is None):
+    args.peaks = np.array(args.peaks.split(';'), dtype=np.dtype(int))
+    
+obj = frequency_domain(signal, args.hz, args.peaks).stats  
 obj['update'] = 'false'
 
 filename = os.path.basename(args.i)[:-4]
