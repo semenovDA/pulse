@@ -3,6 +3,7 @@ using pulse.collection;
 using pulse.forms;
 using System;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -20,6 +21,7 @@ namespace pulse.graphics
         public Spectrogram(Signal signal, Method method)
         {
             InitializeComponent();
+            chart.Size = new Size(1000, 400);
             Initialize(signal, method);
         }
 

@@ -50,6 +50,7 @@
             this.сбросToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.workspace = new System.Windows.Forms.TableLayoutPanel();
             this.InfoBox = new System.Windows.Forms.TextBox();
+            this.exportPDF = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.workspace.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +60,8 @@
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.анализToolStripMenuItem,
             this.правкаToolStripMenuItem,
-            this.видToolStripMenuItem});
+            this.видToolStripMenuItem,
+            this.exportPDF});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(824, 24);
@@ -236,6 +238,13 @@
             this.InfoBox.TabIndex = 15;
             this.InfoBox.Text = "Время: 00:00:00    ms: 0  Y: 0";
             // 
+            // exportPDF
+            // 
+            this.exportPDF.Name = "exportPDF";
+            this.exportPDF.Size = new System.Drawing.Size(64, 20);
+            this.exportPDF.Text = "Экспорт";
+            this.exportPDF.Click += new System.EventHandler(this.exportPDF_Click);
+            // 
             // Sphigmogram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -278,5 +287,6 @@
         private System.Windows.Forms.ToolStripMenuItem filtred;
         private System.Windows.Forms.ToolStripMenuItem правкаToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem addCardioIntervals;
+        private System.Windows.Forms.ToolStripMenuItem exportPDF;
     }
 }

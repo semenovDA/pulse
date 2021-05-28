@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace pulse.forms
 {
-    enum Type
+    public enum Type
     {
         BASIC = 0,
         ADDITIONAL = 1,
@@ -16,12 +16,9 @@ namespace pulse.forms
 
     public partial class VSRStatistics : Form
     {
-        // Private variables
-        private static string _mapPath = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "files/map.json");
-
         // Private functions
-        private List<Statistic> assertMap(JToken jToken) {
-            
+        static public List<Statistic> assertMap(JToken jToken) {
+            string _mapPath = Path.GetFullPath(AppDomain.CurrentDomain.BaseDirectory + "files/map.json");
             JObject map = JObject.Parse(File.ReadAllText(_mapPath));
             var list = new List<Statistic>();
 
@@ -77,7 +74,7 @@ namespace pulse.forms
         }
 
     }
-    class Statistic
+    public class Statistic
     {
         public string key { get; set; }
         public string name { get; set; }

@@ -13,6 +13,7 @@ namespace pulse.graphics
         public Scatterogram(Signal signal)
         {
             InitializeComponent();
+            chart.Size = new Size(400, 400);
             Initialize(signal);
         }
         private void drawEllipse(float[] x, float[] y)

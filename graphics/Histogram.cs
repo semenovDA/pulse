@@ -16,6 +16,7 @@ namespace pulse.graphics
             InitializeComponent();
             if (normal_disribution) FillDistribution(signal);
             else FillValues(signal);
+            chart.Size = new Size(1200, 500);
         }
 
         private void FillDistribution(Signal signal)

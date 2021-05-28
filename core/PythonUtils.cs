@@ -43,7 +43,6 @@ namespace pulse.core
 
                 string arguments = "-i " + Path.GetFullPath(_record.getFileName());
                 if(args != null) { foreach (var arg in args) arguments += " " + arg; }
-                Console.WriteLine(arguments);
                 return run_cmd(script, arguments, base_path);
             } 
             catch(Exception e)

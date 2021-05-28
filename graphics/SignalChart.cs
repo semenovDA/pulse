@@ -15,6 +15,7 @@ namespace pulse.graphics
         public SignalChart(Signal signal)
         {
             InitializeComponent();
+            chart.Size = new Size(1600, 400);
             FillCharts(signal);
             setView();
         }

@@ -138,6 +138,7 @@ namespace pulse
             setCharts();
         }
         /* Graphic events */
+        private void exportPDF_Click(object sender, EventArgs e) => new ExportResults(_signal).Show();
         private void HistogramDistributionMenuItem_Click(object sender, EventArgs e) => new Histogram(_signal, true).Show();
         private void ScattergramToolStripMenuItem_Click(object sender, EventArgs e) => new Scatterogram(_signal).Show();
         private void AllToolStripMenuItem_Click(object sender, EventArgs e) => new AnalysisForm(_signal).Show();

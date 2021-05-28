@@ -2,6 +2,7 @@
 using pulse.collection;
 using pulse.forms;
 using System.ComponentModel;
+using System.Drawing;
 using System.Linq;
 
 namespace pulse.graphics
@@ -11,6 +12,7 @@ namespace pulse.graphics
         public ACFChart(Signal signal)
         {
             InitializeComponent();
+            chart.Size = new Size(1000, 300);
             FillChart(signal);
             setView();
         }

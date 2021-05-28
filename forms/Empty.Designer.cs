@@ -50,6 +50,7 @@ namespace pulse.forms
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Empty";
             this.Text = "Chart";
+            this.SizeChanged += new System.EventHandler(this.Empty_SizeChanged);
             this.ResumeLayout(false);
 
         }

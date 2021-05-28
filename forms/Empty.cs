@@ -16,5 +16,10 @@ namespace pulse.forms
         {
             InitializeComponent();
         }
+
+        private void Empty_SizeChanged(object sender, EventArgs e)
+        {
+            Console.WriteLine(this.Size);
+        }
     }
 }
