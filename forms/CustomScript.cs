@@ -96,6 +96,7 @@ namespace pulse.forms
 
         private void deleteBtn_Click(object sender, EventArgs e)
         {
+            if (scriptsList.SelectedItem == null) return;
             var key = scriptsList.SelectedItem.ToString().Split('|')[0];
             scripts.Remove(key.Substring(0, key.Length - 1));
             saveScripts(scripts);
