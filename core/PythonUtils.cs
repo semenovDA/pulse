@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using Microsoft.Win32;
 using pulse.collection;
 using System.Windows.Forms;
+using System.Collections.Generic;
 
 namespace pulse.core
 {
@@ -37,6 +38,7 @@ namespace pulse.core
                 { // Check if computes should be updated
                     base.Upload();
                     cache = base.Cache["data"][propretyName];
+                    if (cache.Type == JTokenType.String) return cache;
                     if (cache["update"] != null) update = cache["update"].ToString() == "true";
                     if(!update) return cache;
                 }
