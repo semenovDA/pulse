@@ -19,8 +19,8 @@ namespace pulse.forms
             var number = (int)signal.ComputePars();
             foreach(var label in GetAllControls(this).OfType<Label>()) {
                 var isNumeric = int.TryParse(label.Text, out int n);
-                if (isNumeric && n != number) 
-                    label.Font = new Font(DefaultFont, FontStyle.Regular);
+                if (isNumeric && n != number) label.Font = new Font(DefaultFont, FontStyle.Regular);
+                else label.BorderStyle = BorderStyle.FixedSingle;
             }
             pointer.Controls.Add(new Label { Text = "↓" }, number - 1, 0);
         }
