@@ -14,12 +14,12 @@ using System.Windows.Forms.DataVisualization.Charting;
 namespace pulse.graphics
 {
 
-    public partial class CustomForm : Component
+    public partial class CustomChart : Component
     {
         string _key = "none";
         public bool isGraphical;
 
-        public CustomForm(Signal signal, string key)
+        public CustomChart(Signal signal, string key)
         {
             InitializeComponent();
 
@@ -98,13 +98,7 @@ namespace pulse.graphics
             if (style.ToLower() == "square") marker = MarkerStyle.Square;
             return marker;
         } 
-        public void Show()
-        {
-            var emptyFrom = new Empty();
-            emptyFrom.Text = _key;
-            emptyFrom.workspace.Controls.Add(chart);
-            emptyFrom.Show();
-        }
+
     }
 
 }

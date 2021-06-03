@@ -1,7 +1,7 @@
 ﻿
 namespace pulse.graphics
 {
-    partial class CustomForm
+    partial class CustomChart
     {
         /// <summary>
         /// Обязательная переменная конструктора.
