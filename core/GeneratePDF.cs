@@ -15,6 +15,7 @@ using iText.Kernel.Pdf.Canvas.Draw;
 using iText.IO.Image;
 using pulse.forms;
 using iText.Layout.Borders;
+using System.Windows.Forms;
 
 namespace pulse.core
 {
@@ -31,7 +32,6 @@ namespace pulse.core
 
             Initialize();
         }
-
         public void Initialize()
         {
             // Main
@@ -54,7 +54,6 @@ namespace pulse.core
 
             document.Close();
         }
-
         private void setHeader(Document document) 
         {
             document.Add(new Paragraph("Результаты анализа")
@@ -113,7 +112,7 @@ namespace pulse.core
 
             foreach(Data graphic in data)
             {
-                cell.Add(new Paragraph("\n" + graphic.name + ":").SetFontSize(12));
+                cell.Add(new Paragraph("\n" + graphic.info.Key + ":").SetFontSize(12));
                 cell.Add(new Image(ImageDataFactory.Create(graphic.path))
                                 .SetTextAlignment(TextAlignment.CENTER)
                                 .SetTextAlignment(TextAlignment.CENTER));
@@ -127,16 +126,17 @@ namespace pulse.core
     {
         private string appdata = Path.Combine(Environment.GetFolderPath(
                         Environment.SpecialFolder.ApplicationData), "pulse");
-        public string name { set; get; }
+        public KeyValuePair<string,string> info { set; get; }
         public string path { set; get; }
         public string description { set; get; }
-        public Data(string name, Chart chart, string description)
+        public Data(KeyValuePair<string, string> info, Control control, string description)
         {
-            this.name = name;
+            this.info = info;
             this.description = description;
 
-            path = Path.Combine(appdata, string.Format("{0}.png", name));
-            chart.Dock = System.Windows.Forms.DockStyle.None;
+            path = Path.Combine(appdata, string.Format("{0}.png", info.Key));
+            var chart = (Chart)control;
+            chart.Dock = DockStyle.None;
             chart.SaveImage(path, ChartImageFormat.Png);
         }
     }

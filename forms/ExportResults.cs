@@ -37,14 +37,14 @@ namespace pulse.forms
             // var path = saveToFileDialog();
             foreach(var checkedItem in chartList.CheckedItems) {
 
-                var key = analysis.charts.Where(
+                var pair = analysis.charts.Where(
                     s => s.Key == checkedItem.ToString())
-                    .First().Value;
+                    .First();
 
-                var chart = analysis.GetChart(key);
-                fixChartView(key, (Chart)chart);
+                var control = analysis.GetChart(pair.Value);
+                fixChartView(pair.Value, control);
 
-                data.Add(new Data(checkedItem.ToString(), (Chart)chart, ""));
+                data.Add(new Data(pair, control, ""));
             }
             var generator = new GeneratePDF(signal, data, "C:/Users/Admin/Desktop/test.pdf");
         }
@@ -58,38 +58,45 @@ namespace pulse.forms
             saveFileDialog.ShowDialog();
             return saveFileDialog.FileName == "" ? null : saveFileDialog.FileName;
         }
-        private void fixChartView(string chartname, Chart chart)
+        private void fixChartView(string chartname, Control control)
         {
+            Chart chart = null;
             switch (chartname)
             {
                 case "SIGNAL":
+                    chart = (Chart)control;
                     chart.Size = new Size(550, 200);
                     chart.ChartAreas[0].AxisX.ScaleView
                         .Zoom(0, chart.Series[0].Points.Count / 2);
                     break;
                 case "DISTRIBUTION_HISTOGRAM_RR":
+                    chart = (Chart)control;
                     chart.Size = new Size(500, 170);
                     break;
                 case "DISTRIBUTION_HISTOGRAM_SIGNAL":
+                    chart = (Chart)control;
                     chart.Size = new Size(500, 250);
                     chart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
                     break;
                 case "WELCH_SPECTOGRAM":
+                    chart = (Chart)control;
                     chart.Size = new Size(550, 250);
                     break;
                 case "LOMB_SPECTOGRAM":
+                    chart = (Chart)control;
                     chart.Size = new Size(550, 250);
                     break;
                 case "AR_SPECTOGRAM":
+                    chart = (Chart)control;
                     chart.Size = new Size(550, 250);
                     break;
                 case "POINCARE_SCATTERGRAM":
-                    chart.Size = new Size(550, 200);
+                    chart = (Chart)control;
+                    chart.Size = new Size(550, 250);
                     break;
                 case "AUTOCORRELATION_FUNCTION":
+                    chart = (Chart)control;
                     chart.Size = new Size(550, 200);
-                    break;
-                case "PARS_RATING":
                     break;
             }
         }
