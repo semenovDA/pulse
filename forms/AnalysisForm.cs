@@ -86,7 +86,7 @@ namespace pulse.forms
                     var path = Properties.Settings.Default.scriptsFile;
                     var scripts = CustomScript.readScripts();
                     if (!scripts.ContainsKey(key)) break;
-                    var form = new CustomForm(_signal, scripts[key]);
+                    var form = new CustomChart(_signal, scripts[key]);
                     if (form.isGraphical) chart = form.chart;
                     else chart = form.data;
                     break;
