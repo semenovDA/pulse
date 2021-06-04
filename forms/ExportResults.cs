@@ -16,17 +16,25 @@ namespace pulse.forms
     public partial class ExportResults : Form
     {
         Signal signal;
-        AnalysisForm analysis;
+        public Dictionary<string, string> charts = new Dictionary<string, string>();
+
         public ExportResults(Signal signal)
         {
             InitializeComponent();
+
+            charts.Add("Гисторграмма распределение RR", "DISTRIBUTION_HISTOGRAM_RR");
+            charts.Add("Спектограмма Welch", "WELCH_SPECTOGRAM");
+            charts.Add("Спектограмма Lomb-Scargle", "LOMB_SPECTOGRAM");
+            charts.Add("Спектограмма Autoregressive", "AR_SPECTOGRAM");
+            charts.Add("Скатерограмма", "POINCARE_SCATTERGRAM");
+            charts.Add("Автокорреляционная функция", "AUTOCORRELATION_FUNCTION");
+
             this.signal = signal;
-            analysis = new AnalysisForm(signal);
             Initialize();
         }
         public void Initialize()
         {
-            chartList.Items.AddRange(analysis.charts.Select(s => s.Key).ToArray());
+            chartList.Items.AddRange(charts.Select(s => s.Key).ToArray());
             for (var i = 0; i < chartList.Items.Count; i++) chartList.SetItemChecked(i, true);
         }
 
@@ -37,14 +45,14 @@ namespace pulse.forms
             // var path = saveToFileDialog();
             foreach(var checkedItem in chartList.CheckedItems) {
 
-                var pair = analysis.charts.Where(
+                var pair = charts.Where(
                     s => s.Key == checkedItem.ToString())
                     .First();
 
-                var control = analysis.GetChart(pair.Value);
-                fixChartView(pair.Value, control);
+                var control = new AnalysisForm(signal).GetChart(pair.Value);
 
-                data.Add(new Data(pair, control, ""));
+                fixChartView(pair.Value, control);
+                if(pair.Value != "PARS_RATING") data.Add(new Data(pair, control, ""));
             }
             var generator = new GeneratePDF(signal, data, "C:/Users/Admin/Desktop/test.pdf");
         }
@@ -63,20 +71,9 @@ namespace pulse.forms
             Chart chart = null;
             switch (chartname)
             {
-                case "SIGNAL":
-                    chart = (Chart)control;
-                    chart.Size = new Size(550, 200);
-                    chart.ChartAreas[0].AxisX.ScaleView
-                        .Zoom(0, chart.Series[0].Points.Count / 2);
-                    break;
                 case "DISTRIBUTION_HISTOGRAM_RR":
                     chart = (Chart)control;
                     chart.Size = new Size(500, 170);
-                    break;
-                case "DISTRIBUTION_HISTOGRAM_SIGNAL":
-                    chart = (Chart)control;
-                    chart.Size = new Size(500, 250);
-                    chart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
                     break;
                 case "WELCH_SPECTOGRAM":
                     chart = (Chart)control;

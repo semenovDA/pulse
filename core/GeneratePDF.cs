@@ -2,9 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using iText.Kernel.Events;
 using System.Windows.Forms.DataVisualization.Charting;
 using iText.Kernel.Pdf;
 using iText.Layout;
@@ -16,6 +14,8 @@ using iText.IO.Image;
 using pulse.forms;
 using iText.Layout.Borders;
 using System.Windows.Forms;
+using iText.Kernel.Colors;
+using pulse.graphics;
 
 namespace pulse.core
 {
@@ -24,6 +24,12 @@ namespace pulse.core
         string path;
         Signal signal;
         List<Data> data;
+
+        public static readonly PdfNumber PORTRAIT = new PdfNumber(0);
+        public static readonly PdfNumber LANDSCAPE = new PdfNumber(90);
+        public static readonly PdfNumber INVERTEDPORTRAIT = new PdfNumber(180);
+        public static readonly PdfNumber SEASCAPE = new PdfNumber(270);
+
         public GeneratePDF(Signal signal, List<Data> data, string path)
         {
             this.signal = signal;
@@ -37,8 +43,12 @@ namespace pulse.core
             // Main
             var writer = new PdfWriter(path);
             PdfDocument pdf = new PdfDocument(writer);
+            PageOrientationsEventHandler eventHandler = new PageOrientationsEventHandler();
+            pdf.AddEventHandler(PdfDocumentEvent.START_PAGE, eventHandler);
+
             Document document = new Document(pdf);
             document.SetMargins(10, 20, 5, 20);
+
 
             // Font set
             string fonts = Environment.GetFolderPath(Environment.SpecialFolder.Fonts);
@@ -50,7 +60,9 @@ namespace pulse.core
             setHeader(document);
             patientCard(document);
             statsCard(document);
+            signalCard(eventHandler, document);
             graphicCard(document, data);
+            parsCard(document);
 
             document.Close();
         }
@@ -104,6 +116,49 @@ namespace pulse.core
             document.Add(new Paragraph("Базовые статистки:").SetFontSize(12));
             document.Add(table);
         }
+        private void signalCard(PageOrientationsEventHandler eventHandler, Document document)
+        {
+            eventHandler.SetOrientation(LANDSCAPE);
+            document.Add(new AreaBreak());
+
+            var sInfo = new KeyValuePair<string, string>("Сигнал", "SIGNAL");
+            var signalChart = new SignalChart(signal).chart;
+
+            signalChart.Size = new System.Drawing.Size(1000, 300);
+            signalChart.ChartAreas[0].AxisX.ScaleView
+                .Zoom(0, signalChart.Series[0].Points.Count);
+            signalChart.ChartAreas[0].AxisX.LabelStyle.Interval = 1000;
+
+            var signalPath = new Data(sInfo, signalChart, "").path;
+            var signalImg = new Image(ImageDataFactory.Create(signalPath))
+                                    .SetTextAlignment(TextAlignment.CENTER)
+                                    .SetTextAlignment(TextAlignment.CENTER);
+            signalImg.SetProperty(Property.ROTATION_ANGLE, 90 * 0.0174533);
+            signalImg.ScaleToFit(800, 300);
+
+            var hInfo = new KeyValuePair<string, string>("DISTRIBUTION_HISTOGRAM_SIGNAL", "Гисторграмма распределение сигнала");
+            var histChart = new Histogram(signal, false).chart;
+
+            histChart.Size = new System.Drawing.Size(1000, 400);
+            histChart.ChartAreas[0].AxisX.LabelStyle.Interval = 5;
+            histChart.ChartAreas[0].AxisX.ScaleView.ZoomReset();
+
+            var histPath = new Data(hInfo, histChart, "").path;
+            var histImg = new Image(ImageDataFactory.Create(histPath))
+                                    .SetTextAlignment(TextAlignment.CENTER)
+                                    .SetTextAlignment(TextAlignment.CENTER);
+            histImg.SetProperty(Property.ROTATION_ANGLE, 90 * 0.0174533);
+            histImg.ScaleToFit(800, 400);
+
+            var table = new Table(2);
+            table.AddCell(new Cell(1, 1).Add(signalImg));
+            table.AddCell(new Cell(1, 1).Add(histImg));
+
+            document.Add(table);
+
+            eventHandler.SetOrientation(PORTRAIT);
+            document.Add(new AreaBreak());
+        }
         private void graphicCard(Document document, List<Data> data)
         {
             Table table = new Table(2);
@@ -120,6 +175,79 @@ namespace pulse.core
             table.AddCell(cell);
             document.Add(table);
         }
+        private void parsCard(Document document)
+        {
+            document.Add(new Paragraph("Функциональная оценка состояние: ").SetFontSize(12));
+
+            Table resultTable = new Table(UnitValue.CreatePercentArray(14))
+                                                        .UseAllAvailableWidth();
+            
+            var pars = signal.ComputePars().ToObject<int>();
+            var dataTable = generateDataTable(pars);
+            Cell cell = new Cell(10, 10).Add(dataTable);
+            resultTable.AddCell(cell);
+
+            cell = new Cell(3, 4).Add(new Paragraph("Физиологическая норма"));
+            resultTable.AddCell(cell.SetHeight(75).SetTextAlignment(TextAlignment.CENTER));
+            
+            cell = new Cell(4, 4).Add(new Paragraph("Донозологическое состояния\nПреморбидные состояния"));
+            resultTable.AddCell(cell.SetHeight(100).SetTextAlignment(TextAlignment.CENTER));
+            
+            cell = new Cell(3, 4).Add(new Paragraph("Срыв адаптации"));
+            resultTable.AddCell(cell.SetHeight(75).SetTextAlignment(TextAlignment.CENTER));
+
+            document.Add(resultTable);
+        }
+
+        private Table generateDataTable(int pars)
+        {
+            Table dataTable = new Table(10);
+
+            var number = 1;
+            for (var i = 0; i < 100; i++)
+            {
+                Paragraph text;
+                Cell cell = new Cell(1, 1);
+
+                cell.SetBackgroundColor(ColorConstants.GREEN);
+                if (i > 29) cell.SetBackgroundColor(ColorConstants.YELLOW);
+                if (i > 69) cell.SetBackgroundColor(ColorConstants.RED);
+
+                if (i % 11 == 0)
+                {
+                    text = new Paragraph(number.ToString());
+                    if (pars == number) cell.SetBackgroundColor(ColorConstants.LIGHT_GRAY);
+                    //else cell.SetBorder(Border.NO_BORDER);
+                    number++;
+                }
+                else
+                {
+                    //cell.SetBorder(Border.NO_BORDER);
+                    text = new Paragraph("\n");
+                }
+
+                cell.Add(text.SetTextAlignment(TextAlignment.CENTER));
+                dataTable.AddCell(cell);
+            }
+
+            dataTable.UseAllAvailableWidth();
+            return dataTable;
+        }
+        private class PageOrientationsEventHandler : IEventHandler
+        {
+            private PdfNumber orientation = PORTRAIT;
+
+            public void SetOrientation(PdfNumber orientation)
+            {
+                this.orientation = orientation;
+            }
+
+            public void HandleEvent(Event currentEvent)
+            {
+                PdfDocumentEvent docEvent = (PdfDocumentEvent)currentEvent;
+                docEvent.GetPage().Put(PdfName.Rotate, orientation);
+            }
+        }
     }
 
     public class Data
@@ -133,7 +261,6 @@ namespace pulse.core
         {
             this.info = info;
             this.description = description;
-
             path = Path.Combine(appdata, string.Format("{0}.png", info.Key));
             var chart = (Chart)control;
             chart.Dock = DockStyle.None;

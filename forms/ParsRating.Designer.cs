@@ -63,7 +63,7 @@ namespace pulse.forms
             this.main.ColumnCount = 3;
             this.main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 21.93309F));
             this.main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 78.06692F));
-            this.main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 124F));
+            this.main.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 125F));
             this.main.Controls.Add(this.label1, 1, 1);
             this.main.Controls.Add(this.tableLayoutPanel2, 1, 2);
             this.main.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -85,7 +85,7 @@ namespace pulse.forms
             this.label1.Location = new System.Drawing.Point(123, 27);
             this.label1.Margin = new System.Windows.Forms.Padding(3);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(423, 19);
+            this.label1.Size = new System.Drawing.Size(422, 19);
             this.label1.TabIndex = 0;
             this.label1.Text = "Оценка функционального состояния";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -112,7 +112,7 @@ namespace pulse.forms
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 69.81132F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 103F));
             this.tableLayoutPanel2.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 80F));
-            this.tableLayoutPanel2.Size = new System.Drawing.Size(423, 291);
+            this.tableLayoutPanel2.Size = new System.Drawing.Size(422, 291);
             this.tableLayoutPanel2.TabIndex = 1;
             // 
             // tableLayoutPanel3
@@ -139,7 +139,7 @@ namespace pulse.forms
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel3.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 23F));
-            this.tableLayoutPanel3.Size = new System.Drawing.Size(250, 65);
+            this.tableLayoutPanel3.Size = new System.Drawing.Size(249, 65);
             this.tableLayoutPanel3.TabIndex = 0;
             // 
             // rating1
@@ -205,7 +205,7 @@ namespace pulse.forms
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel5.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 25F));
-            this.tableLayoutPanel5.Size = new System.Drawing.Size(250, 75);
+            this.tableLayoutPanel5.Size = new System.Drawing.Size(249, 75);
             this.tableLayoutPanel5.TabIndex = 2;
             // 
             // rating8
@@ -242,7 +242,7 @@ namespace pulse.forms
             this.rating10.Location = new System.Drawing.Point(219, 50);
             this.rating10.Margin = new System.Windows.Forms.Padding(0);
             this.rating10.Name = "rating10";
-            this.rating10.Size = new System.Drawing.Size(31, 25);
+            this.rating10.Size = new System.Drawing.Size(30, 25);
             this.rating10.TabIndex = 8;
             this.rating10.Text = "10";
             this.rating10.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
@@ -273,7 +273,7 @@ namespace pulse.forms
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 27F));
             this.tableLayoutPanel4.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 22F));
-            this.tableLayoutPanel4.Size = new System.Drawing.Size(250, 97);
+            this.tableLayoutPanel4.Size = new System.Drawing.Size(249, 97);
             this.tableLayoutPanel4.TabIndex = 1;
             // 
             // rating4
@@ -333,7 +333,7 @@ namespace pulse.forms
             this.label2.AutoSize = true;
             this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label2.Location = new System.Drawing.Point(261, 36);
+            this.label2.Location = new System.Drawing.Point(260, 36);
             this.label2.Margin = new System.Windows.Forms.Padding(3);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(158, 65);
@@ -346,7 +346,7 @@ namespace pulse.forms
             this.label3.AutoSize = true;
             this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label3.Location = new System.Drawing.Point(261, 108);
+            this.label3.Location = new System.Drawing.Point(260, 108);
             this.label3.Margin = new System.Windows.Forms.Padding(3);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(158, 97);
@@ -359,7 +359,7 @@ namespace pulse.forms
             this.label4.AutoSize = true;
             this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.label4.Location = new System.Drawing.Point(261, 212);
+            this.label4.Location = new System.Drawing.Point(260, 212);
             this.label4.Margin = new System.Windows.Forms.Padding(3);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(158, 75);
@@ -385,7 +385,7 @@ namespace pulse.forms
             this.pointer.Name = "pointer";
             this.pointer.RowCount = 1;
             this.pointer.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.pointer.Size = new System.Drawing.Size(250, 25);
+            this.pointer.Size = new System.Drawing.Size(249, 25);
             this.pointer.TabIndex = 6;
             // 
             // ParsRating

@@ -48,9 +48,9 @@
             this.filtred = new System.Windows.Forms.ToolStripMenuItem();
             this.ShowValuesCb = new System.Windows.Forms.ToolStripMenuItem();
             this.сбросToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportPDF = new System.Windows.Forms.ToolStripMenuItem();
             this.workspace = new System.Windows.Forms.TableLayoutPanel();
             this.InfoBox = new System.Windows.Forms.TextBox();
-            this.exportPDF = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.workspace.SuspendLayout();
             this.SuspendLayout();
@@ -209,6 +209,13 @@
             this.сбросToolStripMenuItem.Text = "Сброс";
             this.сбросToolStripMenuItem.Click += new System.EventHandler(this.сбросToolStripMenuItem_Click);
             // 
+            // exportPDF
+            // 
+            this.exportPDF.Name = "exportPDF";
+            this.exportPDF.Size = new System.Drawing.Size(64, 20);
+            this.exportPDF.Text = "Экспорт";
+            this.exportPDF.Click += new System.EventHandler(this.exportPDF_Click);
+            // 
             // workspace
             // 
             this.workspace.ColumnCount = 1;
@@ -237,13 +244,6 @@
             this.InfoBox.Size = new System.Drawing.Size(824, 20);
             this.InfoBox.TabIndex = 15;
             this.InfoBox.Text = "Время: 00:00:00    ms: 0  Y: 0";
-            // 
-            // exportPDF
-            // 
-            this.exportPDF.Name = "exportPDF";
-            this.exportPDF.Size = new System.Drawing.Size(64, 20);
-            this.exportPDF.Text = "Экспорт";
-            this.exportPDF.Click += new System.EventHandler(this.exportPDF_Click);
             // 
             // Sphigmogram
             // 
