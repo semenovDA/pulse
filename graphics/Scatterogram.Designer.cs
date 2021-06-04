@@ -60,6 +60,7 @@ namespace pulse.graphics
             this.chart.Size = new System.Drawing.Size(768, 450);
             this.chart.TabIndex = 0;
             this.chart.Text = "chart1";
+            this.chart.Paint += new System.Windows.Forms.PaintEventHandler(this.chart_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.chart)).EndInit();
 
         }
